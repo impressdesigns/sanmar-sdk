@@ -1,7 +1,11 @@
 """A module for wrapping SanMar's SOAP API."""
 
+from typing import TYPE_CHECKING
+
 from suds.client import Client
-from suds.sudsobject import Object as SudsObject
+
+if TYPE_CHECKING:
+    from suds.sudsobject import Object as SudsObject
 
 
 class SanMar:
