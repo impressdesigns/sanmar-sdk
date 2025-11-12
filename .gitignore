@@ -1,23 +1,12 @@
-# IDE
+# JetBrains
 .idea
 
-# Packing
-darbiadev_sanmar.egg-info
-build
+# Packaging
+*.egg-info
 dist
-poetry.lock
-
-# Virtual environment
-venv
 
 # Cache
 __pycache__
 
 # Docs
-docs/_build
-
-# Testing
-.tox
-
-# Type checking
-.mypy_cache
+docs/build

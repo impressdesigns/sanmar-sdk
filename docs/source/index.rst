@@ -1,7 +1,7 @@
-darbiadev-sanmar
-===============
+SanMar SDK
+================
 
-A wrapper for SanMar's API
+A Python SDK for SanMar's SOAP APIs.
 
 Module Index
 ------------
@@ -9,14 +9,13 @@ Module Index
 .. toctree::
    :maxdepth: 1
 
-   autoapi/index
+   autoapi/sanmar_sdk/index
 
 .. toctree::
    :caption: Other:
    :hidden:
 
    changelog
-   history
 
 Extras
 ------
@@ -24,4 +23,3 @@ Extras
 * :ref:`genindex`
 * :ref:`search`
 * :doc:`changelog`
-* :doc:`history`

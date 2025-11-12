@@ -6,12 +6,12 @@ https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 from importlib.metadata import metadata
 
-project_metadata = metadata("darbiadev-sanmar")
+project_metadata = metadata("idi-sanmar-sdk")
 project: str = project_metadata["Name"]
 release: str = project_metadata["Version"]
 REPO_LINK: str = project_metadata["Project-URL"].replace("repository, ", "")
-copyright: str = "Darbia"  # noqa: A001
-author: str = "Bradley Reynolds"
+copyright: str = "Impress Designs"  # noqa: A001
+author: str = "Impress Designs team"
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named "sphinx.ext.*") or your custom
@@ -53,7 +53,7 @@ releases_github_path = REPO_LINK.removeprefix("https://github.com/")
 releases_release_uri = f"{REPO_LINK}/releases/tag/v%s"
 
 
-def linkcode_resolve(domain: str, info: dict) -> str:
+def linkcode_resolve(domain: str, info: dict) -> str | None:
     """linkcode_resolve."""
     if domain != "py":
         return None

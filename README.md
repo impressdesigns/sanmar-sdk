@@ -1,6 +1,3 @@
-# darbiadev-sanmar
+# SanMar SDK
 
-A wrapper around SanMar's SOAP API
-
-Currently supports
-- Getting license plate contents
+The API documentation is available at https://www.sanmar.com/resources/electronicintegration/integrationofferings
