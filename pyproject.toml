@@ -1,55 +1,88 @@
 [project]
-name = "darbiadev-sanmar"
-version = "0.5.0"
-description = "A wrapper for SanMar's API"
+name = "idi-sanmar-sdk"
+version = "0.2.0"
+description = "A wrapper for S&S' API."
+readme = "README.md"
 authors = [
-    { name = "Bradley Reynolds", email = "bradley.reynolds@darbia.dev" },
+    { name = "Bradley Reynolds", email = "bradley.reynolds@impressdesigns.com" },
 ]
 license = { text = "MIT" }
-readme = "README.md"
-requires-python = ">=3.11,<3.13"
-dynamic = ["dependencies", "optional-dependencies"]
+requires-python = ">=3.14"
+dependencies = ["suds>=1.2.0"]
 
 [project.urls]
-repository = "https://github.com/darbiadev/darbiadev-sanmar"
-documentation = "https://docs.darbia.dev/darbiadev-sanmar/"
+repository = "https://github.com/impressdesigns/sanmar-sdk"
+documentation = "http://impressdesigns.dev/sanmar-sdk/"
 
 [build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["uv_build"]
+build-backend = "uv_build"
 
-[tool.setuptools.dynamic.dependencies]
-file = ["requirements/requirements.txt"]
-
-[tool.setuptools.dynamic.optional-dependencies]
-dev = { file = ["requirements/requirements-dev.txt"] }
-tests = { file = ["requirements/requirements-tests.txt"] }
-docs = { file = ["requirements/requirements-docs.txt"] }
-
-[tool.ruff]
-preview = true
-unsafe-fixes = true
-target-version = "py311"
-select = ["ALL"]
-line-length = 120
-ignore = [
-    "CPY001", # (Missing copyright notice at top of file) - No license
-    "E501", # (Line too long) - FIXME -- Need to do something about the XML blocks
+[dependency-groups]
+dev = [
+    # DX
+    "nox>=2024.4.15",
+    "pre-commit>=3.7.1",
+    # Linters
+    "ruff>=0.5.2",
+    "mypy>=1.10.1",
+]
+docs = [
+    "sphinx>=7.4.4",
+    # Theme
+    "furo>=2024.5.6",
+    # Extensions
+    "sphinx-autoapi>=3.1.2",
+    "releases>=2.1.1",
+]
+tests = [
+    "coverage>=7.6.1",
+    "pytest>=9.0.0",
+    # Extensions
+    "pytest-randomly>=3.15.0",
 ]
 
-[tool.ruff.extend-per-file-ignores]
+[tool.uv]
+environments = ["sys_platform == 'linux' and platform_machine == 'x86_64'"]
+
+[tool.uv.build-backend]
+module-name = "sanmar_sdk"
+
+[tool.ruff]
+target-version = "py314"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "CPY001", # (Missing copyright notice at top of file) - No license
+    "TC",     # (flake8-type-checking) - Pydantic uses runtime type checking
+]
+
+[tool.ruff.lint.extend-per-file-ignores]
 "docs/*" = [
     "INP001", # (File `tests/*.py` is part of an implicit namespace package. Add an `__init__.py`.) - Docs are not modules
 ]
 "tests/*" = [
     "INP001", # (File `tests/*.py` is part of an implicit namespace package. Add an `__init__.py`.) - Tests are not modules
-    "S101", # (Use of `assert` detected) - Yes, that's the point
+    "S101",   # (Use of `assert` detected) - Yes, that's the point
 ]
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.isort]
+known-first-party = ["sanmar_sdk"]
+
+[tool.ruff.lint.pydocstyle]
 convention = "numpy"
 
+[[tool.mypy.overrides]]
+module = ["suds.*"]
+ignore_missing_imports = true
+
 [tool.coverage.run]
-source = [
-    "darbiadev_sanmar",
-]
+branch = true
+source_pkgs = ["sanmar_sdk"]
+source_dirs = ["tests"]
+
+[tool.pytest]
+strict = true
+junit_family = "legacy"
