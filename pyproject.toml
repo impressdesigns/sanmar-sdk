@@ -56,7 +56,6 @@ line-length = 120
 select = ["ALL"]
 ignore = [
     "CPY001", # (Missing copyright notice at top of file) - No license
-    "TC",     # (flake8-type-checking) - Pydantic uses runtime type checking
 ]
 
 [tool.ruff.lint.extend-per-file-ignores]
