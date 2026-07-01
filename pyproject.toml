@@ -24,7 +24,7 @@ dev = [
     "nox>=2026.4.10",
     "pre-commit>=4.6.0",
     # Linters
-    "ruff>=0.15.14",
+    "ruff>=0.15.19",
     "mypy>=2.1.0",
 ]
 docs = [
@@ -36,8 +36,8 @@ docs = [
     "releases>=2.1.1",
 ]
 tests = [
-    "coverage>=7.14.0",
-    "pytest>=9.0.0",
+    "coverage>=7.14.3",
+    "pytest>=9.1.1",
     # Extensions
     "pytest-randomly>=4.1.0",
 ]
