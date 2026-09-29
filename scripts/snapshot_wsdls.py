@@ -83,30 +83,8 @@ def record_ftp_layout(output: Path) -> None:
     print(f"Recorded the SFTP layout to {output}")
 
 
-def main() -> int:
-    """Record every endpoint's documents and report any that failed to load."""
-    parser = argparse.ArgumentParser(description=__doc__.split("\n\n", 1)[0])
-    parser.add_argument(
-        "--environment",
-        choices=[environment.name.lower() for environment in Environment],
-        default="production",
-        help="which SanMar environment to record (default: production)",
-    )
-    parser.add_argument(
-        "--output",
-        type=Path,
-        default=ROOT / "tests" / "wsdl",
-        help="where to write the snapshot (default: tests/wsdl)",
-    )
-    parser.add_argument(
-        "--ftp",
-        action="store_true",
-        help="also record the SFTP server's folders and product file headers (needs SANMAR_* variables)",
-    )
-    arguments = parser.parse_args()
-    environment = Environment[arguments.environment.upper()]
-    output: Path = arguments.output
-
+def record_wsdls(environment: Environment, output: Path) -> list[str]:
+    """Record every endpoint's WSDL and schema documents; return the URLs that failed."""
     transport = RecordingTransport(timeout=60)
     dumps: dict[str, str] = {}
     failures: list[str] = []
@@ -136,6 +114,39 @@ def main() -> int:
         (operations / f"{name}.txt").write_text(dump_text, encoding="utf-8")
 
     print(f"Recorded {len(transport.snapshot.documents)} documents to {output}")
+    return failures
+
+
+def main() -> int:
+    """Record every endpoint's documents and report any that failed to load."""
+    parser = argparse.ArgumentParser(description=__doc__.split("\n\n", 1)[0])
+    parser.add_argument(
+        "--environment",
+        choices=[environment.name.lower() for environment in Environment],
+        default="production",
+        help="which SanMar environment to record (default: production)",
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=ROOT / "tests" / "wsdl",
+        help="where to write the snapshot (default: tests/wsdl)",
+    )
+    parser.add_argument(
+        "--ftp",
+        action="store_true",
+        help="also record the SFTP server's folders and product file headers (needs SANMAR_* variables)",
+    )
+    parser.add_argument(
+        "--skip-wsdls",
+        action="store_true",
+        help="record only what --ftp records, leaving the WSDL snapshot as it is",
+    )
+    arguments = parser.parse_args()
+    environment = Environment[arguments.environment.upper()]
+    output: Path = arguments.output
+
+    failures = [] if arguments.skip_wsdls else record_wsdls(environment, output)
     if arguments.ftp:
         record_ftp_layout(ROOT / "tests" / "fixtures" / "ftp_layout.json")
     if failures:

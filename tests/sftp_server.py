@@ -95,10 +95,15 @@ class _Files(paramiko.SFTPServerInterface):
 class SFTPServer:
     """An SFTP server on localhost, serving ``root`` to one username and password."""
 
-    def __init__(self, root: Path, username: str, password: str) -> None:
-        """Start listening on a free port."""
+    def __init__(self, root: Path, username: str, password: str, *, legacy_rsa: bool = False) -> None:
+        """Start listening on a free port.
+
+        With ``legacy_rsa``, the server has an RSA key and signs with SHA-1 ``ssh-rsa`` only,
+        as SanMar's does.
+        """
         self.root = root
-        self.host_key = paramiko.ECDSAKey.generate()
+        self.host_key: paramiko.PKey = paramiko.RSAKey.generate(2048) if legacy_rsa else paramiko.ECDSAKey.generate()
+        self._disabled_algorithms = {"keys": ["rsa-sha2-256", "rsa-sha2-512"]} if legacy_rsa else None
         self._username = username
         self._password = password
         self._socket = socket.create_server(("127.0.0.1", 0))
@@ -122,7 +127,7 @@ class SFTPServer:
                 continue
             except OSError:
                 return
-            transport = paramiko.Transport(connection)
+            transport = paramiko.Transport(connection, disabled_algorithms=self._disabled_algorithms)
             transport.add_server_key(self.host_key)
             transport.set_subsystem_handler("sftp", paramiko.SFTPServer, _Files, root=self.root)
             self._transports.append(transport)

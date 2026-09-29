@@ -8,7 +8,12 @@ authors = [
 ]
 license = { text = "MIT" }
 requires-python = ">=3.14"
-dependencies = ["paramiko>=5.0.0", "pydantic>=2.12", "zeep>=4.3.3"]
+dependencies = [
+    # 5.0 removed the ssh-rsa host key algorithm, and SanMar's SFTP server offers nothing newer.
+    "paramiko>=4.0,<5",
+    "pydantic>=2.12",
+    "zeep>=4.3.3",
+]
 
 [project.urls]
 repository = "https://github.com/impressdesigns/sanmar-sdk"
@@ -28,7 +33,7 @@ dev = [
     "mypy>=2.3.1",
     "ty>=0.0.72",
     # Stubs
-    "types-paramiko>=5.0.0",
+    "types-paramiko>=4.0,<5",
     "types-requests>=2.32",
 ]
 docs = [

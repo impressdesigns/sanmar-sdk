@@ -21,6 +21,7 @@ from pathlib import PurePosixPath
 from typing import IO, TYPE_CHECKING, Self, TextIO, cast
 
 import paramiko
+from paramiko.ssh_exception import IncompatiblePeer
 
 from sanmar_sdk.exceptions import AuthenticationError, NotFoundError, SanMarConnectionError
 
@@ -158,6 +159,13 @@ class SanMarFTP:
                 "password is the FTP password SanMar issued, not a SanMar.com password."
             )
             raise AuthenticationError(message) from exc
+        except IncompatiblePeer as exc:
+            ssh.close()
+            message = (
+                f"Could not agree on encryption with {self.host}:{self.port}: {exc}. SanMar's server "
+                f"only speaks older SSH algorithms; this SDK needs paramiko 4, not {paramiko.__version__}."
+            )
+            raise SanMarConnectionError(message) from exc
         except (paramiko.SSHException, OSError) as exc:
             ssh.close()
             message = f"Could not connect to {self.host}:{self.port}: {exc}"

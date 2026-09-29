@@ -1,3 +1,6 @@
+# The WSDL snapshot is SanMar's documents exactly as served; tests replay them byte for byte.
+exclude: ^tests/wsdl/
+
 repos:
   - repo: meta
     hooks:

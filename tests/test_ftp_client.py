@@ -49,6 +49,20 @@ def test_pinned_host_key_is_trusted(sftp_server: SFTPServer, tmp_path: Path) -> 
         assert ftp.list_folder("sanmarpdd") == ["SanMar_SDL_N.csv"]
 
 
+def test_legacy_ssh_rsa_servers_are_supported(tmp_path: Path) -> None:
+    """A server that signs only with SHA-1 ssh-rsa, as SanMar's does, can be connected to."""
+    root = tmp_path / "legacy"
+    root.mkdir()
+    server = SFTPServer(root, SFTP_USERNAME, SFTP_PASSWORD, legacy_rsa=True)
+    try:
+        with _connect(server, tmp_path) as ftp:
+            channel = ftp.sftp.get_channel()
+            assert channel is not None
+            assert channel.get_transport().host_key_type == "ssh-rsa"  # ty: ignore[unresolved-attribute]
+    finally:
+        server.close()
+
+
 def test_unknown_host_key_is_refused(sftp_server: SFTPServer, tmp_path: Path) -> None:
     """Without the key pinned or in known_hosts, the connection is refused."""
     with pytest.raises(SanMarConnectionError, match=r"ssh-keyscan -p \d+ 127\.0\.0\.1"):
