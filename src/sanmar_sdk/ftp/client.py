@@ -381,7 +381,9 @@ class SanMarFTP:
         """Stream SanMar's acknowledgement of an uploaded batch, once it exists.
 
         SanMar writes it to ``Holding`` within about 15 minutes of the upload, and moves it
-        to ``Done`` once the orders are processed.
+        to ``Done`` once the orders are processed. The file is the one whose name is the batch
+        name followed by ``Holding``, so batch ``06-07-2022-1`` never reads
+        ``06-07-2022-10Holding.txt``.
 
         Raises
         ------
@@ -393,8 +395,9 @@ class SanMarFTP:
                 names = self.list_folder(folder)
             except NotFoundError:
                 continue
+            prefix = f"{batch}holding".casefold()
             for name in names:
-                if name.casefold().startswith(batch.casefold()) and "holding" in name.casefold():
+                if name.casefold().startswith(prefix):
                     with self.stream(f"{folder}/{name}", read_holding) as lines:
                         yield lines
                     return

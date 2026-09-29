@@ -3,6 +3,7 @@
 from typing import Any
 
 import pytest
+from pydantic import ValidationError
 
 from sanmar_sdk import (
     AuthenticationError,
@@ -15,6 +16,7 @@ from sanmar_sdk import (
     WillCall,
 )
 from sanmar_sdk.orders import OrderLine, PurchaseOrder
+from sanmar_sdk.promostandards import PromoStandardsOrder, PromoStandardsOrderLine
 
 from .replay import CUSTOMER_NUMBER, PASSWORD, USERNAME, envelope, replay_client, sent
 
@@ -61,6 +63,21 @@ CHECKED = """<poNum>WEBSERVICES TEST</poNum><residence>N</residence>
     <message>Requested Quantity is not in stock from any warehouse or from requested warehouse</message>
     <quantity>900</quantity><size>S</size><sizeIndex>2</sizeIndex><style>K420</style>
   </webServicePoDetailList>"""
+
+
+def test_orders_without_a_country_field_take_us_addresses_only() -> None:
+    """SanMar's own channels would drop a foreign country; PromoStandards sends it."""
+    abroad = ORDER.ship_to.model_copy(update={"country": "CA"})
+
+    with pytest.raises(ValidationError, match="US addresses only, not CA"):
+        PurchaseOrder(po_number="1", ship_to=abroad, ship_method=ShipMethod.UPS_GROUND, lines=ORDER.lines)
+    order = PromoStandardsOrder(
+        po_number="1",
+        ship_to=abroad,
+        ship_method=ShipMethod.UPS_GROUND,
+        lines=[PromoStandardsOrderLine(part_id="208284", quantity=1)],
+    )
+    assert order.ship_to.country == "CA"
 
 
 def test_order_lines_cannot_change_after_validation() -> None:

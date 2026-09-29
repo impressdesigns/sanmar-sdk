@@ -8,7 +8,7 @@ orders carry a different set of fields and are modelled separately.
 from collections.abc import Sequence
 from typing import Annotated
 
-from pydantic import Field
+from pydantic import Field, field_validator
 
 from .base import FROZEN, ORDER_TEXT, Model
 from .common import ShipMethod, ShipTo, SkuKey, StyleColorSize, Warehouse, WillCall
@@ -43,6 +43,18 @@ class PurchaseOrder(Model):
     ship_to: ShipTo
     ship_method: ShipMethod | WillCall
     lines: Annotated[Sequence[OrderLine], Field(min_length=1), FROZEN]
+
+    @field_validator("ship_to")
+    @classmethod
+    def _domestic(cls, ship_to: ShipTo) -> ShipTo:
+        """SanMar's own order service and order files have no country, so they ship within the US."""
+        if ship_to.country != "US":
+            message = (
+                "SanMar's own order service and order files carry no country, so they ship to US "
+                f"addresses only, not {ship_to.country}."
+            )
+            raise ValueError(message)
+        return ship_to
 
     def merged_lines(self) -> list[OrderLine]:
         """Return the lines with duplicates combined, as SanMar asks.

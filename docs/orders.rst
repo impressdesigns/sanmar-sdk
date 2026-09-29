@@ -51,6 +51,10 @@ SanMar's order processor splits on commas and its order files are ASCII, so ever
 field rejects commas and non-ASCII characters when the model is built, before anything is
 sent.
 
+SanMar's own purchase order service and its order files carry no country, so a
+:class:`~sanmar_sdk.orders.PurchaseOrder` takes US addresses only. Only PromoStandards sends
+``country``.
+
 How to ship
 ~~~~~~~~~~~
 

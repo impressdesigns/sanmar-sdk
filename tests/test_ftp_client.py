@@ -229,6 +229,14 @@ def test_holding_is_found_in_holding_then_done(sftp_server: SFTPServer, tmp_path
             pass
 
 
+def test_holding_is_not_confused_with_a_longer_batch_name(sftp_server: SFTPServer, tmp_path: Path) -> None:
+    """Batch 06-07-2022-1's acknowledgement is not 06-07-2022-10's, which sorts first."""
+    target = _publish(sftp_server, "06-07-2022-1Holding.txt", folder="Holding")
+    (target / "06-07-2022-10Holding.txt").write_text("OTHER,K500,Black,L,1,4,Y\r\n", encoding="ascii")
+    with _connect(sftp_server, tmp_path) as ftp, ftp.holding("06-07-2022-1") as lines:
+        assert {line.po_number for line in lines} == {"FX34689"}
+
+
 @pytest.mark.parametrize(
     "line",
     [
