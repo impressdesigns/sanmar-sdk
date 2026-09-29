@@ -20,3 +20,7 @@ jobs:
         uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
         with:
           config-file: impressdesigns/.github/.github/dependency-review-config.yaml@main
+          # paramiko 4 still verifies ssh-rsa (SHA-1) host key signatures, which is all
+          # SanMar's SFTP server offers; paramiko 5, the only fix, cannot connect to it.
+          # Drop this once SanMar offers an rsa-sha2 or newer host key.
+          allow-ghsas: GHSA-r374-rxx8-8654

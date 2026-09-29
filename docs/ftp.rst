@@ -24,6 +24,9 @@ number and the password is the FTP password SanMar issued, not a SanMar.com logi
 The SDK refuses a server whose key it has not been told to trust: pin the key with
 ``host_key``, or pass a ``known_hosts`` file. SanMar's server offers only the older
 ``ssh-rsa`` host key algorithm, which paramiko 5 dropped, so the SDK requires paramiko 4.
+That algorithm signs with SHA-1, for which paramiko 4 carries a low-severity advisory,
+`GHSA-r374-rxx8-8654 <https://github.com/advisories/GHSA-r374-rxx8-8654>`_; there is no way
+to reach SanMar's server without it.
 
 File names match case-insensitively: SanMar's guides spell the same file several ways.
 
