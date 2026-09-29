@@ -24,3 +24,7 @@ jobs:
           # SanMar's SFTP server offers; paramiko 5, the only fix, cannot connect to it.
           # Drop this once SanMar offers an rsa-sha2 or newer host key.
           allow-ghsas: GHSA-r374-rxx8-8654
+          # paramiko is LGPL-2.1-only and its cffi dependency MIT-0, neither of which the shared
+          # org config allows; paramiko is the SDK's SFTP client, used unmodified. This list
+          # replaces the org config's own, so its two entries are repeated here.
+          allow-dependencies-licenses: "pkg:pypi/paramiko, pkg:pypi/cffi, pkg:pypi/typing-extensions, pkg:pypi/pillow"
