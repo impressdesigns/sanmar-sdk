@@ -13,6 +13,7 @@ There are two kinds of model:
 import re
 from collections.abc import Mapping
 from datetime import date, datetime
+from decimal import Decimal
 from typing import Annotated, Any
 
 from pydantic import AfterValidator, BaseModel, BeforeValidator, ConfigDict, model_validator
@@ -86,8 +87,19 @@ def _split_list(separator: str) -> BeforeValidator:
     return BeforeValidator(split)
 
 
+def _parse_price(value: Any) -> Any:  # noqa: ANN401 - runs before validation
+    """Read a price the way SanMar writes one, treating "not available" as no price."""
+    if isinstance(value, str):
+        text = value.strip().removeprefix("$").replace(",", "")
+        return None if text.upper() in {"NA", "N/A", "NLA"} else text
+    return value
+
+
 SanMarDate = Annotated[date, BeforeValidator(_parse_date)]
 """A date in any of the formats SanMar sends."""
+
+Price = Annotated[Decimal | None, BeforeValidator(_parse_price)]
+"""A dollar amount, or ``None`` where SanMar has none (a blank, ``NA`` or ``NLA``)."""
 
 CommaSeparated = Annotated[list[str], _split_list(",")]
 """A comma-separated list, split into its parts."""

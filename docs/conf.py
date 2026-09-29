@@ -40,6 +40,7 @@ autoapi_options: list[str] = [
 
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
+    "paramiko": ("https://docs.paramiko.org/en/stable", None),
     "pydantic": ("https://docs.pydantic.dev/latest", None),
     "requests": ("https://requests.readthedocs.io/en/latest", None),
     "zeep": ("https://docs.python-zeep.org/en/master", None),
@@ -47,7 +48,8 @@ intersphinx_mapping = {
 
 # Field limits are declared as ``Annotated[str, Field(...)]``, which autoapi renders with
 # pydantic's ``Field`` unqualified, so there is nothing for it to resolve against.
-nitpick_ignore: list[tuple[str, str]] = [("py:class", "Field")]
+# Type parameters of generic functions (PEP 695) are not documented objects either.
+nitpick_ignore: list[tuple[str, str]] = [("py:class", "Field"), ("py:class", "R")]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.

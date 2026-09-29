@@ -9,12 +9,22 @@ It loads every web service in SanMar's integration guides, records each WSDL and
 document zeep fetches into ``tests/wsdl/``, and writes a readable dump of each service's
 operations and types to ``tests/wsdl/operations/``. SanMar serves its WSDLs without
 authentication, so no credentials are needed.
+
+With ``--ftp`` it also records the layout of the files on SanMar's SFTP server, into
+``tests/fixtures/ftp_layout.json``: the top-level folder names, the files in the product
+folders, and the header line of each product file. It records no data rows, and replaces
+the customer number wherever it appears in a name. It needs ``SANMAR_CUSTOMER_NUMBER``,
+``SANMAR_FTP_PASSWORD`` and, unless the host key is in known_hosts,
+``SANMAR_SFTP_HOST_KEY`` (as ``ssh-keyscan -p 2200 ftp.sanmar.com`` prints it).
 """
 
 import argparse
 import contextlib
 import io
+import json
+import os
 import re
+import stat
 import sys
 from datetime import UTC, datetime
 from pathlib import Path
@@ -22,9 +32,55 @@ from pathlib import Path
 from zeep import Client
 
 from sanmar_sdk._snapshots import RecordingTransport
-from sanmar_sdk._soap import ENDPOINTS, Environment
+from sanmar_sdk._soap import ENDPOINTS
+from sanmar_sdk.common import Environment
+from sanmar_sdk.ftp import SanMarFTP
+from sanmar_sdk.ftp.client import PRODUCT_FOLDER, PRODUCT_INFORMATION_FOLDER
 
 ROOT = Path(__file__).resolve().parent.parent
+
+
+def _looks_like_header(line: str) -> bool:
+    """Tell a header line from a data row, so no data row is ever recorded."""
+    fields = [field.strip().strip('"') for field in re.split(r"[,|\t]", line)]
+    return not any(re.fullmatch(r"[\d.$/: -]+", field) for field in fields if field)
+
+
+def record_ftp_layout(output: Path) -> None:
+    """Record folder names, product file names and product file headers from the SFTP server."""
+    customer_number = os.environ["SANMAR_CUSTOMER_NUMBER"]
+
+    def redact(text: str) -> str:
+        return text.replace(customer_number, "{customer_number}")
+
+    layout: dict[str, object] = {}
+    with SanMarFTP(
+        customer_number,
+        os.environ["SANMAR_FTP_PASSWORD"],
+        host_key=os.environ.get("SANMAR_SFTP_HOST_KEY"),
+    ) as ftp:
+        layout["folders"] = [
+            redact(name) for name in ftp.list_folder() if stat.S_ISDIR(ftp.sftp.stat(name).st_mode or 0)
+        ]
+        headers: dict[str, str] = {}
+        files: dict[str, list[str]] = {}
+        for folder in (PRODUCT_FOLDER, PRODUCT_INFORMATION_FOLDER):
+            try:
+                names = ftp.list_folder(folder)
+            except Exception as exc:  # noqa: BLE001 - record what is missing, keep going
+                files[folder] = [f"<{type(exc).__name__}: {exc}>"]
+                continue
+            files[folder] = [redact(name) for name in names]
+            for name in names:
+                if not name.casefold().endswith((".csv", ".txt")):
+                    continue
+                with ftp.open(f"{folder}/{name}", prefetch=False) as remote:
+                    first = io.TextIOWrapper(remote, encoding="utf-8-sig", errors="replace").readline().rstrip("\r\n")
+                headers[redact(f"{folder}/{name}")] = first if _looks_like_header(first) else "<no header row>"
+        layout["files"] = files
+        layout["headers"] = headers
+    output.write_text(json.dumps(layout, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    print(f"Recorded the SFTP layout to {output}")
 
 
 def main() -> int:
@@ -41,6 +97,11 @@ def main() -> int:
         type=Path,
         default=ROOT / "tests" / "wsdl",
         help="where to write the snapshot (default: tests/wsdl)",
+    )
+    parser.add_argument(
+        "--ftp",
+        action="store_true",
+        help="also record the SFTP server's folders and product file headers (needs SANMAR_* variables)",
     )
     arguments = parser.parse_args()
     environment = Environment[arguments.environment.upper()]
@@ -75,6 +136,8 @@ def main() -> int:
         (operations / f"{name}.txt").write_text(dump_text, encoding="utf-8")
 
     print(f"Recorded {len(transport.snapshot.documents)} documents to {output}")
+    if arguments.ftp:
+        record_ftp_layout(ROOT / "tests" / "fixtures" / "ftp_layout.json")
     if failures:
         print("These could not be loaded:", *failures, sep="\n  ", file=sys.stderr)
         return 1
