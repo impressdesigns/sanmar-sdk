@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 from ._soap import Credentials, SoapClient
 from .common import Environment
+from .promostandards import PromoStandards
 from .standard import (
     InventoryService,
     InvoiceService,
@@ -63,6 +64,8 @@ class SanMar:
         """SanMar's own purchase order service."""
         self.packing_slips = PackingSlipService(self._soap, self._credentials)
         """The packing slip service, which looks boxes up by license plate number."""
+        self.promostandards = PromoStandards(self._soap, self._credentials)
+        """SanMar's PromoStandards services."""
 
     @property
     def environment(self) -> Environment:

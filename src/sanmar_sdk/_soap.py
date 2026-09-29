@@ -246,7 +246,12 @@ class SoapClient:
         """
         proxy = resolve_operation(self.service(endpoint), operation)
         with _translated_errors():
-            result = proxy(**payload)
+            try:
+                result = proxy(**payload)
+            except IndexError as exc:
+                # zeep reads the first element of the SOAP body without checking there is one.
+                message = "SanMar's response has an empty SOAP body."
+                raise ResponseError(message) from exc
         return serialize_object(result, dict)
 
 

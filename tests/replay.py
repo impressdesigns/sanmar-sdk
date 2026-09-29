@@ -42,3 +42,14 @@ def sent(transport: ReplayTransport, index: int = -1) -> tuple[str, Any]:
     body = document.find("{http://schemas.xmlsoap.org/soap/envelope/}Body")
     operation = body[0]
     return operation.tag.rpartition("}")[2], _element_data(operation)
+
+
+def service_message(code: int, description: str, severity: str = "Error") -> str:
+    """Build a PromoStandards ``ServiceMessageArray`` holding one message.
+
+    It is unprefixed, so the fixture's default namespace must be the service's SharedObjects.
+    """
+    return (
+        f"<ServiceMessageArray><ServiceMessage><code>{code}</code><description>{description}</description>"
+        f"<severity>{severity}</severity></ServiceMessage></ServiceMessageArray>"
+    )

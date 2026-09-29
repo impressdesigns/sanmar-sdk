@@ -57,9 +57,14 @@ nitpick_ignore: list[tuple[str, str]] = [
     ("py:class", "T"),
     ("py:class", "BeforeValidator"),
     ("py:class", "_as_list"),
+    ("py:class", "_status"),
+    ("py:class", "pluck"),
     ("py:class", "SoapClient"),
     ("py:class", "Credentials"),
+    ("py:class", "sanmar_sdk._soap.SoapClient"),
+    ("py:class", "sanmar_sdk._soap.Credentials"),
     ("py:obj", "sanmar_sdk._soap.Service"),
+    ("py:obj", "sanmar_sdk.promostandards._common.PromoStandardsService"),
 ]
 
 # List of patterns, relative to source directory, that match files and

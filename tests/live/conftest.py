@@ -19,7 +19,7 @@ from pathlib import Path
 
 import pytest
 
-from sanmar_sdk import Environment
+from sanmar_sdk import Environment, SanMar
 from sanmar_sdk._snapshots import WsdlSnapshot
 
 LIVE = Path(__file__).parent
@@ -48,3 +48,17 @@ def snapshot() -> WsdlSnapshot:
     if not (SNAPSHOT / "index.json").exists():
         pytest.skip("no WSDL snapshot yet; run scripts/snapshot_wsdls.py")
     return WsdlSnapshot.load(SNAPSHOT)
+
+
+@pytest.fixture(scope="session")
+def sanmar(environment: Environment) -> SanMar:
+    """Build a client from SANMAR_CUSTOMER_NUMBER, SANMAR_USERNAME and SANMAR_PASSWORD."""
+    names = ("SANMAR_CUSTOMER_NUMBER", "SANMAR_USERNAME", "SANMAR_PASSWORD")
+    if missing := [name for name in names if not os.environ.get(name)]:
+        pytest.skip(f"set {', '.join(missing)} to call SanMar's services")
+    return SanMar(
+        int(os.environ["SANMAR_CUSTOMER_NUMBER"]),
+        os.environ["SANMAR_USERNAME"],
+        os.environ["SANMAR_PASSWORD"],
+        environment=environment,
+    )
