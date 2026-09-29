@@ -1,0 +1,157 @@
+
+Prefixes:
+     xsd: http://www.w3.org/2001/XMLSchema
+     ns0: http://www.promostandards.org/WSDL/PO/1.0.0/
+     ns1: http://www.isotc211.org/iso4217/
+     ns2: http://www.promostandards.org/WSDL/PO/1.0.0/SharedObjects/
+     ns3: http://www.codesynthesis.com/xmlns/xsstl
+     ns4: http://www.iso20022.org/
+
+Global elements:
+     ns2:Artwork(instructions: xsd:string, refArtworkId: ns2:refArtworkId, totalStitchCount: xsd:int, ArtworkFileArray: ns2:ArtworkFileArray, description: xsd:string, Dimensions: ns2:Dimensions, Layers: ns2:Layers, TypesetArray: ns2:TypesetArray)
+     ns2:ArtworkFile(artworkType: ns2:artworkType, fileLocation: ns2:fileLocation, fileName: ns2:fileName, transportMechanism: ns2:transportMechanism)
+     ns2:ArtworkFileArray(ArtworkFile: ns2:ArtworkFile[])
+     ns2:Charge(chargeName: ns2:chargeName, description: xsd:string, extendedPrice: xsd:decimal, unitPrice: xsd:decimal, chargeId: xsd:int, chargeType: ns2:chargeType, Quantity: ns2:Quantity)
+     ns2:Configuration(ChargeArray: {Charge: ns2:Charge[]}, LocationArray: {Location: ns2:Location[]}, referenceNumberType: ns2:referenceNumberType, referenceNumber: ns2:referenceNumber, preProductionProof: xsd:boolean)
+     ns2:Contact(accountName: ns2:accountName, accountNumber: ns2:accountNumber, contactType: ns2:contactType, ContactDetails: ns2:ContactDetails)
+     ns2:ContactDetails(attentionTo: ns2:attentionTo, companyName: ns2:companyName, address1: ns2:address1, address2: ns2:address2, address3: ns2:address3, city: ns2:city, region: ns2:region, postalCode: ns2:postalCode, country: ns2:country, email: ns2:email, phone: ns2:phone, comments: xsd:string)
+     ns2:Decoration(decorationName: ns2:decorationName, Artwork: ns2:Artwork, decorationId: xsd:int)
+     ns2:DigitalProof(DigitalProofAddressArray: {DigitalProofAddress: ns2:DigitalProofAddress[]}, required: xsd:boolean)
+     ns2:DigitalProofAddress(type: ns2:type, email: ns2:email, lineItemGroupingId: xsd:int)
+     ns2:Dimensions(diameter: ns2:diameter, height: ns2:height, uom: ns4:ISO20022UomCode, width: ns2:width, useMaxLocationDimensions: xsd:boolean, geometry: ns2:geometry)
+     ns2:FreightDetails(carrier: ns2:carrier, service: ns2:service)
+     ns2:LayerOrStop(color: ns2:color, nameOrNumber: ns2:nameOrNumber, description: xsd:string)
+     ns2:Layers(colorSystem: ns2:colorSystem, LayerOrStopArray: {LayerOrStop: ns2:LayerOrStop[]})
+     ns2:Location(locationName: ns2:locationName, DecorationArray: {Decoration: ns2:Decoration[]}, locationLinkId: xsd:int, locationId: xsd:int)
+     ns2:Part(partGroup: ns2:partGroup, partId: ns2:partId, customerPartId: ns2:customerPartId, customerSupplied: xsd:boolean, description: xsd:string, Quantity: ns2:Quantity, locationLinkId: xsd:int[], unitPrice: xsd:decimal, extendedPrice: xsd:decimal, ShipmentLinkArray: {ShipmentLink: ns2:ShipmentLink[]})
+     ns2:Program(id: ns2:id, name: ns2:name)
+     ns2:Quantity(uom: ns2:uom, value: xsd:decimal)
+     ns2:ServiceMessage(code: xsd:int, description: ns2:description, severity: ns2:severity)
+     ns2:ServiceMessageArray(ServiceMessage: ns2:ServiceMessage[])
+     ns2:ShipTo(customerPickup: xsd:boolean, ContactDetails: ns2:ContactDetails, shipmentId: xsd:int)
+     ns2:Shipment(shipReferences: ns2:shipReferences[], comments: xsd:string, ThirdPartyAccount: ns2:ThirdPartyAccount, allowConsolidation: xsd:boolean, blindShip: xsd:boolean, packingListRequired: xsd:boolean, FreightDetails: ns2:FreightDetails, ShipTo: ns2:ShipTo)
+     ns2:ShipmentLink(Quantity: ns2:Quantity, shipmentId: xsd:int)
+     ns2:TaxInformation(taxJurisdiction: ns2:taxJurisdiction[], taxExempt: xsd:boolean, taxId: ns2:taxId, taxType: ns2:taxType, taxAmount: xsd:decimal)
+     ns2:ThirdPartyAccount(accountName: ns2:accountName, accountNumber: ns2:accountNumber, ContactDetails: ns2:ContactDetails)
+     ns2:ToleranceDetails(uom: ns2:uom, value: xsd:decimal, tolerance: ns2:ToleranceType)
+     ns2:Typeset(fontSize: xsd:decimal, font: ns2:font, sequenceNumber: xsd:int, value: ns2:value)
+     ns2:TypesetArray(Typeset: ns2:Typeset[])
+     ns2:accountName(ns2:accountName)
+     ns2:accountNumber(ns2:accountNumber)
+     ns2:chargeId(xsd:int)
+     ns2:chargeName(ns2:chargeName)
+     ns2:chargeType(ns2:chargeType)
+     ns2:colorId(ns2:colorId)
+     ns2:colorName(ns2:colorName)
+     ns2:comments(xsd:string)
+     ns2:currency(ns1:CurrencyCodeType)
+     ns2:decorationId(xsd:int)
+     ns2:decorationName(ns2:decorationName)
+     ns2:description(xsd:string)
+     ns2:diameter(ns2:diameter)
+     ns2:email(ns2:email)
+     ns2:extendedPrice(xsd:decimal)
+     ns2:fobId(ns2:fobId)
+     ns2:geometry(ns2:geometry)
+     ns2:height(ns2:height)
+     ns2:id(ns2:id)
+     ns2:lineItemGroupingId(xsd:int)
+     ns2:localizationCountry(ns2:localizationCountry)
+     ns2:localizationLanguage(ns2:localizationLanguage)
+     ns2:locationId(xsd:int)
+     ns2:locationLinkId(xsd:int)
+     ns2:locationName(ns2:locationName)
+     ns2:partGroup(ns2:partGroup)
+     ns2:partId(ns2:partId)
+     ns2:password(ns2:password)
+     ns2:productId(ns2:productId)
+     ns2:shipmentId(xsd:int)
+     ns2:unitPrice(xsd:decimal)
+     ns2:uom(ns4:ISO20022UomCode)
+     ns2:width(ns2:width)
+     ns2:wsVersion(ns2:wsVersion)
+     ns0:GetSupportedOrderTypesRequest(wsVersion: ns2:wsVersion, id: ns2:id, password: ns2:password)
+     ns0:GetSupportedOrderTypesResponse(supportedOrderTypes: ns2:OrderTypeType[], ServiceMessageArray: ns2:ServiceMessageArray)
+     ns0:LineItem(lineNumber: xsd:int, lineReferenceId: ns0:lineReferenceId, description: xsd:string, lineType: ns0:lineType, Quantity: ns2:Quantity, fobId: ns2:fobId, ToleranceDetails: ns2:ToleranceDetails, allowPartialShipments: xsd:boolean, unitPrice: xsd:decimal, lineItemTotal: xsd:decimal, requestedShipDate: xsd:dateTime, requestedInHandsDate: xsd:dateTime, referenceSalesQuote: ns0:referenceSalesQuote, Program: ns2:Program, endCustomerSalesOrder: ns0:endCustomerSalesOrder, productId: ns2:productId, customerProductId: ns0:customerProductId, lineItemGroupingId: xsd:int, PartArray: {Part: ns2:Part[]}, Configuration: ns2:Configuration)
+     ns0:PO(orderType: ns0:orderType, orderNumber: ns0:orderNumber, orderDate: xsd:dateTime, lastModified: xsd:dateTime, totalAmount: xsd:decimal, paymentTerms: xsd:string, rush: xsd:boolean, currency: ns1:CurrencyCodeType, DigitalProof: ns2:DigitalProof, OrderContactArray: {Contact: ns2:Contact[]}, ShipmentArray: {Shipment: ns2:Shipment[]}, LineItemArray: {LineItem: ns0:LineItem[]}, termsAndConditions: xsd:string, salesChannel: ns0:salesChannel, promoCode: ns0:promoCode, TaxInformationArray: {TaxInformation: ns2:TaxInformation[]})
+     ns0:SendPORequest(wsVersion: ns2:wsVersion, id: ns2:id, password: ns2:password, PO: ns0:PO)
+     ns0:SendPOResponse(transactionId: xsd:string, ServiceMessageArray: ns2:ServiceMessageArray)
+     
+
+Global types:
+     xsd:anyType
+     ns3:ISO3166CountyCode
+     ns4:ISO20022UomCode
+     ns1:CurrencyCodeType
+     ns1:CurrencyNameType
+     ns1:CurrencyNumberType
+     ns2:ArtworkType
+     ns2:ChargeTypeType
+     ns2:ColorSystemType
+     ns2:ContactTypeType
+     ns2:DigitalProofAddressTypeType
+     ns2:GeometryType
+     ns2:LineTypeType
+     ns2:OrderTypeType
+     ns2:QuantityUomType
+     ns2:ReferenceNumberTypeType
+     ns2:SeverityType
+     ns2:TaxTypeType
+     ns2:ToleranceType
+     ns2:ToleranceUomType
+     ns2:TransportMechanismType
+     xsd:ENTITIES
+     xsd:ENTITY
+     xsd:ID
+     xsd:IDREF
+     xsd:IDREFS
+     xsd:NCName
+     xsd:NMTOKEN
+     xsd:NMTOKENS
+     xsd:NOTATION
+     xsd:Name
+     xsd:QName
+     xsd:anySimpleType
+     xsd:anyURI
+     xsd:base64Binary
+     xsd:boolean
+     xsd:byte
+     xsd:date
+     xsd:dateTime
+     xsd:decimal
+     xsd:double
+     xsd:duration
+     xsd:float
+     xsd:gDay
+     xsd:gMonth
+     xsd:gMonthDay
+     xsd:gYear
+     xsd:gYearMonth
+     xsd:hexBinary
+     xsd:int
+     xsd:integer
+     xsd:language
+     xsd:long
+     xsd:negativeInteger
+     xsd:nonNegativeInteger
+     xsd:nonPositiveInteger
+     xsd:normalizedString
+     xsd:positiveInteger
+     xsd:short
+     xsd:string
+     xsd:time
+     xsd:token
+     xsd:unsignedByte
+     xsd:unsignedInt
+     xsd:unsignedLong
+     xsd:unsignedShort
+
+Bindings:
+     Soap11Binding: {http://www.promostandards.org/WSDL/PO/1.0.0/}POServiceBinding
+
+Service: POService
+     Port: POServiceBinding (Soap11Binding: {http://www.promostandards.org/WSDL/PO/1.0.0/}POServiceBinding)
+         Operations:
+            getSupportedOrderTypes(wsVersion: ns2:wsVersion, id: ns2:id, password: ns2:password) -> supportedOrderTypes: ns2:OrderTypeType[], ServiceMessageArray: ns2:ServiceMessageArray
+            sendPO(wsVersion: ns2:wsVersion, id: ns2:id, password: ns2:password, PO: ns0:PO) -> transactionId: xsd:string, ServiceMessageArray: ns2:ServiceMessageArray
+

@@ -1,0 +1,97 @@
+
+Prefixes:
+     xsd: http://www.w3.org/2001/XMLSchema
+     ns0: http://impl.webservice.integration.sanmar.com/
+
+Global elements:
+     ns0:getProductBulkInfo(ns0:getProductBulkInfo)
+     ns0:getProductBulkInfoResponse(ns0:getProductBulkInfoResponse)
+     ns0:getProductDeltaInfo(ns0:getProductDeltaInfo)
+     ns0:getProductDeltaInfoResponse(ns0:getProductDeltaInfoResponse)
+     ns0:getProductInfoByBrand(ns0:getProductInfoByBrand)
+     ns0:getProductInfoByBrandResponse(ns0:getProductInfoByBrandResponse)
+     ns0:getProductInfoByCategory(ns0:getProductInfoByCategory)
+     ns0:getProductInfoByCategoryResponse(ns0:getProductInfoByCategoryResponse)
+     ns0:getProductInfoByStyleColorSize(ns0:getProductInfoByStyleColorSize)
+     ns0:getProductInfoByStyleColorSizeResponse(ns0:getProductInfoByStyleColorSizeResponse)
+     
+
+Global types:
+     xsd:anyType
+     ns0:getProductBulkInfo(arg0: ns0:webServiceUser)
+     ns0:getProductBulkInfoResponse(return: ns0:productInfoResponseBean)
+     ns0:getProductDeltaInfo(arg0: ns0:webServiceUser)
+     ns0:getProductDeltaInfoResponse(return: ns0:productInfoResponseBean)
+     ns0:getProductInfoByBrand(arg0: ns0:productBrand, arg1: ns0:webServiceUser)
+     ns0:getProductInfoByBrandResponse(return: ns0:productInfoResponseBean)
+     ns0:getProductInfoByCategory(arg0: ns0:productCategory, arg1: ns0:webServiceUser)
+     ns0:getProductInfoByCategoryResponse(return: ns0:productInfoResponseBean)
+     ns0:getProductInfoByStyleColorSize(arg0: ns0:product[], arg1: ns0:webServiceUser)
+     ns0:getProductInfoByStyleColorSizeResponse(return: ns0:productInfoResponseBean)
+     ns0:product(color: xsd:string, size: xsd:string, style: xsd:string)
+     ns0:productBasicInfo(availableSizes: xsd:string, brandName: xsd:string, caseSize: xsd:int, catalogColor: xsd:string, color: xsd:string, inventoryKey: xsd:string, keywords: xsd:string, pieceWeight: xsd:double, productDescription: xsd:string, productStatus: xsd:string, productTitle: xsd:string, size: xsd:string, sizeIndex: xsd:int, style: xsd:string, uniqueKey: xsd:string, category: xsd:string)
+     ns0:productBrand(brandName: xsd:string)
+     ns0:productCategory(category: xsd:string)
+     ns0:productImageInfo(brandLogoImage: xsd:string, colorProductImage: xsd:string, colorProductImageThumbnail: xsd:string, colorSquareImage: xsd:string, colorSwatchImage: xsd:string, productImage: xsd:string, specSheet: xsd:string, thumbnailImage: xsd:string, titleImage: xsd:string, frontModel: xsd:string, backModel: xsd:string, sideModel: xsd:string, backFlat: xsd:string, frontFlat: xsd:string, threeQModel: xsd:string)
+     ns0:productInfo(productBasicInfo: ns0:productBasicInfo, productImageInfo: ns0:productImageInfo, productPriceInfo: ns0:productPriceInfo)
+     ns0:productInfoResponseBean(blob: xsd:base64Binary, errorOccured: xsd:boolean, listResponse: ns0:productInfo[], message: xsd:string)
+     ns0:productPriceInfo(casePrice: xsd:double, caseSalePrice: xsd:double, dozenPrice: xsd:double, dozenSalePrice: xsd:double, piecePrice: xsd:double, pieceSalePrice: xsd:double, priceCode: xsd:string, priceText: xsd:string, saleEndDate: xsd:string, saleStartDate: xsd:string, mapPrice: xsd:double)
+     ns0:webServiceUser(sanMarCustomerNumber: xsd:string, sanMarUserName: xsd:string, sanMarUserPassword: xsd:string, senderId: xsd:int, senderPassword: xsd:string)
+     xsd:ENTITIES
+     xsd:ENTITY
+     xsd:ID
+     xsd:IDREF
+     xsd:IDREFS
+     xsd:NCName
+     xsd:NMTOKEN
+     xsd:NMTOKENS
+     xsd:NOTATION
+     xsd:Name
+     xsd:QName
+     xsd:anySimpleType
+     xsd:anyURI
+     xsd:base64Binary
+     xsd:boolean
+     xsd:byte
+     xsd:date
+     xsd:dateTime
+     xsd:decimal
+     xsd:double
+     xsd:duration
+     xsd:float
+     xsd:gDay
+     xsd:gMonth
+     xsd:gMonthDay
+     xsd:gYear
+     xsd:gYearMonth
+     xsd:hexBinary
+     xsd:int
+     xsd:integer
+     xsd:language
+     xsd:long
+     xsd:negativeInteger
+     xsd:nonNegativeInteger
+     xsd:nonPositiveInteger
+     xsd:normalizedString
+     xsd:positiveInteger
+     xsd:short
+     xsd:string
+     xsd:time
+     xsd:token
+     xsd:unsignedByte
+     xsd:unsignedInt
+     xsd:unsignedLong
+     xsd:unsignedShort
+
+Bindings:
+     Soap11Binding: {http://impl.webservice.integration.sanmar.com/}SanMarProductInfoServicePortBinding
+
+Service: SanMarProductInfoServiceService
+     Port: SanMarProductInfoServicePort (Soap11Binding: {http://impl.webservice.integration.sanmar.com/}SanMarProductInfoServicePortBinding)
+         Operations:
+            getProductBulkInfo(arg0: ns0:webServiceUser) -> return: ns0:productInfoResponseBean
+            getProductDeltaInfo(arg0: ns0:webServiceUser) -> return: ns0:productInfoResponseBean
+            getProductInfoByBrand(arg0: ns0:productBrand, arg1: ns0:webServiceUser) -> return: ns0:productInfoResponseBean
+            getProductInfoByCategory(arg0: ns0:productCategory, arg1: ns0:webServiceUser) -> return: ns0:productInfoResponseBean
+            getProductInfoByStyleColorSize(arg0: ns0:product[], arg1: ns0:webServiceUser) -> return: ns0:productInfoResponseBean
+

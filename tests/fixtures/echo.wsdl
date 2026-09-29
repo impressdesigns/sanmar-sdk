@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A small document/literal service shaped like SanMar's, for testing the SOAP plumbing. -->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:tns="http://example.com/echo/"
+             targetNamespace="http://example.com/echo/">
+  <types>
+    <xsd:schema targetNamespace="http://example.com/echo/" elementFormDefault="qualified">
+      <xsd:complexType name="Part">
+        <xsd:sequence>
+          <xsd:element name="partId" type="xsd:string"/>
+          <xsd:element name="quantity" type="xsd:int" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="GetThingRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:string"/>
+            <xsd:element name="password" type="xsd:string"/>
+            <xsd:element name="productId" type="xsd:string" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetThingResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="productId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="note" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="PartArray" minOccurs="0">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="Part" type="tns:Part" maxOccurs="unbounded"/>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+  <message name="GetThingRequest"><part name="parameters" element="tns:GetThingRequest"/></message>
+  <message name="GetThingResponse"><part name="parameters" element="tns:GetThingResponse"/></message>
+  <portType name="EchoPortType">
+    <operation name="getThing">
+      <input message="tns:GetThingRequest"/>
+      <output message="tns:GetThingResponse"/>
+    </operation>
+  </portType>
+  <binding name="EchoBinding" type="tns:EchoPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="getThing">
+      <soap:operation soapAction="getThing"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+  </binding>
+  <service name="EchoService">
+    <port name="EchoPort" binding="tns:EchoBinding">
+      <soap:address location="http://internal-host.example:9999/echo/EchoService"/>
+    </port>
+  </service>
+</definitions>

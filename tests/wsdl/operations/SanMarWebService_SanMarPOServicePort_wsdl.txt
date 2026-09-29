@@ -1,0 +1,77 @@
+
+Prefixes:
+     xsd: http://www.w3.org/2001/XMLSchema
+     ns0: http://webservice.integration.sanmar.com/
+
+Global elements:
+     ns0:getPreSubmitInfo(ns0:getPreSubmitInfo)
+     ns0:getPreSubmitInfoResponse(ns0:getPreSubmitInfoResponse)
+     ns0:submitPO(ns0:submitPO)
+     ns0:submitPOResponse(ns0:submitPOResponse)
+     
+
+Global types:
+     xsd:anyType
+     ns0:getPreSubmitInfo(arg0: ns0:webServicePO, arg1: ns0:webServiceUser)
+     ns0:getPreSubmitInfoResponse(return: ns0:responseBean)
+     ns0:responseBean(errorOccurred: xsd:boolean, listResponse: None[], message: xsd:string, response: None)
+     ns0:submitPO(arg0: ns0:webServicePO, arg1: ns0:webServiceUser)
+     ns0:submitPOResponse(return: ns0:responseBean)
+     ns0:webServicePO(attention: xsd:string, internalMessage: xsd:string, notes: xsd:string, poNum: xsd:string, poSenderId: xsd:int, residence: xsd:string, department: xsd:string, shipAddress1: xsd:string, shipAddress2: xsd:string, shipCity: xsd:string, shipEmail: xsd:string, shipMethod: xsd:string, shipState: xsd:string, shipTo: xsd:string, shipZip: xsd:string, webServicePoDetailList: ns0:webServicePODetail[])
+     ns0:webServicePODetail(color: xsd:string, errorOccured: xsd:boolean, inventoryKey: xsd:string, message: xsd:string, poId: xsd:int, quantity: xsd:int, size: xsd:string, sizeIndex: xsd:int, style: xsd:string, whseNo: xsd:int)
+     ns0:webServiceUser(sanMarCustomerNumber: xsd:string, sanMarUserName: xsd:string, sanMarUserPassword: xsd:string, senderId: xsd:int, senderPassword: xsd:string)
+     xsd:ENTITIES
+     xsd:ENTITY
+     xsd:ID
+     xsd:IDREF
+     xsd:IDREFS
+     xsd:NCName
+     xsd:NMTOKEN
+     xsd:NMTOKENS
+     xsd:NOTATION
+     xsd:Name
+     xsd:QName
+     xsd:anySimpleType
+     xsd:anyURI
+     xsd:base64Binary
+     xsd:boolean
+     xsd:byte
+     xsd:date
+     xsd:dateTime
+     xsd:decimal
+     xsd:double
+     xsd:duration
+     xsd:float
+     xsd:gDay
+     xsd:gMonth
+     xsd:gMonthDay
+     xsd:gYear
+     xsd:gYearMonth
+     xsd:hexBinary
+     xsd:int
+     xsd:integer
+     xsd:language
+     xsd:long
+     xsd:negativeInteger
+     xsd:nonNegativeInteger
+     xsd:nonPositiveInteger
+     xsd:normalizedString
+     xsd:positiveInteger
+     xsd:short
+     xsd:string
+     xsd:time
+     xsd:token
+     xsd:unsignedByte
+     xsd:unsignedInt
+     xsd:unsignedLong
+     xsd:unsignedShort
+
+Bindings:
+     Soap11Binding: {http://webservice.integration.sanmar.com/}SanMarPOServiceImplPortBinding
+
+Service: SanMarPOServiceImplService
+     Port: SanMarPOServiceImplPort (Soap11Binding: {http://webservice.integration.sanmar.com/}SanMarPOServiceImplPortBinding)
+         Operations:
+            getPreSubmitInfo(arg0: ns0:webServicePO, arg1: ns0:webServiceUser) -> return: ns0:responseBean
+            submitPO(arg0: ns0:webServicePO, arg1: ns0:webServiceUser) -> return: ns0:responseBean
+

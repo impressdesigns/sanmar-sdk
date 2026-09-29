@@ -1,0 +1,109 @@
+
+Prefixes:
+     xsd: http://www.w3.org/2001/XMLSchema
+     ns0: http://www.promostandards.org/WSDL/Inventory/2.0.0/
+     ns1: http://www.promostandards.org/WSDL/Inventory/2.0.0/SharedObjects/
+     ns2: http://www.codesynthesis.com/xmlns/xsstl
+
+Global elements:
+     ns1:Filter(partIdArray: ns1:partIdArray, LabelSizeArray: ns1:LabelSizeArray, PartColorArray: ns1:PartColorArray)
+     ns1:FutureAvailability(Quantity: ns1:Quantity, availableOn: xsd:dateTime)
+     ns1:FutureAvailabilityArray(FutureAvailability: ns1:FutureAvailability[])
+     ns1:Inventory(productId: ns1:productId, PartInventoryArray: ns1:PartInventoryArray)
+     ns1:InventoryLocation(inventoryLocationId: ns1:inventoryLocationId, inventoryLocationName: ns1:inventoryLocationName, postalCode: ns1:postalCode, country: ns1:country, inventoryLocationQuantity: ns1:inventoryLocationQuantity, FutureAvailabilityArray: ns1:FutureAvailabilityArray)
+     ns1:InventoryLocationArray(InventoryLocation: ns1:InventoryLocation[])
+     ns1:LabelSizeArray(labelSize: ns1:labelSize[])
+     ns1:PartColorArray(partColor: ns1:partColor[])
+     ns1:PartInventoryArray(PartInventory: {partId: ns1:partId, mainPart: ns1:mainPart, partColor: ns1:partColor, labelSize: ns1:labelSize, partDescription: ns1:partDescription, quantityAvailable: ns1:quantityAvailable, manufacturedItem: ns1:manufacturedItem, buyToOrder: ns1:buyToOrder, replenishmentLeadTime: ns1:replenishmentLeadTime, attributeSelection: ns1:attributeSelection, InventoryLocationArray: ns1:InventoryLocationArray, lastModified: xsd:dateTime}[])
+     ns1:Quantity(uom: ns1:uom, value: xsd:decimal)
+     ns1:ServiceMessage(code: xsd:int, description: ns1:description, severity: ns1:severity)
+     ns1:ServiceMessageArray(ServiceMessage: ns1:ServiceMessage[])
+     ns1:attributeSelection(ns1:attributeSelection)
+     ns1:availableOn(xsd:dateTime)
+     ns1:buyToOrder(ns1:buyToOrder)
+     ns1:id(ns1:id)
+     ns1:inventoryLocationId(ns1:inventoryLocationId)
+     ns1:inventoryLocationName(ns1:inventoryLocationName)
+     ns1:inventoryLocationQuantity(Quantity: ns1:Quantity)
+     ns1:labelSize(ns1:labelSize)
+     ns1:lastModified(xsd:dateTime)
+     ns1:mainPart(ns1:mainPart)
+     ns1:manufacturedItem(ns1:manufacturedItem)
+     ns1:partColor(ns1:partColor)
+     ns1:partDescription(ns1:partDescription)
+     ns1:partId(ns1:partId)
+     ns1:partIdArray(partId: ns1:partId[])
+     ns1:password(ns1:password)
+     ns1:productId(ns1:productId)
+     ns1:quantityAvailable(Quantity: ns1:Quantity)
+     ns1:replenishmentLeadTime(ns1:replenishmentLeadTime)
+     ns1:selection(ns1:selection)
+     ns1:wsVersion(ns1:wsVersion)
+     ns0:GetFilterValuesRequest(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, productId: ns1:productId)
+     ns0:GetFilterValuesResponse(FilterValues: {productId: ns1:productId, Filter: ns1:Filter}, ServiceMessageArray: ns1:ServiceMessageArray)
+     ns0:GetInventoryLevelsRequest(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, productId: ns1:productId, Filter: ns1:Filter)
+     ns0:GetInventoryLevelsResponse(Inventory: ns1:Inventory, ServiceMessageArray: ns1:ServiceMessageArray)
+     
+
+Global types:
+     xsd:anyType
+     ns2:ISO3166CountyCode
+     ns1:QuantityUomType
+     ns1:SeverityType
+     ns1:WsVersionType
+     ns1:labelSizeEnum
+     xsd:ENTITIES
+     xsd:ENTITY
+     xsd:ID
+     xsd:IDREF
+     xsd:IDREFS
+     xsd:NCName
+     xsd:NMTOKEN
+     xsd:NMTOKENS
+     xsd:NOTATION
+     xsd:Name
+     xsd:QName
+     xsd:anySimpleType
+     xsd:anyURI
+     xsd:base64Binary
+     xsd:boolean
+     xsd:byte
+     xsd:date
+     xsd:dateTime
+     xsd:decimal
+     xsd:double
+     xsd:duration
+     xsd:float
+     xsd:gDay
+     xsd:gMonth
+     xsd:gMonthDay
+     xsd:gYear
+     xsd:gYearMonth
+     xsd:hexBinary
+     xsd:int
+     xsd:integer
+     xsd:language
+     xsd:long
+     xsd:negativeInteger
+     xsd:nonNegativeInteger
+     xsd:nonPositiveInteger
+     xsd:normalizedString
+     xsd:positiveInteger
+     xsd:short
+     xsd:string
+     xsd:time
+     xsd:token
+     xsd:unsignedByte
+     xsd:unsignedInt
+     xsd:unsignedLong
+     xsd:unsignedShort
+
+Bindings:
+     Soap11Binding: {http://www.promostandards.org/WSDL/Inventory/2.0.0/}InventoryServiceBindingV2final
+
+Service: InventoryServiceV2final
+     Port: InventoryServiceBindingV2final (Soap11Binding: {http://www.promostandards.org/WSDL/Inventory/2.0.0/}InventoryServiceBindingV2final)
+         Operations:
+            getFilterValues(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, productId: ns1:productId) -> FilterValues: {productId: ns1:productId, Filter: ns1:Filter}, ServiceMessageArray: ns1:ServiceMessageArray
+            getInventoryLevels(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, productId: ns1:productId, Filter: ns1:Filter) -> Inventory: ns1:Inventory, ServiceMessageArray: ns1:ServiceMessageArray
+

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.4-b01-. --><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.promostandards.org/WSDL/Invoice/1.0.0/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns="http://www.promostandards.org/WSDL/Invoice/1.0.0/SharedObjects/" xmlns:ns1="http://www.codesynthesis.com/xmlns/xsstl" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" name="Invoice_v1_0_0" targetNamespace="http://www.promostandards.org/WSDL/Invoice/1.0.0/">
+  <wsdl:types>
+    <xsd:schema xmlns:ns1="http://www.promostandards.org/WSDL/Invoice/1.0.0/" xmlns:ns2="http://www.promostandards.org/WSDL/Invoice/1.0.0/" xmlns:ns3="http://www.promostandards.org/WSDL/Invoice/1.0.0/SharedObjects/" targetNamespace="http://www.promostandards.org/WSDL/Invoice/1.0.0/" elementFormDefault="qualified">
+  <xsd:import namespace="http://www.promostandards.org/WSDL/Invoice/1.0.0/SharedObjects/" schemaLocation="https://ws.sanmar.com:8080/promostandards/InvoiceServiceBindingV1_0_0?xsd=1"></xsd:import>
+  <xsd:element name="GetInvoicesRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="ns3:wsVersion"></xsd:element>
+        <xsd:element ref="ns3:id"></xsd:element>
+        <xsd:element ref="ns3:password"></xsd:element>
+        <xsd:element ref="ns3:queryType"></xsd:element>
+        <xsd:element ref="ns3:referenceNumber" minOccurs="0"></xsd:element>
+        <xsd:element ref="ns3:requestedDate" minOccurs="0"></xsd:element>
+        <xsd:element ref="ns3:availableTimeStamp" minOccurs="0"></xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  
+   <xsd:element name="Invoice">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="ns3:invoiceNumber"></xsd:element>
+        <xsd:element ref="ns3:invoiceType"></xsd:element>
+        <xsd:element ref="ns3:invoiceDate"></xsd:element>
+        <xsd:element ref="ns3:purchaseOrderNumber" minOccurs="0"></xsd:element>
+        <xsd:element ref="ns3:purchaseOrderVersion" minOccurs="0"></xsd:element>
+        <xsd:element name="BillTo" minOccurs="0">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="ns3:AccountInfo"></xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="SoldTo" minOccurs="0">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="ns3:AccountInfo"></xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element ref="ns3:invoiceComments" minOccurs="0"></xsd:element>
+        <xsd:element ref="ns3:paymentTerms" minOccurs="0"></xsd:element>
+        <xsd:element ref="ns3:paymentDueDate"></xsd:element>
+        <xsd:element ref="ns3:currency"></xsd:element>
+        <xsd:element ref="ns3:fob" minOccurs="0"></xsd:element>
+        <xsd:element ref="ns3:salesAmount"></xsd:element>
+        <xsd:element ref="ns3:shippingAmount"></xsd:element>
+        <xsd:element ref="ns3:handlingAmount"></xsd:element>
+        <xsd:element ref="ns3:taxAmount"></xsd:element>
+        <xsd:element ref="ns3:invoiceAmount"></xsd:element>
+        <xsd:element ref="ns3:advancePaymentAmount"></xsd:element>
+        <xsd:element ref="ns3:invoiceAmountDue"></xsd:element>
+        <xsd:element ref="ns3:invoiceDocumentUrl" minOccurs="0"></xsd:element>
+        <xsd:element name="InvoiceLineItemsArray">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="ns3:InvoiceLineItem" maxOccurs="unbounded"></xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="SalesOrderNumbersArray" minOccurs="0">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="ns3:salesOrderNumber" maxOccurs="unbounded"></xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="TaxArray" minOccurs="0">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="ns3:tax" maxOccurs="unbounded"></xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element ref="ns3:invoicePaymentUrl" minOccurs="0"></xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="GetInvoicesResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="InvoiceArray" minOccurs="0">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="ns1:Invoice" maxOccurs="unbounded"></xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element ref="ns3:ServiceMessageArray" minOccurs="0"></xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="GetVoidedInvoicesRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="ns3:wsVersion"></xsd:element>
+        <xsd:element ref="ns3:id"></xsd:element>
+        <xsd:element ref="ns3:password"></xsd:element>
+        <xsd:element ref="ns3:queryType"></xsd:element>
+        <xsd:element ref="ns3:referenceNumber" minOccurs="0"></xsd:element>
+        <xsd:element ref="ns3:requestedDate" minOccurs="0"></xsd:element>
+        <xsd:element ref="ns3:availableTimeStamp" minOccurs="0"></xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="VoidedInvoice">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="ns3:invoiceNumber"></xsd:element>
+        <xsd:element ref="ns3:voidDate"></xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="GetVoidedInvoicesResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="VoidedInvoiceArray" minOccurs="0">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="ns1:VoidedInvoice" maxOccurs="unbounded"></xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element ref="ns3:ServiceMessageArray" minOccurs="0"></xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="GetInvoicesRequestMessage">
+    <wsdl:part name="GetInvoicesRequest" element="tns:GetInvoicesRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetInvoicesResponseMessage">
+    <wsdl:part name="GetInvoicesResponse" element="tns:GetInvoicesResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVoidedInvoicesRequestMessage">
+    <wsdl:part name="GetVoidedInvoicesRequest" element="tns:GetVoidedInvoicesRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVoidedInvoicesResponseMessage">
+    <wsdl:part name="GetVoidedInvoicesResponse" element="tns:GetVoidedInvoicesResponse"></wsdl:part>
+  </wsdl:message> 
+  <wsdl:portType name="InvoiceServiceV1_0_0">
+    <wsdl:operation name="getInvoices">
+      <wsdl:input message="tns:GetInvoicesRequestMessage"></wsdl:input>
+      <wsdl:output message="tns:GetInvoicesResponseMessage"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getVoidedInvoices">
+      <wsdl:input message="tns:GetVoidedInvoicesRequestMessage"></wsdl:input>
+      <wsdl:output message="tns:GetVoidedInvoicesResponseMessage"></wsdl:output>
+    </wsdl:operation> 
+  </wsdl:portType>
+  <wsdl:binding name="InvoiceServiceBindingV1_0_0" type="tns:InvoiceServiceV1_0_0">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+    <wsdl:operation name="getInvoices">
+      <soap:operation soapAction="getInvoices" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getVoidedInvoices">
+      <soap:operation soapAction="getVoidedInvoices" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>  
+  </wsdl:binding>
+  <wsdl:service name="InvoiceServiceV1_0_0">
+    <wsdl:port name="InvoiceServiceBindingV1_0_0" binding="tns:InvoiceServiceBindingV1_0_0">
+      <soap:address location="https://ws.sanmar.com:8080/promostandards/InvoiceServiceBindingV1_0_0"></soap:address>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

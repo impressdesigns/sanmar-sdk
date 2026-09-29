@@ -1,0 +1,785 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.4-b01-. --><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://www.promostandards.org/WSDL/ProductDataService/2.0.0/" xmlns:ns2="http://www.promostandards.org/WSDL/ProductDataService/2.0.0/SharedObjects/" xmlns:ns3="http://www.codesynthesis.com/xmlns/xsstl" xmlns:ns4="http://www.isotc211.org/iso4217/" elementFormDefault="qualified" targetNamespace="http://www.promostandards.org/WSDL/ProductDataService/2.0.0/SharedObjects/">
+	<xsd:import namespace="http://www.codesynthesis.com/xmlns/xsstl" schemaLocation="https://ws.sanmar.com:8080/promostandards/ProductDataServiceBindingV2?xsd=2"></xsd:import>
+	<xsd:import namespace="http://www.isotc211.org/iso4217/" schemaLocation="https://ws.sanmar.com:8080/promostandards/ProductDataServiceBindingV2?xsd=3"></xsd:import>
+	<!-- TYPES -->
+	<xsd:simpleType name="specificationTypeEnum">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Length"></xsd:enumeration>
+			<xsd:enumeration value="Thickness"></xsd:enumeration>
+			<xsd:enumeration value="Radius"></xsd:enumeration>
+			<xsd:enumeration value="Volume"></xsd:enumeration>
+			<xsd:enumeration value="Capacity"></xsd:enumeration>
+			<xsd:enumeration value="Memory"></xsd:enumeration>
+			<xsd:enumeration value="Data Ports"></xsd:enumeration>
+			<xsd:enumeration value="Capacitance"></xsd:enumeration>
+			<xsd:enumeration value="Voltage"></xsd:enumeration>
+			<xsd:enumeration value="Point Size"></xsd:enumeration>
+			<xsd:enumeration value="Sheet Size"></xsd:enumeration>
+			<xsd:enumeration value="Sheet Count"></xsd:enumeration>
+			<xsd:enumeration value="Pockets"></xsd:enumeration>
+			<xsd:enumeration value="Inseam"></xsd:enumeration>
+			<xsd:enumeration value="Bust"></xsd:enumeration>
+			<xsd:enumeration value="Chest"></xsd:enumeration>
+			<xsd:enumeration value="Waist"></xsd:enumeration>
+			<xsd:enumeration value="Hips"></xsd:enumeration>
+			<xsd:enumeration value="Cup"></xsd:enumeration>
+			<xsd:enumeration value="Rise"></xsd:enumeration>
+			<xsd:enumeration value="Neck"></xsd:enumeration>
+			<xsd:enumeration value="Thigh"></xsd:enumeration>
+			<xsd:enumeration value="Shoulders"></xsd:enumeration>
+			<xsd:enumeration value="Sleeve"></xsd:enumeration>
+			<xsd:enumeration value="Device Size"></xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="apparelStyleEnum">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unisex"></xsd:enumeration>
+			<xsd:enumeration value="Youth"></xsd:enumeration>
+			<xsd:enumeration value="Girls"></xsd:enumeration>
+			<xsd:enumeration value="Boys"></xsd:enumeration>
+			<xsd:enumeration value="Womens"></xsd:enumeration>
+			<xsd:enumeration value="WomensTall"></xsd:enumeration>
+			<xsd:enumeration value="Mens"></xsd:enumeration>
+			<xsd:enumeration value="MensTall"></xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="labelSizeEnum">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="OSFA"></xsd:enumeration>
+			<xsd:enumeration value="6XS"></xsd:enumeration>
+			<xsd:enumeration value="5XS"></xsd:enumeration>
+			<xsd:enumeration value="4XS"></xsd:enumeration>
+			<xsd:enumeration value="3XS"></xsd:enumeration>
+			<xsd:enumeration value="2XS"></xsd:enumeration>
+			<xsd:enumeration value="XS"></xsd:enumeration>
+			<xsd:enumeration value="S"></xsd:enumeration>
+			<xsd:enumeration value="M"></xsd:enumeration>
+			<xsd:enumeration value="L"></xsd:enumeration>
+			<xsd:enumeration value="XL"></xsd:enumeration>
+			<xsd:enumeration value="2XL"></xsd:enumeration>
+			<xsd:enumeration value="3XL"></xsd:enumeration>
+			<xsd:enumeration value="4XL"></xsd:enumeration>
+			<xsd:enumeration value="5XL"></xsd:enumeration>
+			<xsd:enumeration value="6XL"></xsd:enumeration>
+			<xsd:enumeration value="CUSTOM"></xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="dimensionUomEnum">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="MM"></xsd:enumeration>
+			<xsd:enumeration value="CM"></xsd:enumeration>
+			<xsd:enumeration value="MR"></xsd:enumeration>
+			<xsd:enumeration value="IN"></xsd:enumeration>
+			<xsd:enumeration value="FT"></xsd:enumeration>
+			<xsd:enumeration value="YD"></xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="weightUomEnum">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="ME"></xsd:enumeration>
+			<xsd:enumeration value="KG"></xsd:enumeration>
+			<xsd:enumeration value="OZ"></xsd:enumeration>
+			<xsd:enumeration value="LB"></xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="relationTypeEnum">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Substitute"></xsd:enumeration>
+			<xsd:enumeration value="Companion Sell"></xsd:enumeration>
+			<xsd:enumeration value="Common Grouping"></xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SeverityType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Error"></xsd:enumeration>
+			<xsd:enumeration value="Information"></xsd:enumeration>
+			<xsd:enumeration value="Warning"></xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ELEMENTS -->
+	<xsd:element name="FobPointArray">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" ref="ns2:FobPoint"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="FobPoint">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ns2:fobId"></xsd:element>
+				<xsd:element name="fobCity">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:minLength value="1"></xsd:minLength>
+							<xsd:maxLength value="64"></xsd:maxLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="fobState">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:minLength value="1"></xsd:minLength>
+							<xsd:maxLength value="64"></xsd:maxLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element ref="ns2:fobPostalCode"></xsd:element>
+				<xsd:element name="fobCountry">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:minLength value="1"></xsd:minLength>
+							<xsd:maxLength value="64"></xsd:maxLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="fobId">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="64"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="fobPostalCode">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="64"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="currency" type="ns4:CurrencyCodeType"></xsd:element>
+	<xsd:element name="colorName">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="64"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="ApparelSizeArray">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" ref="ns2:ApparelSize"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Dimension">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ns2:dimensionUom"></xsd:element>
+				<xsd:element ref="ns2:depth"></xsd:element>
+				<xsd:element ref="ns2:height"></xsd:element>
+				<xsd:element ref="ns2:width"></xsd:element>
+				<xsd:element ref="ns2:weightUom"></xsd:element>
+				<xsd:element ref="ns2:weight"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ProductPackage">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="default" type="xsd:boolean"></xsd:element>
+				<xsd:element ref="ns2:packageType"></xsd:element>
+				<xsd:element minOccurs="0" ref="ns2:description"></xsd:element>
+				<xsd:element ref="ns2:quantity"></xsd:element>
+				<xsd:element ref="ns2:dimensionUom"></xsd:element>
+				<xsd:element ref="ns2:depth"></xsd:element>
+				<xsd:element ref="ns2:height"></xsd:element>
+				<xsd:element ref="ns2:width"></xsd:element>
+				<xsd:element ref="ns2:weightUom"></xsd:element>
+				<xsd:element ref="ns2:weight"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ShippingPackage">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ns2:packageType"></xsd:element>
+				<xsd:element minOccurs="0" ref="ns2:description"></xsd:element>
+				<xsd:element ref="ns2:quantity"></xsd:element>
+				<xsd:element ref="ns2:dimensionUom"></xsd:element>
+				<xsd:element ref="ns2:depth"></xsd:element>
+				<xsd:element ref="ns2:height"></xsd:element>
+				<xsd:element ref="ns2:width"></xsd:element>
+				<xsd:element ref="ns2:weightUom"></xsd:element>
+				<xsd:element ref="ns2:weight"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Specification">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="specificationType">
+					<xsd:simpleType>
+						<xsd:restriction base="ns2:specificationTypeEnum">
+							<xsd:minLength value="1"></xsd:minLength>
+							<xsd:maxLength value="64"></xsd:maxLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="SpecificationUom" nillable="true">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:token">
+							<xsd:minLength value="1"></xsd:minLength>
+							<xsd:maxLength value="64"></xsd:maxLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="measurementValue">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:token">
+							<xsd:minLength value="1"></xsd:minLength>
+							<xsd:maxLength value="64"></xsd:maxLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ProductCategory">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="category">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:token">
+							<xsd:minLength value="1"></xsd:minLength>
+							<xsd:maxLength value="256"></xsd:maxLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element minOccurs="0" name="subCategory">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:token">
+							<xsd:minLength value="1"></xsd:minLength>
+							<xsd:maxLength value="256"></xsd:maxLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RelatedProduct">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="relationType">
+					<xsd:simpleType>
+						<xsd:restriction base="ns2:relationTypeEnum">
+							<xsd:minLength value="1"></xsd:minLength>
+							<xsd:maxLength value="64"></xsd:maxLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element ref="ns2:productId"></xsd:element>
+				<xsd:element minOccurs="0" ref="ns2:partId"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ProductKeyword">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="keyword">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:token">
+							<xsd:minLength value="1"></xsd:minLength>
+							<xsd:maxLength value="16384"></xsd:maxLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ProductMarketingPoint">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element minOccurs="0" name="pointType">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:token">
+							<xsd:minLength value="1"></xsd:minLength>
+							<xsd:maxLength value="64"></xsd:maxLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="pointCopy">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:token">
+							<xsd:minLength value="1"></xsd:minLength>
+							<xsd:maxLength value="1024"></xsd:maxLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="productBrand">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:maxLength value="64"></xsd:maxLength>
+				<xsd:minLength value="1"></xsd:minLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="productName">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="256"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="wsVersion">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="64"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="id">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="64"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="password">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="64"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="changeTimeStamp" type="xsd:dateTime"></xsd:element>
+	<xsd:element name="localizationCountry">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:maxLength value="2"></xsd:maxLength>
+				<xsd:minLength value="2"></xsd:minLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="localizationLanguage">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="2"></xsd:minLength>
+				<xsd:maxLength value="2"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="ServiceMessageArray">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" ref="ns2:ServiceMessage"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ServiceMessage">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="code" type="xsd:int"></xsd:element>
+				<xsd:element name="description">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:token">
+							<xsd:maxLength value="256"></xsd:maxLength>
+							<xsd:minLength value="1"></xsd:minLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="severity">
+					<xsd:simpleType>
+						<xsd:restriction base="ns2:SeverityType">
+							<xsd:maxLength value="64"></xsd:maxLength>
+							<xsd:minLength value="1"></xsd:minLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="productId">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="64"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="partId">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="64"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="description">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="2048"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="marketingDescription">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="1024"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="priceExpiresDate" nillable="true" type="xsd:dateTime"></xsd:element>
+	<xsd:element name="endDate" nillable="true" type="xsd:dateTime"></xsd:element>
+	<xsd:element name="effectiveDate" nillable="true" type="xsd:dateTime"></xsd:element>
+	<xsd:element name="isCaution" nillable="true" type="xsd:boolean"></xsd:element>
+	<xsd:element name="isRushCharge" nillable="true" type="xsd:boolean"></xsd:element>
+	<xsd:element name="specialPricingExcluded" nillable="true" type="xsd:boolean"></xsd:element>
+	<xsd:element name="cautionComment">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:maxLength value="1024"></xsd:maxLength>
+				<xsd:minLength value="1"></xsd:minLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="isSellable" type="xsd:boolean"></xsd:element>
+	<xsd:element name="countryOfOrigin">
+		<xsd:simpleType>
+			<xsd:restriction base="ns3:ISO3166CountyCode">
+				<xsd:maxLength value="2"></xsd:maxLength>
+				<xsd:minLength value="2"></xsd:minLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="isCloseout" nillable="true" type="xsd:boolean"></xsd:element>
+	<xsd:element name="dimensionUom">
+		<xsd:simpleType>
+			<xsd:restriction base="ns2:dimensionUomEnum">
+				<xsd:maxLength value="2"></xsd:maxLength>
+				<xsd:minLength value="1"></xsd:minLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="depth" nillable="true" type="xsd:decimal"></xsd:element>
+	<xsd:element name="height" nillable="true" type="xsd:decimal"></xsd:element>
+	<xsd:element name="weight" nillable="true" type="xsd:decimal"></xsd:element>
+	<xsd:element name="width" nillable="true" type="xsd:decimal"></xsd:element>
+	<xsd:element name="weightUom">
+		<xsd:simpleType>
+			<xsd:restriction base="ns2:weightUomEnum">
+				<xsd:maxLength value="2"></xsd:maxLength>
+				<xsd:minLength value="1"></xsd:minLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="quantity" type="xsd:decimal"></xsd:element>
+	<xsd:element name="packageType">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="256"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="ApparelSize">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="apparelStyle">
+					<xsd:simpleType>
+						<xsd:restriction base="ns2:apparelStyleEnum">
+							<xsd:minLength value="1"></xsd:minLength>
+							<xsd:maxLength value="64"></xsd:maxLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="labelSize">
+					<xsd:simpleType>
+						<xsd:restriction base="ns2:labelSizeEnum">
+							<xsd:minLength value="1"></xsd:minLength>
+							<xsd:maxLength value="6"></xsd:maxLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element minOccurs="0" name="customSize">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:token">
+							<xsd:minLength value="1"></xsd:minLength>
+							<xsd:maxLength value="64"></xsd:maxLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="SizeApparelArray">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" name="SizeApparel">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="apparelStyle" type="ns2:apparelStyleEnum"></xsd:element>
+							<xsd:element name="labelSize" type="ns2:labelSizeEnum"></xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="TaxCategoryArray">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" name="TaxCategory"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="primaryImageUrl">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="1024"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="chargeLTM">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="1024"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="reorderTimeFrame">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="1024"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="reorderSetupCharge">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="1024"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="ImprintColorsArray">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" name="Color"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Color">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element minOccurs="0" name="standardColorName">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:token">
+							<xsd:minLength value="1"></xsd:minLength>
+							<xsd:maxLength value="64"></xsd:maxLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element minOccurs="0" name="hex">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:token">
+							<xsd:minLength value="1"></xsd:minLength>
+							<xsd:maxLength value="64"></xsd:maxLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element minOccurs="0" name="approximatePms">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:token">
+							<xsd:minLength value="1"></xsd:minLength>
+							<xsd:maxLength value="64"></xsd:maxLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="colorName">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:token">
+							<xsd:minLength value="1"></xsd:minLength>
+							<xsd:maxLength value="64"></xsd:maxLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="nmfcCode" type="xsd:decimal"></xsd:element>
+	<xsd:element name="nmfcDescription">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="1024"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="nmfcNumber">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="64"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="isOnDemand" nillable="true" type="xsd:boolean"></xsd:element>
+	<xsd:element name="lineName">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:maxLength value="64"></xsd:maxLength>
+				<xsd:minLength value="1"></xsd:minLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="primaryMaterial">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="64"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="shape">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="64"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="unspsc">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="8"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="gtin">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="14"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="isRushService" nillable="true" type="xsd:boolean"></xsd:element>
+	<xsd:element name="complianceInfoAvailable" nillable="true" type="xsd:boolean"></xsd:element>
+	<xsd:element name="isHazmat" nillable="true" type="xsd:boolean"></xsd:element>
+	<xsd:element name="quantityLTM" type="xsd:int"></xsd:element>
+	<xsd:element name="groupName">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="64"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="ProductPriceGroup">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="ProductPriceArray">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element maxOccurs="unbounded" minOccurs="1" ref="ns2:ProductPrice"></xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element ref="ns2:groupName"></xsd:element>
+				<xsd:element ref="ns2:currency"></xsd:element>
+				<xsd:element minOccurs="0" ref="ns2:description"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="ProductPrice">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="quantityMin" type="xsd:int"></xsd:element>
+				<xsd:element minOccurs="0" name="quantityMax" type="xsd:int"></xsd:element>
+				<xsd:element name="price" type="xsd:decimal"></xsd:element>
+				<xsd:element minOccurs="0" name="discountCode">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:token">
+							<xsd:minLength value="1"></xsd:minLength>
+							<xsd:maxLength value="5"></xsd:maxLength>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="imprintSize">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="256"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="defaultSetupCharge">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="256"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="defaultRunCharge">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="256"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="culturePoint">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="64"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="LocationDecorationArray">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" name="LocationDecoration">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="locationName">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:token">
+										<xsd:minLength value="1"></xsd:minLength>
+										<xsd:maxLength value="255"></xsd:maxLength>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element minOccurs="0" name="maxImprintColors" type="xsd:int"></xsd:element>
+							<xsd:element name="decorationName">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:token">
+										<xsd:minLength value="1"></xsd:minLength>
+										<xsd:maxLength value="64"></xsd:maxLength>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="locationDecorationComboDefault" type="xsd:boolean"></xsd:element>
+							<xsd:element name="priceIncludes" type="xsd:boolean"></xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

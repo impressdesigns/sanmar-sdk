@@ -1,0 +1,83 @@
+
+Prefixes:
+     xsd: http://www.w3.org/2001/XMLSchema
+     ns0: http://www.promostandards.org/WSDL/OrderShipmentNotificationService/1.0.0/SharedObjects/
+     ns1: http://www.promostandards.org/WSDL/OrderShipmentNotificationService/1.0.0/
+
+Global elements:
+     ns0:address1(ns0:address1)
+     ns0:address2(ns0:address2)
+     ns0:address3(ns0:address3)
+     ns0:address4(ns0:address4)
+     ns0:city(ns0:city)
+     ns0:country(ns0:country)
+     ns0:cultureName(xsd:string)
+     ns0:errorMessage(code: xsd:int, description: ns0:description)
+     ns0:id(ns0:id)
+     ns0:password(ns0:password)
+     ns0:postalCode(ns0:postalCode)
+     ns0:region(ns0:region)
+     ns0:wsVersion(ns0:wsVersion)
+     ns1:GetOrderShipmentNotificationRequest(wsVersion: ns0:wsVersion, id: ns0:id, password: ns0:password, queryType: ns1:queryType, referenceNumber: ns1:referenceNumber, shipmentDateTimeStamp: xsd:dateTime)
+     ns1:GetOrderShipmentNotificationResponse(OrderShipmentNotificationArray: {OrderShipmentNotification: {purchaseOrderNumber: xsd:string, complete: xsd:boolean, SalesOrderArray: {SalesOrder: {salesOrderNumber: ns1:salesOrderNumber, complete: xsd:boolean, ShipmentLocationArray: {ShipmentLocation: {id: xsd:integer, complete: xsd:boolean, ShipFromAddress: {address1: ns0:address1, address2: ns0:address2, address3: ns0:address3, address4: ns0:address4, city: ns0:city, region: ns0:region, postalCode: ns0:postalCode, country: ns0:country}, ShipToAddress: {address1: ns0:address1, address2: ns0:address2, address3: ns0:address3, address4: ns0:address4, city: ns0:city, region: ns0:region, postalCode: ns0:postalCode, country: ns0:country}, shipmentDestinationType: ns1:shipmentDestinationTypeType, PackageArray: {Package: {id: xsd:integer, trackingNumber: ns1:trackingNumber, shipmentDate: xsd:dateTime, dimUOM: ns1:dimUOMType, length: xsd:decimal, width: xsd:decimal, height: xsd:decimal, weightUOM: ns1:weightUOMType, weight: xsd:decimal, carrier: xsd:string, shipmentMethod: ns1:shipmentMethod, shippingAccount: ns1:shippingAccount, shipmentTerms: ns1:shipmentTerms, ItemArray: {Item: {supplierProductId: ns1:supplierProductId, supplierPartId: ns1:supplierPartId, distributorProductId: ns1:distributorProductId, distributorPartId: ns1:distributorPartId, purchaseOrderLineNumber: ns1:purchaseOrderLineNumber, quantity: xsd:decimal}[]}}[]}}[]}}[]}}[]}, errorMessage: ns0:errorMessage)
+     
+
+Global types:
+     xsd:anyType
+     ns1:dimUOMType
+     ns1:shipmentDestinationTypeType
+     ns1:weightUOMType
+     xsd:ENTITIES
+     xsd:ENTITY
+     xsd:ID
+     xsd:IDREF
+     xsd:IDREFS
+     xsd:NCName
+     xsd:NMTOKEN
+     xsd:NMTOKENS
+     xsd:NOTATION
+     xsd:Name
+     xsd:QName
+     xsd:anySimpleType
+     xsd:anyURI
+     xsd:base64Binary
+     xsd:boolean
+     xsd:byte
+     xsd:date
+     xsd:dateTime
+     xsd:decimal
+     xsd:double
+     xsd:duration
+     xsd:float
+     xsd:gDay
+     xsd:gMonth
+     xsd:gMonthDay
+     xsd:gYear
+     xsd:gYearMonth
+     xsd:hexBinary
+     xsd:int
+     xsd:integer
+     xsd:language
+     xsd:long
+     xsd:negativeInteger
+     xsd:nonNegativeInteger
+     xsd:nonPositiveInteger
+     xsd:normalizedString
+     xsd:positiveInteger
+     xsd:short
+     xsd:string
+     xsd:time
+     xsd:token
+     xsd:unsignedByte
+     xsd:unsignedInt
+     xsd:unsignedLong
+     xsd:unsignedShort
+
+Bindings:
+     Soap11Binding: {http://www.promostandards.org/WSDL/OrderShipmentNotificationService/1.0.0/}OrderShipmentNotificationServiceBinding
+
+Service: OrderShipmentNotificationService
+     Port: OrderShipmentNotificationServiceBinding (Soap11Binding: {http://www.promostandards.org/WSDL/OrderShipmentNotificationService/1.0.0/}OrderShipmentNotificationServiceBinding)
+         Operations:
+            getOrderShipmentNotification(wsVersion: ns0:wsVersion, id: ns0:id, password: ns0:password, queryType: ns1:queryType, referenceNumber: ns1:referenceNumber, shipmentDateTimeStamp: xsd:dateTime) -> OrderShipmentNotificationArray: {OrderShipmentNotification: {purchaseOrderNumber: xsd:string, complete: xsd:boolean, SalesOrderArray: {SalesOrder: {salesOrderNumber: ns1:salesOrderNumber, complete: xsd:boolean, ShipmentLocationArray: {ShipmentLocation: {id: xsd:integer, complete: xsd:boolean, ShipFromAddress: {address1: ns0:address1, address2: ns0:address2, address3: ns0:address3, address4: ns0:address4, city: ns0:city, region: ns0:region, postalCode: ns0:postalCode, country: ns0:country}, ShipToAddress: {address1: ns0:address1, address2: ns0:address2, address3: ns0:address3, address4: ns0:address4, city: ns0:city, region: ns0:region, postalCode: ns0:postalCode, country: ns0:country}, shipmentDestinationType: ns1:shipmentDestinationTypeType, PackageArray: {Package: {id: xsd:integer, trackingNumber: ns1:trackingNumber, shipmentDate: xsd:dateTime, dimUOM: ns1:dimUOMType, length: xsd:decimal, width: xsd:decimal, height: xsd:decimal, weightUOM: ns1:weightUOMType, weight: xsd:decimal, carrier: xsd:string, shipmentMethod: ns1:shipmentMethod, shippingAccount: ns1:shippingAccount, shipmentTerms: ns1:shipmentTerms, ItemArray: {Item: {supplierProductId: ns1:supplierProductId, supplierPartId: ns1:supplierPartId, distributorProductId: ns1:distributorProductId, distributorPartId: ns1:distributorPartId, purchaseOrderLineNumber: ns1:purchaseOrderLineNumber, quantity: xsd:decimal}[]}}[]}}[]}}[]}}[]}, errorMessage: ns0:errorMessage
+

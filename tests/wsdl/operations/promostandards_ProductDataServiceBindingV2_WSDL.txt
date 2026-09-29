@@ -1,0 +1,169 @@
+
+Prefixes:
+     xsd: http://www.w3.org/2001/XMLSchema
+     ns0: http://www.promostandards.org/WSDL/ProductDataService/2.0.0/
+     ns1: http://www.promostandards.org/WSDL/ProductDataService/2.0.0/SharedObjects/
+     ns2: http://www.codesynthesis.com/xmlns/xsstl
+     ns3: http://www.isotc211.org/iso4217/
+
+Global elements:
+     ns1:ApparelSize(apparelStyle: ns1:apparelStyle, labelSize: ns1:labelSize, customSize: ns1:customSize)
+     ns1:ApparelSizeArray(ApparelSize: ns1:ApparelSize[])
+     ns1:Color(standardColorName: ns1:standardColorName, hex: ns1:hex, approximatePms: ns1:approximatePms, colorName: ns1:colorName)
+     ns1:Dimension(dimensionUom: ns1:dimensionUom, depth: xsd:decimal, height: xsd:decimal, width: xsd:decimal, weightUom: ns1:weightUom, weight: xsd:decimal)
+     ns1:FobPoint(fobId: ns1:fobId, fobCity: ns1:fobCity, fobState: ns1:fobState, fobPostalCode: ns1:fobPostalCode, fobCountry: ns1:fobCountry)
+     ns1:FobPointArray(FobPoint: ns1:FobPoint[])
+     ns1:ImprintColorsArray(Color: xsd:anyType[])
+     ns1:LocationDecorationArray(LocationDecoration: {locationName: ns1:locationName, maxImprintColors: xsd:int, decorationName: ns1:decorationName, locationDecorationComboDefault: xsd:boolean, priceIncludes: xsd:boolean}[])
+     ns1:ProductCategory(category: ns1:category, subCategory: ns1:subCategory)
+     ns1:ProductKeyword(keyword: ns1:keyword)
+     ns1:ProductMarketingPoint(pointType: ns1:pointType, pointCopy: ns1:pointCopy)
+     ns1:ProductPackage(default: xsd:boolean, packageType: ns1:packageType, description: ns1:description, quantity: xsd:decimal, dimensionUom: ns1:dimensionUom, depth: xsd:decimal, height: xsd:decimal, width: xsd:decimal, weightUom: ns1:weightUom, weight: xsd:decimal)
+     ns1:ProductPrice(quantityMin: xsd:int, quantityMax: xsd:int, price: xsd:decimal, discountCode: ns1:discountCode)
+     ns1:ProductPriceGroup(ProductPriceArray: {ProductPrice: ns1:ProductPrice[]}, groupName: ns1:groupName, currency: ns3:CurrencyCodeType, description: ns1:description)
+     ns1:RelatedProduct(relationType: ns1:relationType, productId: ns1:productId, partId: ns1:partId)
+     ns1:ServiceMessage(code: xsd:int, description: ns1:description, severity: ns1:severity)
+     ns1:ServiceMessageArray(ServiceMessage: ns1:ServiceMessage[])
+     ns1:ShippingPackage(packageType: ns1:packageType, description: ns1:description, quantity: xsd:decimal, dimensionUom: ns1:dimensionUom, depth: xsd:decimal, height: xsd:decimal, width: xsd:decimal, weightUom: ns1:weightUom, weight: xsd:decimal)
+     ns1:SizeApparelArray(SizeApparel: {apparelStyle: ns1:apparelStyleEnum, labelSize: ns1:labelSizeEnum}[])
+     ns1:Specification(specificationType: ns1:specificationType, SpecificationUom: ns1:SpecificationUom, measurementValue: ns1:measurementValue)
+     ns1:TaxCategoryArray(TaxCategory: xsd:anyType[])
+     ns1:cautionComment(ns1:cautionComment)
+     ns1:changeTimeStamp(xsd:dateTime)
+     ns1:chargeLTM(ns1:chargeLTM)
+     ns1:colorName(ns1:colorName)
+     ns1:complianceInfoAvailable(xsd:boolean)
+     ns1:countryOfOrigin(ns1:countryOfOrigin)
+     ns1:culturePoint(ns1:culturePoint)
+     ns1:currency(ns3:CurrencyCodeType)
+     ns1:defaultRunCharge(ns1:defaultRunCharge)
+     ns1:defaultSetupCharge(ns1:defaultSetupCharge)
+     ns1:depth(xsd:decimal)
+     ns1:description(ns1:description)
+     ns1:dimensionUom(ns1:dimensionUom)
+     ns1:effectiveDate(xsd:dateTime)
+     ns1:endDate(xsd:dateTime)
+     ns1:fobId(ns1:fobId)
+     ns1:fobPostalCode(ns1:fobPostalCode)
+     ns1:groupName(ns1:groupName)
+     ns1:gtin(ns1:gtin)
+     ns1:height(xsd:decimal)
+     ns1:id(ns1:id)
+     ns1:imprintSize(ns1:imprintSize)
+     ns1:isCaution(xsd:boolean)
+     ns1:isCloseout(xsd:boolean)
+     ns1:isHazmat(xsd:boolean)
+     ns1:isOnDemand(xsd:boolean)
+     ns1:isRushCharge(xsd:boolean)
+     ns1:isRushService(xsd:boolean)
+     ns1:isSellable(xsd:boolean)
+     ns1:lineName(ns1:lineName)
+     ns1:localizationCountry(ns1:localizationCountry)
+     ns1:localizationLanguage(ns1:localizationLanguage)
+     ns1:marketingDescription(ns1:marketingDescription)
+     ns1:nmfcCode(xsd:decimal)
+     ns1:nmfcDescription(ns1:nmfcDescription)
+     ns1:nmfcNumber(ns1:nmfcNumber)
+     ns1:packageType(ns1:packageType)
+     ns1:partId(ns1:partId)
+     ns1:password(ns1:password)
+     ns1:priceExpiresDate(xsd:dateTime)
+     ns1:primaryImageUrl(ns1:primaryImageUrl)
+     ns1:primaryMaterial(ns1:primaryMaterial)
+     ns1:productBrand(ns1:productBrand)
+     ns1:productId(ns1:productId)
+     ns1:productName(ns1:productName)
+     ns1:quantity(xsd:decimal)
+     ns1:quantityLTM(xsd:int)
+     ns1:reorderSetupCharge(ns1:reorderSetupCharge)
+     ns1:reorderTimeFrame(ns1:reorderTimeFrame)
+     ns1:shape(ns1:shape)
+     ns1:specialPricingExcluded(xsd:boolean)
+     ns1:unspsc(ns1:unspsc)
+     ns1:weight(xsd:decimal)
+     ns1:weightUom(ns1:weightUom)
+     ns1:width(xsd:decimal)
+     ns1:wsVersion(ns1:wsVersion)
+     ns0:GetProductCloseOutRequest(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password)
+     ns0:GetProductCloseOutResponse(ProductCloseOutArray: {ProductCloseOut: ns0:ProductCloseOut[]}, ServiceMessageArray: ns1:ServiceMessageArray)
+     ns0:GetProductDateModifiedRequest(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, changeTimeStamp: xsd:dateTime)
+     ns0:GetProductDateModifiedResponse(ProductDateModifiedArray: {ProductDateModified: ns0:ProductDateModified[]}, ServiceMessageArray: ns1:ServiceMessageArray)
+     ns0:GetProductRequest(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, localizationCountry: ns1:localizationCountry, localizationLanguage: ns1:localizationLanguage, productId: ns1:productId, partId: ns1:partId, colorName: ns1:colorName, ApparelSizeArray: ns1:ApparelSizeArray)
+     ns0:GetProductResponse(Product: ns0:Product, ServiceMessageArray: ns1:ServiceMessageArray)
+     ns0:GetProductSellableRequest(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, localizationCountry: ns1:localizationCountry, localizationLanguage: ns1:localizationLanguage, productId: ns1:productId, partId: ns1:partId, lineName: ns1:lineName, isSellable: xsd:boolean)
+     ns0:GetProductSellableResponse(ProductSellableArray: {ProductSellable: {productId: ns1:productId, partId: ns1:partId, culturePoint: ns1:culturePoint}[]}, ServiceMessageArray: ns1:ServiceMessageArray)
+     ns0:Product(productId: ns1:productId, productName: ns1:productName, description: ns1:description[], priceExpiresDate: xsd:dateTime, ProductMarketingPointArray: {ProductMarketingPoint: ns1:ProductMarketingPoint[]}, ProductKeywordArray: {ProductKeyword: ns1:ProductKeyword[]}, productBrand: ns1:productBrand, export: xsd:boolean, ProductCategoryArray: {ProductCategory: ns1:ProductCategory[]}, RelatedProductArray: {RelatedProduct: ns1:RelatedProduct[]}, primaryImageUrl: ns1:primaryImageUrl, ProductPriceGroupArray: {ProductPriceGroup: ns1:ProductPriceGroup[]}, complianceInfoAvailable: xsd:boolean, unspscCommodityCode: xsd:int, LocationDecorationArray: ns1:LocationDecorationArray, ProductPartArray: {ProductPart: {partId: ns1:partId, primaryColor: {Color: ns1:Color}, description: ns1:description[], countryOfOrigin: ns1:countryOfOrigin, ColorArray: {Color: ns1:Color[]}, primaryMaterial: ns1:primaryMaterial, SpecificationArray: {Specification: ns1:Specification[]}, shape: ns1:shape, ApparelSize: ns1:ApparelSize, Dimension: ns1:Dimension, leadTime: xsd:int, unspsc: ns1:unspsc, gtin: ns1:gtin, isRushService: xsd:boolean, ProductPackagingArray: {ProductPackage: ns1:ProductPackage[]}, ShippingPackageArray: {ShippingPackage: ns1:ShippingPackage[]}, endDate: xsd:dateTime, effectiveDate: xsd:dateTime, isCloseout: xsd:boolean, isCaution: xsd:boolean, cautionComment: ns1:cautionComment, nmfcCode: xsd:decimal, nmfcDescription: ns1:nmfcDescription, nmfcNumber: ns1:nmfcNumber, isOnDemand: xsd:boolean, isHazmat: xsd:boolean}[]}, lastChangeDate: xsd:dateTime, creationDate: xsd:dateTime, endDate: xsd:dateTime, effectiveDate: xsd:dateTime, isCaution: xsd:boolean, cautionComment: ns1:cautionComment, isCloseout: xsd:boolean, lineName: ns1:lineName, defaultSetupCharge: ns1:defaultSetupCharge, defaultRunCharge: ns1:defaultRunCharge, imprintSize: ns1:imprintSize, FobPointArray: ns1:FobPointArray)
+     ns0:ProductCloseOut(productId: ns1:productId, partId: ns1:partId)
+     ns0:ProductDateModified(productId: ns1:productId, partId: ns1:partId)
+     
+
+Global types:
+     xsd:anyType
+     ns2:ISO3166CountyCode
+     ns3:CurrencyCodeType
+     ns3:CurrencyNameType
+     ns3:CurrencyNumberType
+     ns1:SeverityType
+     ns1:apparelStyleEnum
+     ns1:dimensionUomEnum
+     ns1:labelSizeEnum
+     ns1:relationTypeEnum
+     ns1:specificationTypeEnum
+     ns1:weightUomEnum
+     xsd:ENTITIES
+     xsd:ENTITY
+     xsd:ID
+     xsd:IDREF
+     xsd:IDREFS
+     xsd:NCName
+     xsd:NMTOKEN
+     xsd:NMTOKENS
+     xsd:NOTATION
+     xsd:Name
+     xsd:QName
+     xsd:anySimpleType
+     xsd:anyURI
+     xsd:base64Binary
+     xsd:boolean
+     xsd:byte
+     xsd:date
+     xsd:dateTime
+     xsd:decimal
+     xsd:double
+     xsd:duration
+     xsd:float
+     xsd:gDay
+     xsd:gMonth
+     xsd:gMonthDay
+     xsd:gYear
+     xsd:gYearMonth
+     xsd:hexBinary
+     xsd:int
+     xsd:integer
+     xsd:language
+     xsd:long
+     xsd:negativeInteger
+     xsd:nonNegativeInteger
+     xsd:nonPositiveInteger
+     xsd:normalizedString
+     xsd:positiveInteger
+     xsd:short
+     xsd:string
+     xsd:time
+     xsd:token
+     xsd:unsignedByte
+     xsd:unsignedInt
+     xsd:unsignedLong
+     xsd:unsignedShort
+
+Bindings:
+     Soap11Binding: {http://www.promostandards.org/WSDL/ProductDataService/2.0.0/}ProductDataServiceBindingV2
+
+Service: ProductDataServiceV2
+     Port: ProductDataServiceBindingV2 (Soap11Binding: {http://www.promostandards.org/WSDL/ProductDataService/2.0.0/}ProductDataServiceBindingV2)
+         Operations:
+            getProduct(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, localizationCountry: ns1:localizationCountry, localizationLanguage: ns1:localizationLanguage, productId: ns1:productId, partId: ns1:partId, colorName: ns1:colorName, ApparelSizeArray: ns1:ApparelSizeArray) -> Product: ns0:Product, ServiceMessageArray: ns1:ServiceMessageArray
+            getProductCloseOut(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password) -> ProductCloseOutArray: {ProductCloseOut: ns0:ProductCloseOut[]}, ServiceMessageArray: ns1:ServiceMessageArray
+            getProductDateModified(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, changeTimeStamp: xsd:dateTime) -> ProductDateModifiedArray: {ProductDateModified: ns0:ProductDateModified[]}, ServiceMessageArray: ns1:ServiceMessageArray
+            getProductSellable(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, localizationCountry: ns1:localizationCountry, localizationLanguage: ns1:localizationLanguage, productId: ns1:productId, partId: ns1:partId, lineName: ns1:lineName, isSellable: xsd:boolean) -> ProductSellableArray: {ProductSellable: {productId: ns1:productId, partId: ns1:partId, culturePoint: ns1:culturePoint}[]}, ServiceMessageArray: ns1:ServiceMessageArray
+

@@ -1,0 +1,147 @@
+
+Prefixes:
+     xsd: http://www.w3.org/2001/XMLSchema
+     ns0: http://www.promostandards.org/WSDL/Invoice/1.0.0/
+     ns1: http://www.promostandards.org/WSDL/Invoice/1.0.0/SharedObjects/
+     ns2: http://www.codesynthesis.com/xmlns/xsstl
+     ns3: http://www.isotc211.org/iso4217/
+
+Global elements:
+     ns1:AccountInfo(accountName: ns1:accountName, accountNumber: ns1:accountNumber, attentionTo: ns1:attentionTo, Address1: ns1:addressLine, Address2: ns1:addressLine, Address3: ns1:addressLine, city: ns1:city, region: ns1:region, postalCode: ns1:postalCode, country: ns1:country, email: ns1:email, phone: ns1:phone)
+     ns1:InvoiceLineItem(invoiceLineItemNumber: ns1:invoiceLineItemNumber, productId: ns1:productId, partId: ns1:partId, chargeId: ns1:chargeId, purchaseOrderLineItemNumber: ns1:purchaseOrderLineItemNumber, orderedQuantity: ns1:orderedQuantity, invoiceQuantity: ns1:invoiceQuantity, backOrderedQuantity: ns1:backOrderedQuantity, quantityUOM: ns1:quantityUOM, lineItemDescription: ns1:lineItemDescription, unitPrice: ns1:unitPrice, discountAmount: ns1:discountAmount, extendedPrice: ns1:extendedPrice, distributorProductId: ns1:distributorProductId, distributorPartId: ns1:distributorPartId)
+     ns1:ServiceMessage(code: xsd:int, description: ns1:description, severity: ns1:severity)
+     ns1:ServiceMessageArray(ServiceMessage: ns1:ServiceMessage[])
+     ns1:accountName(ns1:accountName)
+     ns1:accountNumber(ns1:accountNumber)
+     ns1:advancePaymentAmount(ns1:advancePaymentAmount)
+     ns1:attentionTo(ns1:attentionTo)
+     ns1:availableTimeStamp(xsd:dateTime)
+     ns1:backOrderedQuantity(ns1:backOrderedQuantity)
+     ns1:chargeId(ns1:chargeId)
+     ns1:city(ns1:city)
+     ns1:country(ns1:country)
+     ns1:currency(ns3:CurrencyCodeType)
+     ns1:discountAmount(ns1:discountAmount)
+     ns1:distributorPartId(ns1:distributorPartId)
+     ns1:distributorProductId(ns1:distributorProductId)
+     ns1:email(ns1:email)
+     ns1:extendedPrice(ns1:extendedPrice)
+     ns1:fob(ns1:fob)
+     ns1:handlingAmount(ns1:handlingAmount)
+     ns1:id(ns1:id)
+     ns1:invoiceAmount(ns1:invoiceAmount)
+     ns1:invoiceAmountDue(ns1:invoiceAmountDue)
+     ns1:invoiceComments(ns1:invoiceComments)
+     ns1:invoiceDate(xsd:date)
+     ns1:invoiceDocumentUrl(ns1:invoiceDocumentUrl)
+     ns1:invoiceLineItemNumber(ns1:invoiceLineItemNumber)
+     ns1:invoiceNumber(ns1:invoiceNumber)
+     ns1:invoicePaymentUrl(ns1:invoicePaymentUrl)
+     ns1:invoiceQuantity(ns1:invoiceQuantity)
+     ns1:invoiceType(ns1:invoiceType)
+     ns1:invoiceVoidedAvailableTimeStamp(xsd:date)
+     ns1:invoiceVoidedDate(xsd:dateTime)
+     ns1:lineItemDescription(ns1:lineItemDescription)
+     ns1:localizationCountry(ns1:localizationCountry)
+     ns1:localizationLanguage(ns1:localizationLanguage)
+     ns1:orderedQuantity(ns1:orderedQuantity)
+     ns1:partId(ns1:partId)
+     ns1:password(ns1:password)
+     ns1:paymentDueDate(xsd:date)
+     ns1:paymentTerms(ns1:paymentTerms)
+     ns1:phone(ns1:phone)
+     ns1:postalCode(ns1:postalCode)
+     ns1:productId(ns1:productId)
+     ns1:purchaseOrderLineItemNumber(ns1:purchaseOrderLineItemNumber)
+     ns1:purchaseOrderNumber(ns1:purchaseOrderNumber)
+     ns1:purchaseOrderVersion(ns1:purchaseOrderVersion)
+     ns1:quantityUOM(ns1:quantityUOM)
+     ns1:queryType(ns1:queryType)
+     ns1:referenceNumber(ns1:referenceNumber)
+     ns1:region(ns1:region)
+     ns1:requestedDate(xsd:date)
+     ns1:salesAmount(ns1:salesAmount)
+     ns1:salesOrderNumber(ns1:salesOrderNumber)
+     ns1:shippingAmount(ns1:shippingAmount)
+     ns1:tax(taxType: ns1:taxType, taxJurisdiction: ns1:taxJurisdiction, taxAmount: ns1:taxAmount)
+     ns1:taxAmount(ns1:taxAmount)
+     ns1:taxJurisdiction(ns1:taxJurisdiction)
+     ns1:taxType(ns1:taxType)
+     ns1:unitPrice(ns1:unitPrice)
+     ns1:voidDate(xsd:date)
+     ns1:wsVersion(ns1:wsVersion)
+     ns0:GetInvoicesRequest(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, queryType: ns1:queryType, referenceNumber: ns1:referenceNumber, requestedDate: xsd:date, availableTimeStamp: xsd:dateTime)
+     ns0:GetInvoicesResponse(InvoiceArray: {Invoice: ns0:Invoice[]}, ServiceMessageArray: ns1:ServiceMessageArray)
+     ns0:GetVoidedInvoicesRequest(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, queryType: ns1:queryType, referenceNumber: ns1:referenceNumber, requestedDate: xsd:date, availableTimeStamp: xsd:dateTime)
+     ns0:GetVoidedInvoicesResponse(VoidedInvoiceArray: {VoidedInvoice: ns0:VoidedInvoice[]}, ServiceMessageArray: ns1:ServiceMessageArray)
+     ns0:Invoice(invoiceNumber: ns1:invoiceNumber, invoiceType: ns1:invoiceType, invoiceDate: xsd:date, purchaseOrderNumber: ns1:purchaseOrderNumber, purchaseOrderVersion: ns1:purchaseOrderVersion, BillTo: {AccountInfo: ns1:AccountInfo}, SoldTo: {AccountInfo: ns1:AccountInfo}, invoiceComments: ns1:invoiceComments, paymentTerms: ns1:paymentTerms, paymentDueDate: xsd:date, currency: ns3:CurrencyCodeType, fob: ns1:fob, salesAmount: ns1:salesAmount, shippingAmount: ns1:shippingAmount, handlingAmount: ns1:handlingAmount, taxAmount: ns1:taxAmount, invoiceAmount: ns1:invoiceAmount, advancePaymentAmount: ns1:advancePaymentAmount, invoiceAmountDue: ns1:invoiceAmountDue, invoiceDocumentUrl: ns1:invoiceDocumentUrl, InvoiceLineItemsArray: {InvoiceLineItem: ns1:InvoiceLineItem[]}, SalesOrderNumbersArray: {salesOrderNumber: ns1:salesOrderNumber[]}, TaxArray: {tax: ns1:tax[]}, invoicePaymentUrl: ns1:invoicePaymentUrl)
+     ns0:VoidedInvoice(invoiceNumber: ns1:invoiceNumber, voidDate: xsd:date)
+     
+
+Global types:
+     xsd:anyType
+     ns2:ISO3166CountyCode
+     ns3:CurrencyCodeType
+     ns3:CurrencyNameType
+     ns3:CurrencyNumberType
+     ns1:SeverityType
+     ns1:addressLine
+     ns1:invoiceTypeType
+     ns1:quantityUOMType
+     ns1:queryTypeType
+     ns1:taxTypeType
+     xsd:ENTITIES
+     xsd:ENTITY
+     xsd:ID
+     xsd:IDREF
+     xsd:IDREFS
+     xsd:NCName
+     xsd:NMTOKEN
+     xsd:NMTOKENS
+     xsd:NOTATION
+     xsd:Name
+     xsd:QName
+     xsd:anySimpleType
+     xsd:anyURI
+     xsd:base64Binary
+     xsd:boolean
+     xsd:byte
+     xsd:date
+     xsd:dateTime
+     xsd:decimal
+     xsd:double
+     xsd:duration
+     xsd:float
+     xsd:gDay
+     xsd:gMonth
+     xsd:gMonthDay
+     xsd:gYear
+     xsd:gYearMonth
+     xsd:hexBinary
+     xsd:int
+     xsd:integer
+     xsd:language
+     xsd:long
+     xsd:negativeInteger
+     xsd:nonNegativeInteger
+     xsd:nonPositiveInteger
+     xsd:normalizedString
+     xsd:positiveInteger
+     xsd:short
+     xsd:string
+     xsd:time
+     xsd:token
+     xsd:unsignedByte
+     xsd:unsignedInt
+     xsd:unsignedLong
+     xsd:unsignedShort
+
+Bindings:
+     Soap11Binding: {http://www.promostandards.org/WSDL/Invoice/1.0.0/}InvoiceServiceBindingV1_0_0
+
+Service: InvoiceServiceV1_0_0
+     Port: InvoiceServiceBindingV1_0_0 (Soap11Binding: {http://www.promostandards.org/WSDL/Invoice/1.0.0/}InvoiceServiceBindingV1_0_0)
+         Operations:
+            getInvoices(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, queryType: ns1:queryType, referenceNumber: ns1:referenceNumber, requestedDate: xsd:date, availableTimeStamp: xsd:dateTime) -> InvoiceArray: {Invoice: ns0:Invoice[]}, ServiceMessageArray: ns1:ServiceMessageArray
+            getVoidedInvoices(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, queryType: ns1:queryType, referenceNumber: ns1:referenceNumber, requestedDate: xsd:date, availableTimeStamp: xsd:dateTime) -> VoidedInvoiceArray: {VoidedInvoice: ns0:VoidedInvoice[]}, ServiceMessageArray: ns1:ServiceMessageArray
+

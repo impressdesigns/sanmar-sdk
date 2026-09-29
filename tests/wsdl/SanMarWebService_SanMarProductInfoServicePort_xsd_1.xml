@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.4-b01-. --><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://impl.webservice.integration.sanmar.com/" targetNamespace="http://impl.webservice.integration.sanmar.com/" version="1.0">
+
+  <xs:element name="getProductBulkInfo" type="tns:getProductBulkInfo"></xs:element>
+
+  <xs:element name="getProductBulkInfoResponse" type="tns:getProductBulkInfoResponse"></xs:element>
+
+  <xs:element name="getProductDeltaInfo" type="tns:getProductDeltaInfo"></xs:element>
+
+  <xs:element name="getProductDeltaInfoResponse" type="tns:getProductDeltaInfoResponse"></xs:element>
+
+  <xs:element name="getProductInfoByBrand" type="tns:getProductInfoByBrand"></xs:element>
+
+  <xs:element name="getProductInfoByBrandResponse" type="tns:getProductInfoByBrandResponse"></xs:element>
+
+  <xs:element name="getProductInfoByCategory" type="tns:getProductInfoByCategory"></xs:element>
+
+  <xs:element name="getProductInfoByCategoryResponse" type="tns:getProductInfoByCategoryResponse"></xs:element>
+
+  <xs:element name="getProductInfoByStyleColorSize" type="tns:getProductInfoByStyleColorSize"></xs:element>
+
+  <xs:element name="getProductInfoByStyleColorSizeResponse" type="tns:getProductInfoByStyleColorSizeResponse"></xs:element>
+
+  <xs:complexType name="getProductDeltaInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:webServiceUser"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="webServiceUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="sanMarCustomerNumber" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="sanMarUserName" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="sanMarUserPassword" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="senderId" type="xs:int"></xs:element>
+      <xs:element minOccurs="0" name="senderPassword" type="xs:string"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getProductDeltaInfoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:productInfoResponseBean"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="productInfoResponseBean">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="blob" type="xs:base64Binary"></xs:element>
+      <xs:element minOccurs="0" name="errorOccured" type="xs:boolean"></xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="listResponse" nillable="true" type="tns:productInfo"></xs:element>
+      <xs:element minOccurs="0" name="message" type="xs:string"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="productInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="productBasicInfo" type="tns:productBasicInfo"></xs:element>
+      <xs:element minOccurs="0" name="productImageInfo" type="tns:productImageInfo"></xs:element>
+      <xs:element minOccurs="0" name="productPriceInfo" type="tns:productPriceInfo"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="productBasicInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="availableSizes" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="brandName" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="caseSize" type="xs:int"></xs:element>
+      <xs:element minOccurs="0" name="catalogColor" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="color" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="inventoryKey" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="keywords" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="pieceWeight" type="xs:double"></xs:element>
+      <xs:element minOccurs="0" name="productDescription" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="productStatus" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="productTitle" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="size" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="sizeIndex" type="xs:int"></xs:element>
+      <xs:element minOccurs="0" name="style" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="uniqueKey" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="category" type="xs:string"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="productImageInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="brandLogoImage" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="colorProductImage" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="colorProductImageThumbnail" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="colorSquareImage" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="colorSwatchImage" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="productImage" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="specSheet" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="thumbnailImage" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="titleImage" type="xs:string"></xs:element>
+      
+      <xs:element minOccurs="0" name="frontModel" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="backModel" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="sideModel" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="backFlat" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="frontFlat" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="threeQModel" type="xs:string"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="productPriceInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="casePrice" type="xs:double"></xs:element>
+      <xs:element minOccurs="0" name="caseSalePrice" type="xs:double"></xs:element>
+      <xs:element minOccurs="0" name="dozenPrice" type="xs:double"></xs:element>
+      <xs:element minOccurs="0" name="dozenSalePrice" type="xs:double"></xs:element>
+      <xs:element minOccurs="0" name="piecePrice" type="xs:double"></xs:element>
+      <xs:element minOccurs="0" name="pieceSalePrice" type="xs:double"></xs:element>
+      <xs:element minOccurs="0" name="priceCode" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="priceText" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="saleEndDate" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="saleStartDate" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="mapPrice" type="xs:double"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getProductInfoByBrand">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:productBrand"></xs:element>
+      <xs:element minOccurs="0" name="arg1" type="tns:webServiceUser"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="productBrand">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="brandName" type="xs:string"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getProductInfoByBrandResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:productInfoResponseBean"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getProductInfoByCategory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:productCategory"></xs:element>
+      <xs:element minOccurs="0" name="arg1" type="tns:webServiceUser"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="productCategory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="category" type="xs:string"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getProductInfoByCategoryResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:productInfoResponseBean"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getProductInfoByStyleColorSize">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg0" type="tns:product"></xs:element>
+      <xs:element minOccurs="0" name="arg1" type="tns:webServiceUser"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="product">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="color" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="size" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="style" type="xs:string"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getProductInfoByStyleColorSizeResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:productInfoResponseBean"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getProductBulkInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:webServiceUser"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getProductBulkInfoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:productInfoResponseBean"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

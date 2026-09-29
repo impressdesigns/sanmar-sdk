@@ -1,0 +1,2 @@
+"inventory_key"|"size_index"|"catalog_no"|"catalog_color"|"size"|"whse_no"|"quantity"|"piece_weight"|"piece_price"|"dozens_price"|"case_price"|"case_size"|"unique_key"
+"20828"|"4"|"K500"|"Black"|"L"|"3"|"500"|"0.6094"|"12.98"|"12.98"|"10.98"|"36"|"208284"

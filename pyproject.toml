@@ -1,18 +1,24 @@
 [project]
 name = "idi-sanmar-sdk"
 version = "0.2.0"
-description = "A Python SDK for SanMar’s SOAP APIs."
+description = "A typed Python SDK for SanMar’s web services and SFTP files."
 readme = "README.md"
 authors = [
     { name = "Bradley Reynolds", email = "bradley.reynolds@impressdesigns.com" },
 ]
 license = { text = "MIT" }
 requires-python = ">=3.14"
-dependencies = ["suds>=1.2.0"]
+dependencies = [
+    # 5.0 removed the ssh-rsa host key algorithm, and SanMar's SFTP server offers nothing newer.
+    # That is why 4.x carries GHSA-r374-rxx8-8654 (SHA-1 in rsakey.py), with no fix short of 5.0.
+    "paramiko>=4.0,<5",
+    "pydantic>=2.12",
+    "zeep>=4.3.3",
+]
 
 [project.urls]
 repository = "https://github.com/impressdesigns/sanmar-sdk"
-documentation = "http://impressdesigns.dev/sanmar-sdk/"
+documentation = "https://impressdesigns.dev/sanmar-sdk/"
 
 [build-system]
 requires = ["uv_build"]
@@ -21,18 +27,22 @@ build-backend = "uv_build"
 [dependency-groups]
 dev = [
     # DX
-    "nox>=2026.7.11",
-    "pre-commit>=4.6.1",
+    "nox>=2026.8.10",
+    "prek>=0.4.14",
     # Linters
-    "ruff>=0.16.0",
-    "mypy>=2.3.0",
+    "ruff>=0.16.3",
+    "mypy>=2.3.1",
+    "ty>=0.0.72",
+    # Stubs
+    "types-paramiko>=4.0,<5",
+    "types-requests>=2.32",
 ]
 docs = [
-    "sphinx>=7.4.4",
+    "sphinx>=9.1.0",
     # Theme
-    "furo>=2024.5.6",
+    "furo>=2025.12.19",
     # Extensions
-    "sphinx-autoapi>=3.1.2",
+    "sphinx-autoapi>=3.8.0",
     "releases>=2.1.1",
 ]
 tests = [
@@ -43,28 +53,48 @@ tests = [
 ]
 
 [tool.uv]
-environments = ["sys_platform == 'linux' and platform_machine == 'x86_64'"]
+# Sync with Dependabot's uv version
+required-version = ">=0.11.8"
+exclude-newer = "P7D"
+environments = [
+    "sys_platform == 'linux' and platform_machine == 'x86_64'",
+]
 
 [tool.uv.build-backend]
 module-name = "sanmar_sdk"
 
 [tool.ruff]
-target-version = "py314"
 line-length = 120
+cache-dir = ".cache/ruff"
 
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
+    "COM812", # (missing-trailing-comma) - Conflicts with formatter
     "CPY001", # (Missing copyright notice at top of file) - No license
 ]
 
 [tool.ruff.lint.extend-per-file-ignores]
 "docs/*" = [
-    "INP001", # (File `tests/*.py` is part of an implicit namespace package. Add an `__init__.py`.) - Docs are not modules
+    "INP001", # (File `docs/conf.py` is part of an implicit namespace package. Add an `__init__.py`.) - Docs are not modules
+]
+"scripts/*" = [
+    "INP001", # (File `scripts/*.py` is part of an implicit namespace package. Add an `__init__.py`.) - Scripts are not modules
+    "T201",   # (`print` found) - Scripts report to the terminal
 ]
 "tests/*" = [
-    "INP001", # (File `tests/*.py` is part of an implicit namespace package. Add an `__init__.py`.) - Tests are not modules
-    "S101",   # (Use of `assert` detected) - Yes, that's the point
+    "S101", # (Use of `assert` detected) - Yes, that's the point
+]
+
+[tool.ruff.lint.flake8-type-checking]
+# Pydantic evaluates annotations at runtime to build validators, so imports used only
+# in model annotations must stay at runtime scope. Without this, py314's deferred
+# annotations make TC rules think they are safe to move into a type-checking block.
+# Ruff cannot follow inheritance across modules, so the SDK's own bases are listed too.
+runtime-evaluated-base-classes = [
+    "pydantic.BaseModel",
+    "sanmar_sdk.base.Model",
+    "sanmar_sdk.base.Record",
 ]
 
 [tool.ruff.lint.isort]
@@ -73,15 +103,33 @@ known-first-party = ["sanmar_sdk"]
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
 
-[[tool.mypy.overrides]]
-module = ["suds.*"]
-ignore_missing_imports = true
+# Still need to tell Mypy to ignore these
+[tool.ty.rules]
+unused-ignore-comment = "ignore"
+
+[tool.mypy]
+pretty = true
+num_workers = 4
+native_parser = true # required by num_workers
+plugins = ["pydantic.mypy"]
+cache_dir = ".cache/mypy"
+# zeep ships py.typed but leaves most of its API unannotated.
+untyped_calls_exclude = ["zeep"]
 
 [tool.coverage.run]
 branch = true
 source_pkgs = ["sanmar_sdk"]
 source_dirs = ["tests"]
+data_file = ".cache/coverage/.coverage"
+omit = [
+    "tests/live/*",
+    # TypedDicts for type checkers only; nothing imports them at runtime.
+    "src/sanmar_sdk/*/_wire.py",
+]
 
 [tool.pytest]
 strict = true
-junit_family = "legacy"
+cache_dir = ".cache/pytest"
+markers = [
+    "live: calls SanMar's real services; runs only when SANMAR_LIVE=1 (see tests/live/conftest.py)",
+]
