@@ -51,6 +51,9 @@ def record_ftp_layout(output: Path) -> None:
     customer_number = os.environ["SANMAR_CUSTOMER_NUMBER"]
 
     def redact(text: str) -> str:
+        # SanMarPI is shared by every customer, and its bulk and delta files are named for
+        # the customer who asked for them; no customer's number belongs in the snapshot.
+        text = re.sub(r"(SanMarPI-(?:Bulk|Delta)-)\d+", r"\g<1>{customer_number}", text, flags=re.IGNORECASE)
         return text.replace(customer_number, "{customer_number}")
 
     layout: dict[str, object] = {}
@@ -64,19 +67,22 @@ def record_ftp_layout(output: Path) -> None:
         ]
         headers: dict[str, str] = {}
         files: dict[str, list[str]] = {}
+        # Redacting can give several files the same name; keep one of each.
         for folder in (PRODUCT_FOLDER, PRODUCT_INFORMATION_FOLDER):
             try:
                 names = ftp.list_folder(folder)
             except Exception as exc:  # noqa: BLE001 - record what is missing, keep going
                 files[folder] = [f"<{type(exc).__name__}: {exc}>"]
                 continue
-            files[folder] = [redact(name) for name in names]
+            files[folder] = list(dict.fromkeys(redact(name) for name in names))
             for name in names:
                 if not name.casefold().endswith((".csv", ".txt")):
                     continue
                 with ftp.open(f"{folder}/{name}", prefetch=False) as remote:
                     first = io.TextIOWrapper(remote, encoding="utf-8-sig", errors="replace").readline().rstrip("\r\n")
-                headers[redact(f"{folder}/{name}")] = first if _looks_like_header(first) else "<no header row>"
+                headers.setdefault(
+                    redact(f"{folder}/{name}"), first if _looks_like_header(first) else "<no header row>"
+                )
         layout["files"] = files
         layout["headers"] = headers
     output.write_text(json.dumps(layout, indent=2, sort_keys=True) + "\n", encoding="utf-8")
