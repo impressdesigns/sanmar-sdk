@@ -4,9 +4,10 @@
   with that warehouse's stock (capped by SanMar) and the current piece, case and sale
   prices. SanMar recommends it over its inventory web services for anything more frequent
   than a live check at ordering time. ``sanmar_closeouts_dip.txt`` has the same layout.
-- ``sanmar_activeproductsexport.txt`` is the older per-warehouse export, with fewer columns.
+- ``sanmar_activeproductsexport.txt`` is the older per-warehouse export, with fewer columns
+  and no sale prices.
 
-Both are pipe-delimited.
+Both are pipe-delimited, with a header row.
 
 Discontinued products stay in the file with a quantity of 0 while any size of that color
 has at least 12 pieces left. SanMar suggests skipping rows whose ``discontinued_code`` is
@@ -46,16 +47,18 @@ WAREHOUSE_INVENTORY_COLUMNS = (
     "sale_end_datetime",
     "unique_key",
     "discontinued_code",
-    "sale_start_date",
-    "sale_end_date",
 )
-"""``sanmar_dip.txt``, per the FTP Integration Guide v23.6.
+"""``sanmar_dip.txt``, as SanMar's server writes it.
 
-The guide numbers these columns 1 to 22 but skips 20; this is the 21 it names.
+The FTP Integration Guide v23.6 lists two more columns, ``SALE_START_DATE`` and
+``SALE_END_DATE``, that the file does not have; its sale dates are the ``_datetime`` ones.
 """
 
-ACTIVE_PRODUCTS_COLUMNS = (*WAREHOUSE_INVENTORY_COLUMNS[:12], "inventory_key")
-"""``sanmar_activeproductsexport.txt``, which ends by repeating the inventory key."""
+ACTIVE_PRODUCTS_COLUMNS = (*WAREHOUSE_INVENTORY_COLUMNS[:12], "unique_key")
+"""``sanmar_activeproductsexport.txt``, as SanMar's server writes it.
+
+The guide says it ends by repeating the inventory key; the file ends with the unique key.
+"""
 
 
 class WarehouseInventory(Record):
@@ -71,7 +74,7 @@ class WarehouseInventory(Record):
     quantity: int
     """Stock at this warehouse, capped by SanMar."""
     unique_key: str | None = None
-    """SanMar's identifier for this style, color and size. Not in the active products file."""
+    """SanMar's identifier for this style, color and size, and the PromoStandards part id."""
     piece_weight: Decimal | None = None
     piece_price: Price = None
     case_price: Price = None

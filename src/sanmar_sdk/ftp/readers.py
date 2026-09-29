@@ -80,9 +80,9 @@ def read_delimited[R: Record](
 ) -> Iterator[R]:
     """Yield one record per row of a delimited SanMar file.
 
-    ``columns`` is the file's layout as SanMar's guide gives it, already normalized. When the
-    file starts with a header row, its own column names are used and the guide's order does
-    not matter. When it does not, rows must have exactly as many fields as ``columns``.
+    ``columns`` is the file's layout, already normalized. When the file starts with a header
+    row, its own column names are used and the order of ``columns`` does not matter. When it
+    does not, rows must have exactly as many fields as ``columns``.
 
     Raises
     ------
@@ -128,11 +128,11 @@ def _check_header(
     if unexpected := sorted(set(names) - set(columns)):
         logger.info("SanMar file has columns this SDK does not read: %s", ", ".join(unexpected))
     if absent := sorted(set(columns) - set(names)):
-        logger.info("SanMar file lacks columns its guide lists: %s", ", ".join(absent))
+        logger.info("SanMar file lacks columns this SDK expects: %s", ", ".join(absent))
 
 
 def _check_width(row: list[str], names: Sequence[str], line_number: int) -> None:
-    """Fail on a headerless row whose field count does not match the guide's layout."""
+    """Fail on a headerless row whose field count does not match the file's layout."""
     if len(row) != len(names):
-        message = f"expected {len(names)} fields, as SanMar's guide lays the file out, but found {len(row)}"
+        message = f"expected {len(names)} fields, as the file is laid out, but found {len(row)}"
         raise FileFormatError(message, line_number)

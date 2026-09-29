@@ -5,6 +5,7 @@ asks SanMar to write product files to the SFTP server. For frequent or whole-cat
 SanMar recommends its product files (:mod:`sanmar_sdk.ftp`) over this service.
 """
 
+import re
 from decimal import Decimal
 from typing import TYPE_CHECKING
 
@@ -94,6 +95,14 @@ class ProductInfo(Record):
     prices: ProductPrices = Field(default_factory=ProductPrices, validation_alias="productPriceInfo")
 
 
+def _file_name_part(name: str) -> str:
+    """Spell a brand or category the way SanMar's file names do: letters and digits only.
+
+    ``Port & Co`` becomes ``PortCo`` and ``T-Shirts`` becomes ``TShirts``.
+    """
+    return re.sub(r"[^A-Za-z0-9]", "", name)
+
+
 class FileRequest(Record):
     """SanMar's acknowledgement of a request for a product file.
 
@@ -162,7 +171,7 @@ class ProductInfoService(Service):
             ("getProductInfoByBrand",),
             {"arg0": {"brandName": brand}, "arg1": web_service_user(self._credentials)},
         )
-        return self._file_request(result, f"Brand_{brand}_*.csv")
+        return self._file_request(result, f"Brand_{_file_name_part(brand)}_*.csv")
 
     def request_category_file(self, category: str) -> FileRequest:
         """Ask SanMar to write a file of one category's products, such as ``Caps``."""
@@ -171,7 +180,7 @@ class ProductInfoService(Service):
             ("getProductInfoByCategory",),
             {"arg0": {"category": category}, "arg1": web_service_user(self._credentials)},
         )
-        return self._file_request(result, f"Category_{category}_*.csv")
+        return self._file_request(result, f"Category_{_file_name_part(category)}_*.csv")
 
     @staticmethod
     def _file_request(result: dict[str, object], file_pattern: str) -> FileRequest:

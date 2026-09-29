@@ -1,26 +1,38 @@
 """Testing the streaming readers for SanMar's data files."""
 
+import csv
 import io
+import json
 from datetime import date
 from decimal import Decimal
 from pathlib import Path
 from types import GeneratorType
+from typing import TYPE_CHECKING
 
 import pytest
 
 from sanmar_sdk import FileFormatError, Warehouse
 from sanmar_sdk.ftp import (
+    catalog,
+    inventory,
+    legacy,
     read_active_products,
     read_catalog,
+    read_catalog_txt,
     read_customer_prices,
     read_extended_catalog,
     read_holding,
+    read_pdd,
     read_price_changes,
     read_product_information,
+    read_sale_items,
     read_shipment_status,
     read_warehouse_inventory,
 )
 from sanmar_sdk.ftp.readers import normalize_column
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
 
 FILES = Path(__file__).parent / "fixtures" / "files"
 
@@ -134,8 +146,8 @@ def test_bad_value_is_reported_with_its_line() -> None:
         next(rows)
 
 
-def test_warehouse_inventory_without_a_header() -> None:
-    """The dip file is read by the guide's column order when it has no header."""
+def test_warehouse_inventory() -> None:
+    """The dip file's quoted, pipe-delimited rows parse, sale datetimes included."""
     rows = list(read_warehouse_inventory(FILES / "sanmar_dip.txt"))
 
     assert [(row.unique_key, row.warehouse, row.quantity) for row in rows] == [
@@ -152,8 +164,8 @@ def test_warehouse_inventory_without_a_header() -> None:
     assert [row.discontinued for row in rows] == [False, False, True]
 
 
-def test_warehouse_inventory_with_a_header() -> None:
-    """A header row, in any order, is used instead of the guide's layout."""
+def test_header_row_decides_the_column_order() -> None:
+    """A header row, in any order, is followed instead of the known layout."""
     stream = io.StringIO(
         "Whse_ No|Catalog_No|Catalog_Color|Size|Quantity|Inventory_Key|Size_Index\n3|K500|Black|L|7|20828|4\n"
     )
@@ -161,16 +173,18 @@ def test_warehouse_inventory_with_a_header() -> None:
     assert (row.warehouse, row.style, row.quantity, row.unique_key) == (Warehouse.DALLAS, "K500", 7, None)
 
 
-def test_headerless_row_of_the_wrong_width_is_reported() -> None:
-    """Without a header, a row must match the guide's layout field for field."""
-    with pytest.raises(FileFormatError, match=r"line 1: expected 21 fields.* found 3"):
+def test_file_without_a_header_is_read_by_the_known_layout() -> None:
+    """Without a header, rows are read in the known column order, and must fit it exactly."""
+    row = "20828|4|K500|Black|L|4|9|0.6094|12.98|12.98|10.98|36||||||208284|"
+    assert next(read_warehouse_inventory(io.StringIO(row + "\n"))).warehouse == Warehouse.RENO
+    with pytest.raises(FileFormatError, match=r"line 1: expected 19 fields.* found 3"):
         list(read_warehouse_inventory(io.StringIO("20828|4|K500\n")))
 
 
 def test_active_products() -> None:
-    """The older per-warehouse export has no unique key."""
+    """The older per-warehouse export ends with the unique key, whatever the guide says."""
     row = next(read_active_products(FILES / "sanmar_activeproductsexport.txt"))
-    assert (row.inventory_key, row.warehouse, row.quantity, row.unique_key) == (20828, Warehouse.DALLAS, 500, None)
+    assert (row.inventory_key, row.warehouse, row.quantity, row.unique_key) == (20828, Warehouse.DALLAS, 500, "208284")
 
 
 def test_customer_prices() -> None:
@@ -237,3 +251,87 @@ def test_shipment_status_file() -> None:
         "license_plate": "LP0002488302",
         "size_index": 4,
     }
+
+
+LAYOUT = json.loads((Path(__file__).parent / "fixtures" / "ftp_layout.json").read_text(encoding="utf-8"))
+REAL_FILES: list[tuple[str, Callable[..., Iterator[object]], tuple[str, ...], str]] = [
+    ("SanMarPDD/SanMar_SDL_N.csv", read_catalog, catalog.SDL_COLUMNS, ","),
+    ("SanMarPDD/SanMar_EPDD.csv", read_extended_catalog, catalog.EPDD_COLUMNS, ","),
+    ("SanMarPDD/sanmar_dip.txt", read_warehouse_inventory, inventory.WAREHOUSE_INVENTORY_COLUMNS, "|"),
+    ("SanMarPDD/sanmar_activeproductsexport.txt", read_active_products, inventory.ACTIVE_PRODUCTS_COLUMNS, "|"),
+    ("SanMarPDD/sanmar_pdd.txt", read_pdd, legacy.PDD_COLUMNS, "|"),
+    ("SanMarPDD/Catalog.txt", read_catalog_txt, legacy.CATALOG_TXT_COLUMNS, "\t"),
+    ("SanMarPDD/sanmar_saleItems.txt", read_sale_items, legacy.SALE_ITEM_COLUMNS, "|"),
+    *(
+        (path, read_product_information, catalog.PRODUCT_INFORMATION_COLUMNS, ",")
+        for path in (
+            "SanMarPDD/SanMarPI/SanMarPI-Bulk-{customer_number}.csv",
+            "SanMarPDD/SanMarPI/SanMarPI-Delta-{customer_number}.csv",
+            "SanMarPDD/SanMarPI/Brand_A4_09-25-2026.csv",
+            "SanMarPDD/SanMarPI/Category_Accessories_09-25-2026.csv",
+        )
+    ),
+]
+
+
+@pytest.mark.parametrize(("path", "reader", "columns", "delimiter"), REAL_FILES, ids=[entry[0] for entry in REAL_FILES])
+def test_readers_know_sanmars_real_headers(
+    path: str,
+    reader: Callable[..., Iterator[object]],
+    columns: tuple[str, ...],
+    delimiter: str,
+) -> None:
+    """Every column of the header SanMar's server really writes is one the reader expects.
+
+    The headers were recorded from SanMar's SFTP server by ``scripts/snapshot_wsdls.py --ftp``.
+    """
+    header = LAYOUT["headers"][path]
+    names = [normalize_column(name) for name in next(csv.reader(io.StringIO(header), delimiter=delimiter))]
+    assert names == list(columns)
+    assert list(reader(io.StringIO(header + "\n"))) == []
+
+
+def test_legacy_text_files() -> None:
+    """The older text files parse, including Catalog.txt's own spelling of two columns."""
+    pdd = next(
+        read_pdd(
+            io.StringIO(
+                LAYOUT["headers"]["SanMarPDD/sanmar_pdd.txt"]
+                + '\n"20828"|"K500"|"Port Authority"|"K500"|"NA"|"Black"|"L"|"Silk Touch Polo"|""|"12.98"|"12.98"|"1"'
+                '|"10.98"|"36"|"0"|"0.6094"|"L"|"4"|"Unknown"|"00191265001373"\n',
+            ),
+        ),
+    )
+    catalog_txt = next(
+        read_catalog_txt(
+            io.StringIO(
+                LAYOUT["headers"]["SanMarPDD/Catalog.txt"]
+                + "\n20828\tK500\tPort Authority\tK500\tNA\tBlack\tL\tSilk Touch Polo\t\t12.98\t12.98\t1\t10.98\t36\t0"
+                "\t0.6094\tL\t4\tUnknown\t00191265001373\n",
+            ),
+        ),
+    )
+    assert pdd == catalog_txt
+    assert (pdd.style, pdd.catalog_color, pdd.size_index, pdd.mill_style, pdd.case_price, pdd.gtin) == (
+        "K500",
+        "Black",
+        4,
+        "K500",
+        Decimal("10.98"),
+        "00191265001373",
+    )
+
+    sale = next(
+        read_sale_items(
+            io.StringIO(
+                LAYOUT["headers"]["SanMarPDD/sanmar_saleItems.txt"]
+                + '\n"20828"|"K500"|"Port Authority"|"K500"|"NA"|"Black"|"L"|"Silk Touch Polo"|""|"9.98"|"9.98"|"1"'
+                '|"8.98"|"36"|"0"|"0.6094"|"L"|"4"|"Unknown"|""|"10/14/2026"|"10/20/2026"\n',
+            ),
+        ),
+    )
+    assert (sale.piece_sale_price, sale.case_sale_price, sale.sale_end_date) == (
+        Decimal("9.98"),
+        Decimal("8.98"),
+        date(2026, 10, 20),
+    )

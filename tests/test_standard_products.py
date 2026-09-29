@@ -158,3 +158,20 @@ def test_file_requests(method: str, operation: str, arguments: tuple[str, ...], 
         assert next(iter(payload["arg0"].values())) == arguments[0]
     else:
         assert payload == {"arg0": LOGIN}
+
+
+def test_file_patterns_spell_names_as_sanmar_does() -> None:
+    """SanMar's file names keep only letters and digits from a brand or category."""
+    sanmar, transport = replay_client()
+    for operation in ("getProductInfoByBrand", "getProductInfoByCategory"):
+        transport.queue(
+            envelope(
+                f"""<ns2:{operation}Response xmlns:ns2="http://impl.webservice.integration.sanmar.com/">
+                  <return><errorOccured>false</errorOccured></return>
+                </ns2:{operation}Response>""",
+            ),
+        )
+
+    assert sanmar.products.request_brand_file("Port & Co").file_pattern == "Brand_PortCo_*.csv"
+    assert sanmar.products.request_category_file("T-Shirts").file_pattern == "Category_TShirts_*.csv"
+    assert sent(transport)[1]["arg0"] == {"category": "T-Shirts"}

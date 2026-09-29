@@ -61,14 +61,14 @@ class Record(BaseModel):
 def _parse_date(value: Any) -> Any:  # noqa: ANN401 - runs before validation
     """Accept the date formats SanMar uses, alongside ISO 8601.
 
-    SanMar's data files write dates as ``MM/DD/YYYY`` (sometimes without leading zeros),
-    while its web services use ISO dates and timestamps.
+    SanMar's data files write dates as ``MM/DD/YYYY`` (sometimes without leading zeros, and
+    sometimes followed by a time), while its web services use ISO dates and timestamps.
     """
     if isinstance(value, datetime):
         return value.date()
     if isinstance(value, str):
         text = value.strip()
-        if match := re.fullmatch(r"(\d{1,2})/(\d{1,2})/(\d{4})", text):
+        if match := re.fullmatch(r"(\d{1,2})/(\d{1,2})/(\d{4})(?:[ T].*)?", text):
             month, day, year = (int(part) for part in match.groups())
             return date(year, month, day)
         if re.fullmatch(r"\d{4}-\d{2}-\d{2}[T ].*", text):

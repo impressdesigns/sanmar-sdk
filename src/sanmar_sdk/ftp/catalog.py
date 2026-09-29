@@ -55,22 +55,73 @@ SDL_COLUMNS = (
     "sanmar_mainframe_color",
     "mill",
     "product_status",
-    "companion_styles",
+    "companion_style",
     "msrp",
     "map_pricing",
     "front_model_image_url",
     "back_model_image_url",
     "front_flat_image_url",
     "back_flat_image_url",
-    "product_measurement",
+    "product_measurements",
     "pms_color",
     "gtin",
     "decoration_spec_sheet",
 )
-"""``SanMar_SDL_N.csv``, per the FTP Integration Guide v23.6."""
+"""``SanMar_SDL_N.csv``, as SanMar's server writes it.
 
-EPDD_COLUMNS = (*SDL_COLUMNS[:19], "qty", *SDL_COLUMNS[19:])
-"""``SanMar_EPDD.csv``, which has the SDL columns with ``QTY`` after ``SIZE``."""
+The FTP Integration Guide v23.6 spells a few of these differently (``COMPANION_STYLES``,
+``PRODUCT_MEASUREMENT``); the file's own header is followed here.
+"""
+
+EPDD_COLUMNS = (
+    "unique_key",
+    "product_title",
+    "product_description",
+    "style#",
+    "available_sizes",
+    "brand_logo_image",
+    "thumbnail_image",
+    "color_swatch_image",
+    "product_image",
+    "spec_sheet",
+    "price_text",
+    "suggested_price",
+    "category_name",
+    "subcategory_name",
+    "color_name",
+    "color_square_image",
+    "color_product_image",
+    "color_product_image_thumbnail",
+    "size",
+    "qty",
+    "piece_weight",
+    "piece_price",
+    "dozens_price",
+    "case_price",
+    "price_group",
+    "case_size",
+    "inventory_key",
+    "size_index",
+    "sanmar_mainframe_color",
+    "mill",
+    "product_status",
+    "companion_styles",
+    "msrp",
+    "map_pricing",
+    "front_model_image_url",
+    "back_model_image",
+    "front_flat_image",
+    "back_flat_image",
+    "product_measurements",
+    "pms_color",
+    "gtin",
+    "decoration_spec_sheet",
+)
+"""``SanMar_EPDD.csv``, as SanMar's server writes it.
+
+Like SDL_N with ``QTY`` after ``SIZE``, except that its model and flat image columns drop
+the ``_URL`` suffix SDL_N's have.
+"""
 
 PRODUCT_INFORMATION_COLUMNS = (
     "unique_key",
@@ -117,7 +168,7 @@ PRODUCT_INFORMATION_COLUMNS = (
     "map_price",
 )
 """The SanMarPI bulk, delta, brand and category files, per the Web Services Integration
-Guide v24.6."""
+Guide v24.6 and as SanMar's server writes them."""
 
 
 class ProductRecord(Record):
@@ -169,12 +220,30 @@ class CatalogProduct(ProductRecord):
     subcategory: str | None = Field(default=None, validation_alias="subcategory_name")
     suggested_price: Price = None
     msrp: Price = None
-    companion_styles: str | None = None
-    front_model_image_url: str | None = None
-    back_model_image_url: str | None = None
-    front_flat_image_url: str | None = None
-    back_flat_image_url: str | None = None
-    product_measurements: str | None = Field(default=None, validation_alias="product_measurement")
+    companion_styles: str | None = Field(
+        default=None,
+        validation_alias=AliasChoices("companion_styles", "companion_style"),
+    )
+    front_model_image_url: str | None = Field(
+        default=None,
+        validation_alias=AliasChoices("front_model_image_url", "front_model_image"),
+    )
+    back_model_image_url: str | None = Field(
+        default=None,
+        validation_alias=AliasChoices("back_model_image_url", "back_model_image"),
+    )
+    front_flat_image_url: str | None = Field(
+        default=None,
+        validation_alias=AliasChoices("front_flat_image_url", "front_flat_image"),
+    )
+    back_flat_image_url: str | None = Field(
+        default=None,
+        validation_alias=AliasChoices("back_flat_image_url", "back_flat_image"),
+    )
+    product_measurements: str | None = Field(
+        default=None,
+        validation_alias=AliasChoices("product_measurements", "product_measurement"),
+    )
     pms_color: str | None = None
     """The Pantone (PMS) color. SanMar says it does not stand in for the product color."""
     gtin: str | None = None
