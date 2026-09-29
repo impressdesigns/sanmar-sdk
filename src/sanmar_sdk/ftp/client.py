@@ -6,7 +6,7 @@ onboarding, which is not the SanMar.com password the web services use.
 
 The server's host key is checked like any SSH server's. Either have it in a known_hosts
 file, or pin it: get it once with ``ssh-keyscan -p 2200 ftp.sanmar.com``, check it, and pass
-the key (``ecdsa-sha2-nistp256 AAAA...``) as ``host_key``. An unknown key is refused.
+the key (``ssh-rsa AAAA...``) as ``host_key``. An unknown key is refused.
 
 Everything is read as a stream: a product file is parsed row by row as it downloads, and
 never held in memory or written to disk.
@@ -15,9 +15,11 @@ never held in memory or written to disk.
 import base64
 import fnmatch
 import io
+import re
 import time
 import zipfile
 from contextlib import AbstractContextManager, contextmanager
+from datetime import date
 from pathlib import PurePosixPath
 from typing import IO, TYPE_CHECKING, Self, TextIO, cast
 
@@ -63,10 +65,22 @@ def _parse_host_key(text: str) -> paramiko.PKey:
     if len(parts) >= 3:  # noqa: PLR2004 - "host type key", as a known_hosts line has it
         parts = parts[1:]
     if len(parts) != 2:  # noqa: PLR2004 - "type key"
-        message = f"Expected a host key like 'ecdsa-sha2-nistp256 AAAA...', not {text!r}."
+        message = f"Expected a host key like 'ssh-rsa AAAA...', not {text!r}."
         raise ValueError(message)
     key_type, key_data = parts
     return paramiko.PKey.from_type_string(key_type, base64.b64decode(key_data))
+
+
+def _dated(name: str) -> tuple[date, str]:
+    """Key a file name by the ``MM-DD-YYYY`` date in it, for files SanMar dates."""
+    match = re.search(r"(\d{2})-(\d{2})-(\d{4})", name)
+    if match is None:
+        return date.min, name
+    month, day, year = (int(part) for part in match.groups())
+    try:
+        return date(year, month, day), name
+    except ValueError:
+        return date.min, name
 
 
 class SanMarFTP:
@@ -74,7 +88,7 @@ class SanMarFTP:
 
     Use it as a context manager, and read files inside the ``with`` block::
 
-        with SanMarFTP(123456, "ftp-password", host_key="ecdsa-sha2-nistp256 AAAA...") as ftp:
+        with SanMarFTP(123456, "ftp-password", host_key="ssh-rsa AAAA...") as ftp:
             with ftp.catalog() as products:
                 for product in products:
                     ...
@@ -202,12 +216,31 @@ class SanMarFTP:
     def find(self, folder: str, pattern: str) -> list[str]:
         """List the files in a folder whose names match a shell-style pattern, ignoring case.
 
-        Names come back sorted. SanMar dates the brand and category files it writes on
-        request as ``MM-DD-YYYY``, so compare those dates to find the newest::
+        Names come back sorted by name. SanMar dates the brand and category files it writes
+        on request as ``MM-DD-YYYY``, which does not sort by date; :meth:`newest` does::
 
             ftp.find("SanMarPDD/SanMarPI", "Brand_OGIO_*.csv")
         """
         return [name for name in self.list_folder(folder) if fnmatch.fnmatch(name.casefold(), pattern.casefold())]
+
+    def newest(self, folder: str, pattern: str) -> str:
+        """Find the most recently dated file in a folder whose name matches a pattern.
+
+        Files are compared by the ``MM-DD-YYYY`` date SanMar puts in the names of the brand
+        and category files it writes on request, then by name::
+
+            ftp.newest("SanMarPDD/SanMarPI", "Brand_OGIO_*.csv")
+
+        Raises
+        ------
+        ~sanmar_sdk.exceptions.NotFoundError
+            If no file matches.
+        """
+        names = self.find(folder, pattern)
+        if not names:
+            message = f"No file in {folder} matches {pattern}."
+            raise NotFoundError(message)
+        return max(names, key=_dated)
 
     def resolve(self, path: str) -> str:
         """Find a path on the server, matching each part of it case-insensitively.
@@ -288,8 +321,8 @@ class SanMarFTP:
 
         The rows are read as the file downloads, and only while the ``with`` block is open::
 
-            with ftp.stream("SanMarPDD/sanmar_dpc.csv", read_price_changes) as changes:
-                for change in changes:
+            with ftp.stream("SanMarPDD/sanmar_saleItems.txt", read_sale_items) as items:
+                for item in items:
                     ...
         """
         with self.open_text(path, member=member, encoding=encoding) as stream:

@@ -1,7 +1,7 @@
 [project]
 name = "idi-sanmar-sdk"
 version = "0.2.0"
-description = "A Python SDK for SanMar’s SOAP APIs."
+description = "A typed Python SDK for SanMar’s web services and SFTP files."
 readme = "README.md"
 authors = [
     { name = "Bradley Reynolds", email = "bradley.reynolds@impressdesigns.com" },

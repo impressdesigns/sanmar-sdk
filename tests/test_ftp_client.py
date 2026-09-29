@@ -124,6 +124,17 @@ def test_find_matches_patterns_regardless_of_case(sftp_server: SFTPServer, tmp_p
         ]
 
 
+def test_newest_compares_the_dates_in_file_names(sftp_server: SFTPServer, tmp_path: Path) -> None:
+    """The newest file is found by the date in its name, which sorts wrong as text."""
+    target = _publish(sftp_server, folder="SanMarPDD/SanMarPI")
+    for name in ("Brand_OGIO_12-30-2025.csv", "Brand_OGIO_01-02-2026.csv", "Brand_OGIO_13-45-2026.csv"):
+        (target / name).write_text("", encoding="utf-8")
+    with _connect(sftp_server, tmp_path) as ftp:
+        assert ftp.newest("SanMarPDD/SanMarPI", "Brand_OGIO_*.csv") == "Brand_OGIO_01-02-2026.csv"
+        with pytest.raises(NotFoundError, match="Brand_Nope"):
+            ftp.newest("SanMarPDD/SanMarPI", "Brand_Nope_*.csv")
+
+
 def test_catalog_streams_from_the_server(sftp_server: SFTPServer, tmp_path: Path) -> None:
     """The product files are parsed straight off the server."""
     _publish(sftp_server, "SanMar_SDL_N.csv", "SanMar_EPDD.csv", "sanmar_dip.txt")
