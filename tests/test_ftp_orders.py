@@ -130,3 +130,20 @@ def test_release_files_are_numbered() -> None:
         render_release_file("b-1", [])
     with pytest.raises(ValueError, match="start at 1"):
         render_release_file("b-1", ["A"], release_number=0)
+
+
+@pytest.mark.parametrize(
+    "po_number",
+    ["85496\r\n99999", "85,496", "Café", "", "X" * 29],
+    ids=["line-break", "comma", "non-ascii", "empty", "too-long"],
+)
+def test_release_files_check_po_numbers(po_number: str) -> None:
+    """A release file's PO numbers are held to the same rules as an order's."""
+    with pytest.raises(ValueError, match=r"at most 28|at least 1|SanMar orders"):
+        render_release_file("b-1", ["85496", po_number])
+
+
+def test_release_files_need_a_list() -> None:
+    """One PO number passed as a string would be released a character at a time."""
+    with pytest.raises(TypeError, match="not one string"):
+        render_release_file("b-1", "85496")

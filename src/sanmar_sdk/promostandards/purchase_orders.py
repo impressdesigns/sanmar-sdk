@@ -21,6 +21,7 @@ from sanmar_sdk._soap import PROMOSTANDARDS_PURCHASE_ORDER
 from sanmar_sdk.base import FROZEN, ORDER_TEXT, Model
 from sanmar_sdk.common import ShipMethod, ShipTo, Warehouse
 from sanmar_sdk.exceptions import ResponseError
+from sanmar_sdk.orders import PONumber
 
 from ._common import PromoStandardsService, check
 
@@ -49,7 +50,7 @@ class PromoStandardsOrderLine(Model):
 class PromoStandardsOrder(Model):
     """A purchase order for SanMar's PromoStandards purchase order service."""
 
-    po_number: Annotated[str, Field(min_length=1, max_length=28), ORDER_TEXT]
+    po_number: PONumber
     ship_to: ShipTo
     ship_method: ShipMethod
     lines: Annotated[Sequence[PromoStandardsOrderLine], Field(min_length=1), FROZEN]

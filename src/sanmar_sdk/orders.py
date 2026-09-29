@@ -13,6 +13,9 @@ from pydantic import Field
 from .base import FROZEN, ORDER_TEXT, Model
 from .common import ShipMethod, ShipTo, SkuKey, StyleColorSize, Warehouse, WillCall
 
+type PONumber = Annotated[str, Field(min_length=1, max_length=28), ORDER_TEXT]
+"""A purchase order number as SanMar takes it, up to 28 characters of printable ASCII without commas."""
+
 
 class OrderLine(Model):
     """One item on a purchase order.
@@ -36,7 +39,7 @@ class OrderLine(Model):
 class PurchaseOrder(Model):
     """A purchase order for SanMar's standard order service or SFTP order files."""
 
-    po_number: Annotated[str, Field(min_length=1, max_length=28), ORDER_TEXT]
+    po_number: PONumber
     ship_to: ShipTo
     ship_method: ShipMethod | WillCall
     lines: Annotated[Sequence[OrderLine], Field(min_length=1), FROZEN]

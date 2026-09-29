@@ -19,10 +19,11 @@ import re
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
-from pydantic import AliasChoices, Field
+from pydantic import AliasChoices, Field, TypeAdapter
 
 from sanmar_sdk.base import Price, Record, SanMarDate
 from sanmar_sdk.common import SkuKey, WarehouseNumber, WillCall
+from sanmar_sdk.orders import PONumber
 
 from .readers import Source, read_delimited
 
@@ -168,12 +169,20 @@ def render_order_files(batch: str, orders: Sequence[PurchaseOrder]) -> OrderFile
     )
 
 
+_PO_NUMBERS: TypeAdapter[list[str]] = TypeAdapter(list[PONumber])
+
+
 def render_release_file(batch: str, po_numbers: Sequence[str], release_number: int = 1) -> tuple[str, str]:
     """Build the file that releases some or all of a batch's orders, as ``(name, contents)``.
 
-    Each release of a batch gets the next ``release_number``, starting at 1.
+    Each release of a batch gets the next ``release_number``, starting at 1. PO numbers are
+    checked as a :class:`~sanmar_sdk.orders.PurchaseOrder` checks its own.
     """
     _check_batch(batch)
+    if isinstance(po_numbers, str):
+        message = "po_numbers takes a list of PO numbers, not one string."
+        raise TypeError(message)
+    po_numbers = _PO_NUMBERS.validate_python(list(po_numbers), strict=True)
     if not po_numbers:
         message = "A release needs at least one PO number."
         raise ValueError(message)
