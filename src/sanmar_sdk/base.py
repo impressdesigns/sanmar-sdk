@@ -76,6 +76,15 @@ def _parse_date(value: Any) -> Any:  # noqa: ANN401 - runs before validation
     return value
 
 
+def _as_list(value: Any) -> Any:  # noqa: ANN401 - runs before validation
+    """Wrap a single value in a list, for elements that repeat only sometimes."""
+    if value is None:
+        return []
+    if isinstance(value, list):
+        return value
+    return [value]
+
+
 def _split_list(separator: str) -> BeforeValidator:
     """Split a delimited string into its non-blank, stripped parts."""
 
@@ -97,6 +106,9 @@ def _parse_price(value: Any) -> Any:  # noqa: ANN401 - runs before validation
 
 SanMarDate = Annotated[date, BeforeValidator(_parse_date)]
 """A date in any of the formats SanMar sends."""
+
+type OneOrMany[T] = Annotated[list[T], BeforeValidator(_as_list)]
+"""A list that SanMar may send as a single item when there is only one."""
 
 Price = Annotated[Decimal | None, BeforeValidator(_parse_price)]
 """A dollar amount, or ``None`` where SanMar has none (a blank, ``NA`` or ``NLA``)."""

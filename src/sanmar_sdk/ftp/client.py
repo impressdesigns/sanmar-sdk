@@ -13,6 +13,7 @@ never held in memory or written to disk.
 """
 
 import base64
+import fnmatch
 import io
 import time
 import zipfile
@@ -197,6 +198,16 @@ class SanMarFTP:
     def list_folder(self, folder: str = "") -> list[str]:
         """List a folder's entries by name, sorted. Folder names match case-insensitively."""
         return sorted(self.sftp.listdir(self.resolve(folder) if folder else "."))
+
+    def find(self, folder: str, pattern: str) -> list[str]:
+        """List the files in a folder whose names match a shell-style pattern, ignoring case.
+
+        Names come back sorted. SanMar dates the brand and category files it writes on
+        request as ``MM-DD-YYYY``, so compare those dates to find the newest::
+
+            ftp.find("SanMarPDD/SanMarPI", "Brand_OGIO_*.csv")
+        """
+        return [name for name in self.list_folder(folder) if fnmatch.fnmatch(name.casefold(), pattern.casefold())]
 
     def resolve(self, path: str) -> str:
         """Find a path on the server, matching each part of it case-insensitively.

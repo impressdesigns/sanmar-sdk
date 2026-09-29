@@ -112,6 +112,18 @@ def test_paths_resolve_case_insensitively(sftp_server: SFTPServer, tmp_path: Pat
             ftp.resolve("SanMarPDD/SanMar_EPDD.csv")
 
 
+def test_find_matches_patterns_regardless_of_case(sftp_server: SFTPServer, tmp_path: Path) -> None:
+    """Dated files SanMar writes on request are found by pattern."""
+    target = _publish(sftp_server, folder="SanMarPDD/SanMarPI")
+    for name in ("Brand_OGIO_06-01-2026.csv", "brand_ogio_06-08-2026.csv", "Category_Caps_06-01-2026.csv"):
+        (target / name).write_text("", encoding="utf-8")
+    with _connect(sftp_server, tmp_path) as ftp:
+        assert ftp.find("sanmarpdd/sanmarpi", "Brand_OGIO_*.csv") == [
+            "Brand_OGIO_06-01-2026.csv",
+            "brand_ogio_06-08-2026.csv",
+        ]
+
+
 def test_catalog_streams_from_the_server(sftp_server: SFTPServer, tmp_path: Path) -> None:
     """The product files are parsed straight off the server."""
     _publish(sftp_server, "SanMar_SDL_N.csv", "SanMar_EPDD.csv", "sanmar_dip.txt")

@@ -120,7 +120,11 @@ branch = true
 source_pkgs = ["sanmar_sdk"]
 source_dirs = ["tests"]
 data_file = ".cache/coverage/.coverage"
-omit = ["tests/live/*"]
+omit = [
+    "tests/live/*",
+    # TypedDicts for type checkers only; nothing imports them at runtime.
+    "src/sanmar_sdk/*/_wire.py",
+]
 
 [tool.pytest]
 strict = true

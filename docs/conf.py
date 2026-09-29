@@ -48,8 +48,19 @@ intersphinx_mapping = {
 
 # Field limits are declared as ``Annotated[str, Field(...)]``, which autoapi renders with
 # pydantic's ``Field`` unqualified, so there is nothing for it to resolve against.
-# Type parameters of generic functions (PEP 695) are not documented objects either.
-nitpick_ignore: list[tuple[str, str]] = [("py:class", "Field"), ("py:class", "R")]
+# Type parameters of generic functions and aliases (PEP 695) are not documented objects
+# either, and neither is what a generic alias expands to. The service classes are built by
+# the client from its private connection and login, whose types stay unpublished.
+nitpick_ignore: list[tuple[str, str]] = [
+    ("py:class", "Field"),
+    ("py:class", "R"),
+    ("py:class", "T"),
+    ("py:class", "BeforeValidator"),
+    ("py:class", "_as_list"),
+    ("py:class", "SoapClient"),
+    ("py:class", "Credentials"),
+    ("py:obj", "sanmar_sdk._soap.Service"),
+]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.

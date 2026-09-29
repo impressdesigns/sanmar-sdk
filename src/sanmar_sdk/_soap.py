@@ -17,6 +17,7 @@ from zeep import Client, Transport
 from zeep.exceptions import Error as ZeepError
 from zeep.exceptions import Fault, TransportError
 from zeep.helpers import serialize_object
+from zeep.loader import parse_xml
 from zeep.proxy import OperationProxy, ServiceProxy
 from zeep.wsdl.bindings.soap import Soap11Binding
 
@@ -158,6 +159,28 @@ def resolve_operation(service: ServiceProxy, candidates: Sequence[str]) -> Opera
     raise ResponseError(message)
 
 
+def _element_data(element: Any) -> Any:  # noqa: ANN401 - an lxml element in, arbitrary data out
+    """Turn an element into plain data: text for a leaf, a dict of children otherwise.
+
+    A child that appears more than once becomes a list, so a record reading an element that
+    may repeat should accept a single value too.
+    """
+    children = [child for child in element if isinstance(child.tag, str)]
+    if not children:
+        return element.text
+    data: dict[str, Any] = {}
+    for child in children:
+        name = child.tag.rpartition("}")[2]
+        value = _element_data(child)
+        if name not in data:
+            data[name] = value
+        elif isinstance(data[name], list):
+            data[name].append(value)
+        else:
+            data[name] = [data[name], value]
+    return data
+
+
 class SoapClient:
     """Calls SanMar's web services on one environment, loading each WSDL on first use."""
 
@@ -187,6 +210,34 @@ class SoapClient:
                 client = Client(endpoint.wsdl_url(self.environment), transport=self.transport)
             self._services[endpoint] = _bind(client, self.environment)
         return self._services[endpoint]
+
+    def call_unparsed(
+        self,
+        endpoint: Endpoint,
+        operation: Sequence[str],
+        payload: Mapping[str, object],
+    ) -> Any:  # noqa: ANN401
+        """Call an operation and read its response body without the WSDL.
+
+        For a response SanMar's own WSDL cannot describe: the request is still built and
+        checked against the WSDL, but the response body is read as plain XML. Returns the
+        body's first element as plain data (see :func:`_element_data`).
+        """
+        service = self.service(endpoint)
+        proxy = resolve_operation(service, operation)
+        client = service._client  # noqa: SLF001 - zeep offers no public accessor
+        with _translated_errors(), client.settings(raw_response=True):
+            response = proxy(**payload)
+        with _translated_errors():
+            if response.status_code != HTTPStatus.OK:
+                # Let zeep read the fault, or report the HTTP error, exactly as it would.
+                service._binding.process_reply(client, service._binding.get(proxy._op_name), response)  # noqa: SLF001
+            document = parse_xml(response.content, self.transport, settings=client.settings)
+        body = document.find("{http://schemas.xmlsoap.org/soap/envelope/}Body")
+        if body is None or not len(body):
+            message = "SanMar's response has no SOAP body."
+            raise ResponseError(message)
+        return _element_data(body[0])
 
     def call(self, endpoint: Endpoint, operation: Sequence[str], payload: Mapping[str, object]) -> Any:  # noqa: ANN401
         """Call an operation and return its response as plain dicts, lists and scalars.
@@ -220,3 +271,12 @@ def _translated_errors() -> Iterator[None]:
     except ZeepError as exc:
         message = f"Could not read SanMar's response: {exc}"
         raise ResponseError(message) from exc
+
+
+class Service:
+    """A group of operations on one of SanMar's services, as the client exposes it."""
+
+    def __init__(self, soap: SoapClient, credentials: Credentials) -> None:
+        """Share the client's connection and login."""
+        self._soap = soap
+        self._credentials = credentials

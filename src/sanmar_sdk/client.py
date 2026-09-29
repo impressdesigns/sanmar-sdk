@@ -4,6 +4,14 @@ from typing import TYPE_CHECKING
 
 from ._soap import Credentials, SoapClient
 from .common import Environment
+from .standard import (
+    InventoryService,
+    InvoiceService,
+    PackingSlipService,
+    PricingService,
+    ProductInfoService,
+    PurchaseOrderService,
+)
 
 if TYPE_CHECKING:
     from zeep import Transport
@@ -43,6 +51,18 @@ class SanMar:
         """Prepare a client; nothing is loaded until the first call."""
         self._credentials = Credentials(customer_number, username, password)
         self._soap = SoapClient(environment, timeout=timeout, transport=transport)
+        self.products = ProductInfoService(self._soap, self._credentials)
+        """SanMar's own product information service."""
+        self.inventory = InventoryService(self._soap, self._credentials)
+        """SanMar's own inventory service."""
+        self.pricing = PricingService(self._soap, self._credentials)
+        """SanMar's own pricing service, including this account's prices."""
+        self.invoices = InvoiceService(self._soap, self._credentials)
+        """SanMar's own invoicing service."""
+        self.purchase_orders = PurchaseOrderService(self._soap, self._credentials)
+        """SanMar's own purchase order service."""
+        self.packing_slips = PackingSlipService(self._soap, self._credentials)
+        """The packing slip service, which looks boxes up by license plate number."""
 
     @property
     def environment(self) -> Environment:
