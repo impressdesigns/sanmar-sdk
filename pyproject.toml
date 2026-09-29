@@ -8,7 +8,7 @@ authors = [
 ]
 license = { text = "MIT" }
 requires-python = ">=3.14"
-dependencies = ["suds>=1.2.0"]
+dependencies = ["pydantic>=2.12", "zeep>=4.3.3"]
 
 [project.urls]
 repository = "https://github.com/impressdesigns/sanmar-sdk"
@@ -27,6 +27,8 @@ dev = [
     "ruff>=0.16.3",
     "mypy>=2.3.1",
     "ty>=0.0.72",
+    # Stubs
+    "types-requests>=2.32",
 ]
 docs = [
     "sphinx>=9.1.0",
@@ -69,8 +71,23 @@ ignore = [
 "docs/*" = [
     "INP001", # (File `docs/conf.py` is part of an implicit namespace package. Add an `__init__.py`.) - Docs are not modules
 ]
+"scripts/*" = [
+    "INP001", # (File `scripts/*.py` is part of an implicit namespace package. Add an `__init__.py`.) - Scripts are not modules
+    "T201",   # (`print` found) - Scripts report to the terminal
+]
 "tests/*" = [
     "S101", # (Use of `assert` detected) - Yes, that's the point
+]
+
+[tool.ruff.lint.flake8-type-checking]
+# Pydantic evaluates annotations at runtime to build validators, so imports used only
+# in model annotations must stay at runtime scope. Without this, py314's deferred
+# annotations make TC rules think they are safe to move into a type-checking block.
+# Ruff cannot follow inheritance across modules, so the SDK's own bases are listed too.
+runtime-evaluated-base-classes = [
+    "pydantic.BaseModel",
+    "sanmar_sdk.base.Model",
+    "sanmar_sdk.base.Record",
 ]
 
 [tool.ruff.lint.isort]
@@ -87,18 +104,21 @@ unused-ignore-comment = "ignore"
 pretty = true
 num_workers = 4
 native_parser = true # required by num_workers
+plugins = ["pydantic.mypy"]
 cache_dir = ".cache/mypy"
-
-[[tool.mypy.overrides]]
-module = ["suds.*"]
-ignore_missing_imports = true
+# zeep ships py.typed but leaves most of its API unannotated.
+untyped_calls_exclude = ["zeep"]
 
 [tool.coverage.run]
 branch = true
 source_pkgs = ["sanmar_sdk"]
 source_dirs = ["tests"]
 data_file = ".cache/coverage/.coverage"
+omit = ["tests/live/*"]
 
 [tool.pytest]
 strict = true
 cache_dir = ".cache/pytest"
+markers = [
+    "live: calls SanMar's real services; runs only when SANMAR_LIVE=1 (see tests/live/conftest.py)",
+]

@@ -27,8 +27,27 @@ extensions = [
 
 autoapi_type: str = "python"
 autoapi_dirs: list[str] = ["../src"]
+# The default options plus nothing private: the wire payloads and SOAP plumbing are
+# implementation details, and publishing them would invite callers to depend on them.
+autoapi_options: list[str] = [
+    "members",
+    "undoc-members",
+    "show-inheritance",
+    "show-module-summary",
+    "special-members",
+    "imported-members",
+]
 
-intersphinx_mapping = {"python": ("https://docs.python.org/3", None)}
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3", None),
+    "pydantic": ("https://docs.pydantic.dev/latest", None),
+    "requests": ("https://requests.readthedocs.io/en/latest", None),
+    "zeep": ("https://docs.python-zeep.org/en/master", None),
+}
+
+# Field limits are declared as ``Annotated[str, Field(...)]``, which autoapi renders with
+# pydantic's ``Field`` unqualified, so there is nothing for it to resolve against.
+nitpick_ignore: list[tuple[str, str]] = [("py:class", "Field")]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
