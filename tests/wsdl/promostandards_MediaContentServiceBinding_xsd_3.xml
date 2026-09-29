@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.4-b01-. --><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://www.promostandards.org/WSDL/MediaService/1.0.0/" xmlns:ns2="http://www.promostandards.org/WSDL/MediaService/1.0.0/SharedObjects/" targetNamespace="http://www.promostandards.org/WSDL/MediaService/1.0.0/" elementFormDefault="qualified">
+	<xsd:import namespace="http://www.promostandards.org/WSDL/MediaService/1.0.0/SharedObjects/" schemaLocation="https://ws.sanmar.com:8080/promostandards/MediaContentServiceBinding?xsd=5"></xsd:import>
+	<xsd:element name="GetMediaDateModifiedRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ns2:wsVersion"></xsd:element>
+				<xsd:element ref="ns2:id"></xsd:element>
+				<xsd:element ref="ns2:password" minOccurs="0"></xsd:element>
+				<xsd:element ref="ns2:cultureName" minOccurs="0"></xsd:element>
+				<xsd:element ref="ns2:changeTimeStamp"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

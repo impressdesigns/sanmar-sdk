@@ -1,0 +1,147 @@
+
+Prefixes:
+     xsd: http://www.w3.org/2001/XMLSchema
+     ns0: http://www.promostandards.org/WSDL/PricingAndConfiguration/1.0.0/
+     ns1: http://www.promostandards.org/WSDL/PricingAndConfiguration/1.0.0/SharedObjects/
+     ns2: http://www.codesynthesis.com/xmlns/xsstl
+     ns3: http://www.isotc211.org/iso4217/
+
+Global elements:
+     ns1:ErrorMessage(code: xsd:int, description: ns1:description)
+     ns1:FobArray(Fob: {fobId: ns1:fobId, fobPostalCode: ns1:fobPostalCode}[])
+     ns1:chargeDescription(ns1:chargeDescription)
+     ns1:chargeId(xsd:int)
+     ns1:chargeName(ns1:chargeName)
+     ns1:chargeType(ns1:chargeType)
+     ns1:colorId(ns1:colorId)
+     ns1:colorName(ns1:colorName)
+     ns1:configurationType(ns1:configurationType)
+     ns1:currency(ns3:CurrencyCodeType)
+     ns1:decorationDiameter(ns1:decorationDiameter)
+     ns1:decorationGeometry(ns1:decorationGeometry)
+     ns1:decorationHeight(ns1:decorationHeight)
+     ns1:decorationId(xsd:int)
+     ns1:decorationName(ns1:decorationName)
+     ns1:decorationUnitsIncludedUom(ns1:decorationUnitsIncludedUom)
+     ns1:decorationUnitsMax(xsd:int)
+     ns1:decorationUom(ns1:decorationUom)
+     ns1:decorationWidth(ns1:decorationWidth)
+     ns1:decorationsIncluded(ns1:decorationsIncluded)
+     ns1:defaultLocation(ns1:defaultLocation)
+     ns1:defaultPart(xsd:boolean)
+     ns1:fobId(ns1:fobId)
+     ns1:fobPostalCode(ns1:fobPostalCode)
+     ns1:id(ns1:id)
+     ns1:localizationCountry(ns1:localizationCountry)
+     ns1:localizationLanguage(ns1:localizationLanguage)
+     ns1:locationId(xsd:int)
+     ns1:locationName(ns1:locationName)
+     ns1:locationRank(xsd:int)
+     ns1:maxDecoration(xsd:int)
+     ns1:minDecoration(xsd:int)
+     ns1:nextPartGroup(xsd:int)
+     ns1:partDescription(ns1:partDescription)
+     ns1:partGroup(xsd:int)
+     ns1:partGroupDescription(ns1:partGroupDescription)
+     ns1:partGroupRequired(ns1:partGroupRequired)
+     ns1:partId(ns1:partId)
+     ns1:password(ns1:password)
+     ns1:priceType(ns1:priceType)
+     ns1:productId(ns1:productId)
+     ns1:ratio(ns1:ratio)
+     ns1:wsVersion(ns1:wsVersion)
+     ns0:AvailableCharge(chargeId: xsd:int, chargeName: ns1:chargeName, chargeDescription: ns1:chargeDescription, chargeType: ns1:chargeType)
+     ns0:AvailableLocation(locationId: xsd:int, locationName: ns1:locationName)
+     ns0:Charge(chargeId: xsd:int, chargeName: ns1:chargeName, chargeDescription: ns1:chargeDescription, chargeType: ns1:chargeType, ChargePriceArray: {ChargePrice: ns0:ChargePrice[]}, chargesAppliesLTM: xsd:boolean, chargesPerLocation: xsd:int, chargesPerColor: xsd:int)
+     ns0:ChargePrice(xMinQty: xsd:int, xUom: ns0:xUom, yMinQty: xsd:int, yUom: ns1:decorationUomType, price: ns0:price, discountCode: ns0:discountCode, repeatPrice: ns0:repeatPrice, repeatDiscountCode: ns0:repeatDiscountCode, priceEffectiveDate: xsd:dateTime, priceExpiryDate: xsd:dateTime)
+     ns0:Color(colorId: ns1:colorId, colorName: ns1:colorName)
+     ns0:Configuration(PartArray: {Part: ns0:Part[]}, LocationArray: {Location: ns0:Location[]}, productId: ns1:productId, currency: ns3:CurrencyCodeType, FobArray: ns1:FobArray, priceType: ns1:priceType)
+     ns0:CurrencySupported(currency: ns3:CurrencyCodeType)
+     ns0:Decoration(decorationId: xsd:int, decorationName: ns1:decorationName, decorationGeometry: ns1:decorationGeometry, decorationHeight: ns1:decorationHeight, decorationWidth: ns1:decorationWidth, decorationDiameter: ns1:decorationDiameter, decorationUom: ns1:decorationUom, allowSubForDefaultLocation: xsd:boolean, allowSubForDefaultMethod: xsd:boolean, itemPartQuantityLTM: xsd:int, ChargeArray: {Charge: ns0:Charge[]}, decorationUnitsIncluded: xsd:int, decorationUnitsIncludedUom: ns1:decorationUnitsIncludedUom, decorationUnitsMax: xsd:int, defaultDecoration: xsd:boolean, leadTime: xsd:int, rushLeadTime: xsd:int)
+     ns0:DecorationMethod(decorationId: xsd:int, decorationName: ns1:decorationName)
+     ns0:FobPoint(fobId: ns1:fobId, fobCity: ns0:fobCity, fobState: ns0:fobState, fobPostalCode: ns1:fobPostalCode, fobCountry: ns0:fobCountry, CurrencySupportedArray: {CurrencySupported: ns0:CurrencySupported[]}, ProductArray: {Product: ns0:Product[]})
+     ns0:GetAvailableChargesRequest(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, productId: ns1:productId, localizationCountry: ns1:localizationCountry, localizationLanguage: ns1:localizationLanguage)
+     ns0:GetAvailableChargesResponse(AvailableChargeArray: {AvailableCharge: ns0:AvailableCharge[]}, ErrorMessage: ns1:ErrorMessage)
+     ns0:GetAvailableLocationsRequest(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, productId: ns1:productId, localizationCountry: ns1:localizationCountry, localizationLanguage: ns1:localizationLanguage)
+     ns0:GetAvailableLocationsResponse(AvailableLocationArray: {AvailableLocation: ns0:AvailableLocation[]}, ErrorMessage: ns1:ErrorMessage)
+     ns0:GetConfigurationAndPricingRequest(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, productId: ns1:productId, partId: ns1:partId, currency: ns3:CurrencyCodeType, fobId: ns1:fobId, priceType: ns1:priceType, localizationCountry: ns1:localizationCountry, localizationLanguage: ns1:localizationLanguage, configurationType: ns1:configurationType)
+     ns0:GetConfigurationAndPricingResponse(Configuration: ns0:Configuration, ErrorMessage: ns1:ErrorMessage)
+     ns0:GetDecorationColorsRequest(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, locationId: xsd:int, productId: ns1:productId, decorationId: xsd:int, localizationCountry: ns1:localizationCountry, localizationLanguage: ns1:localizationLanguage)
+     ns0:GetDecorationColorsResponse(DecorationColors: {ColorArray: {Color: ns0:Color[]}, productId: ns1:productId, locationId: xsd:int, DecorationMethodArray: {DecorationMethod: ns0:DecorationMethod[]}, pmsMatch: xsd:boolean, fullColor: xsd:boolean}, ErrorMessage: ns1:ErrorMessage)
+     ns0:GetFobPointsRequest(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, productId: ns1:productId, localizationCountry: ns1:localizationCountry, localizationLanguage: ns1:localizationLanguage)
+     ns0:GetFobPointsResponse(FobPointArray: {FobPoint: ns0:FobPoint[]}, ErrorMessage: ns1:ErrorMessage)
+     ns0:Location(locationId: xsd:int, locationName: ns1:locationName, DecorationArray: {Decoration: ns0:Decoration[]}, decorationsIncluded: ns1:decorationsIncluded, defaultLocation: ns1:defaultLocation, maxDecoration: xsd:int, minDecoration: xsd:int, locationRank: xsd:int)
+     ns0:Part(partId: ns1:partId, partDescription: ns1:partDescription, PartPriceArray: {PartPrice: ns0:PartPrice[]}, partGroup: xsd:int, nextPartGroup: xsd:int, partGroupRequired: ns1:partGroupRequired, partGroupDescription: ns1:partGroupDescription, ratio: ns1:ratio, defaultPart: xsd:boolean, LocationIdArray: {LocationId: {locationId: xsd:int}[]})
+     ns0:PartPrice(minQuantity: xsd:int, price: ns0:price, discountCode: ns0:discountCode, priceUom: ns0:priceUom, priceEffectiveDate: xsd:dateTime, priceExpiryDate: xsd:dateTime)
+     ns0:Product(productId: ns1:productId)
+     
+
+Global types:
+     xsd:anyType
+     ns2:ISO3166CountyCode
+     ns3:CurrencyCodeType
+     ns3:CurrencyNameType
+     ns3:CurrencyNumberType
+     ns1:QuantityUomType
+     ns1:chargeTypeType
+     ns1:decorationUomType
+     ns1:dimensionUomEnum
+     ns1:weightUomEnum
+     xsd:ENTITIES
+     xsd:ENTITY
+     xsd:ID
+     xsd:IDREF
+     xsd:IDREFS
+     xsd:NCName
+     xsd:NMTOKEN
+     xsd:NMTOKENS
+     xsd:NOTATION
+     xsd:Name
+     xsd:QName
+     xsd:anySimpleType
+     xsd:anyURI
+     xsd:base64Binary
+     xsd:boolean
+     xsd:byte
+     xsd:date
+     xsd:dateTime
+     xsd:decimal
+     xsd:double
+     xsd:duration
+     xsd:float
+     xsd:gDay
+     xsd:gMonth
+     xsd:gMonthDay
+     xsd:gYear
+     xsd:gYearMonth
+     xsd:hexBinary
+     xsd:int
+     xsd:integer
+     xsd:language
+     xsd:long
+     xsd:negativeInteger
+     xsd:nonNegativeInteger
+     xsd:nonPositiveInteger
+     xsd:normalizedString
+     xsd:positiveInteger
+     xsd:short
+     xsd:string
+     xsd:time
+     xsd:token
+     xsd:unsignedByte
+     xsd:unsignedInt
+     xsd:unsignedLong
+     xsd:unsignedShort
+
+Bindings:
+     Soap11Binding: {http://www.promostandards.org/WSDL/PricingAndConfiguration/1.0.0/}PricingAndConfigurationServiceBinding
+
+Service: PricingAndConfigurationService
+     Port: PricingAndConfigurationServiceBinding (Soap11Binding: {http://www.promostandards.org/WSDL/PricingAndConfiguration/1.0.0/}PricingAndConfigurationServiceBinding)
+         Operations:
+            getAvailableCharges(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, productId: ns1:productId, localizationCountry: ns1:localizationCountry, localizationLanguage: ns1:localizationLanguage) -> AvailableChargeArray: {AvailableCharge: ns0:AvailableCharge[]}, ErrorMessage: ns1:ErrorMessage
+            getAvailableLocations(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, productId: ns1:productId, localizationCountry: ns1:localizationCountry, localizationLanguage: ns1:localizationLanguage) -> AvailableLocationArray: {AvailableLocation: ns0:AvailableLocation[]}, ErrorMessage: ns1:ErrorMessage
+            getConfigurationAndPricing(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, productId: ns1:productId, partId: ns1:partId, currency: ns3:CurrencyCodeType, fobId: ns1:fobId, priceType: ns1:priceType, localizationCountry: ns1:localizationCountry, localizationLanguage: ns1:localizationLanguage, configurationType: ns1:configurationType) -> Configuration: ns0:Configuration, ErrorMessage: ns1:ErrorMessage
+            getDecorationColors(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, locationId: xsd:int, productId: ns1:productId, decorationId: xsd:int, localizationCountry: ns1:localizationCountry, localizationLanguage: ns1:localizationLanguage) -> DecorationColors: {ColorArray: {Color: ns0:Color[]}, productId: ns1:productId, locationId: xsd:int, DecorationMethodArray: {DecorationMethod: ns0:DecorationMethod[]}, pmsMatch: xsd:boolean, fullColor: xsd:boolean}, ErrorMessage: ns1:ErrorMessage
+            getFobPoints(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, productId: ns1:productId, localizationCountry: ns1:localizationCountry, localizationLanguage: ns1:localizationLanguage) -> FobPointArray: {FobPoint: ns0:FobPoint[]}, ErrorMessage: ns1:ErrorMessage
+

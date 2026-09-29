@@ -1,0 +1,92 @@
+
+Prefixes:
+     xsd: http://www.w3.org/2001/XMLSchema
+     ns0: http://ws.sanmar.com/webservices/PackingSlip
+
+Global elements:
+     ns0:Address(ns0:AddressType)
+     ns0:CompanyAddress(ns0:CompanyAddressType)
+     ns0:EmailAddress(ns0:EmailAddressType)
+     ns0:Fault(ns0:FaultType)
+     ns0:GetPackingSlip(ns0:GetPackingSlipType)
+     ns0:GetPackingSlipFault(ns0:FaultType)
+     ns0:GetPackingSlipResponse(ns0:GetPackingSlipResponseType)
+     ns0:PackingSlip(ns0:PackingSlipType)
+     ns0:TelephoneNumber(ns0:TelephoneNumberType)
+     
+
+Global types:
+     xsd:anyType
+     ns0:AddressType(Line1: ns0:Line1, Line2: ns0:Line2, Line3: ns0:Line3, CityName: ns0:CityName, StateCode: ns0:StateCode, PostalCode: ns0:PostalCode, CountryCode: ns0:CountryCode, IsResidential: xsd:boolean, Notes: ns0:Notes)
+     ns0:CarrierType(Name: xsd:normalizedString, ShippingMethod: ns0:ShippingMethod, TrackingId: xsd:normalizedString)
+     ns0:CompanyAddressType(Name: ns0:Name, Address: ns0:AddressType, ContactName: ns0:ContactName, Telephone: ns0:TelephoneNumberType, Fax: ns0:TelephoneNumberType, Email: ns0:EmailAddressType)
+     ns0:DistanceType(ns0:UnsignedMeasureType, uom: ns0:uom)
+     ns0:EmailAddressType
+     ns0:FaultActorType
+     ns0:FaultCodeType
+     ns0:FaultSeverityType
+     ns0:FaultType(Code: ns0:FaultCodeType, Message: xsd:normalizedString, Actor: ns0:FaultActorType, Severity: ns0:FaultSeverityType, Type: ns0:FaultTypeType, IsRetriable: xsd:boolean)
+     ns0:FaultTypeType
+     ns0:GetPackingSlipResponseType(PackingSlip: ns0:PackingSlipType)
+     ns0:GetPackingSlipType(wsVersion: ns0:wsVersion, UserId: ns0:UserId, Password: ns0:Password, PackingSlipId: xsd:normalizedString)
+     ns0:ItemType(SkuId: ns0:SkuId, StyleNo: ns0:StyleNo, Description: xsd:normalizedString, Color: ns0:Color, Size: ns0:Size, Quantity: ns0:Quantity, GTIN: xsd:normalizedString, id: xsd:normalizedString)
+     ns0:PackingSlipBodyType(({PackingSlip: ns0:PackingSlipType[]} | {Item: ns0:ItemType[]}))
+     ns0:PackingSlipHeaderType(ShipmentDate: xsd:date, ShipmentUnitIndex: xsd:int, ShipmentUnitQuantity: xsd:int, OrderDate: xsd:date, OrderNumber: xsd:int, InvoiceNumber: xsd:int, PurchaseOrderReference: xsd:normalizedString, ShipFrom: ns0:CompanyAddressType, ShipTo: ns0:CompanyAddressType, BillTo: ns0:CompanyAddressType, Weight: ns0:WeightType, Length: ns0:DistanceType, Width: ns0:DistanceType, Height: ns0:DistanceType, Carrier: ns0:CarrierType)
+     ns0:PackingSlipType(Header: ns0:PackingSlipHeaderType, Body: ns0:PackingSlipBodyType, id: xsd:normalizedString)
+     ns0:TelephoneNumberType
+     ns0:UnsignedMeasureType
+     ns0:WeightType(ns0:UnsignedMeasureType, uom: ns0:uom)
+     xsd:ENTITIES
+     xsd:ENTITY
+     xsd:ID
+     xsd:IDREF
+     xsd:IDREFS
+     xsd:NCName
+     xsd:NMTOKEN
+     xsd:NMTOKENS
+     xsd:NOTATION
+     xsd:Name
+     xsd:QName
+     xsd:anySimpleType
+     xsd:anyURI
+     xsd:base64Binary
+     xsd:boolean
+     xsd:byte
+     xsd:date
+     xsd:dateTime
+     xsd:decimal
+     xsd:double
+     xsd:duration
+     xsd:float
+     xsd:gDay
+     xsd:gMonth
+     xsd:gMonthDay
+     xsd:gYear
+     xsd:gYearMonth
+     xsd:hexBinary
+     xsd:int
+     xsd:integer
+     xsd:language
+     xsd:long
+     xsd:negativeInteger
+     xsd:nonNegativeInteger
+     xsd:nonPositiveInteger
+     xsd:normalizedString
+     xsd:positiveInteger
+     xsd:short
+     xsd:string
+     xsd:time
+     xsd:token
+     xsd:unsignedByte
+     xsd:unsignedInt
+     xsd:unsignedLong
+     xsd:unsignedShort
+
+Bindings:
+     Soap11Binding: {http://ws.sanmar.com/webservices/PackingSlip}PackingSlipBinding
+
+Service: PackingSlipService
+     Port: PackingSlipService (Soap11Binding: {http://ws.sanmar.com/webservices/PackingSlip}PackingSlipBinding)
+         Operations:
+            GetPackingSlip(wsVersion: ns0:wsVersion, UserId: ns0:UserId, Password: ns0:Password, PackingSlipId: xsd:normalizedString) -> PackingSlip: ns0:PackingSlipType
+

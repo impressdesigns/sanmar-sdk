@@ -1,0 +1,85 @@
+
+Prefixes:
+     xsd: http://www.w3.org/2001/XMLSchema
+     ns0: http://www.promostandards.org/WSDL/MediaService/1.0.0/
+     ns1: http://www.promostandards.org/WSDL/MediaService/1.0.0/SharedObjects/
+
+Global elements:
+     ns1:changeTimeStamp(xsd:dateTime)
+     ns1:cultureName(xsd:string)
+     ns1:errorMessage(code: xsd:int, description: ns1:description)
+     ns1:id(ns1:id)
+     ns1:mediaType(ns1:mediaTypeType)
+     ns1:partId(ns1:partId)
+     ns1:password(ns1:password)
+     ns1:productId(ns1:productId)
+     ns1:wsVersion(ns1:wsVersion)
+     ns0:ClassType(classTypeId: xsd:int, classTypeName: ns0:classTypeName)
+     ns0:Decoration(decorationId: xsd:int, decorationName: ns0:decorationName)
+     ns0:GetMediaContentRequest(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, cultureName: xsd:string, mediaType: ns1:mediaTypeType, productId: ns1:productId, partId: ns1:partId, classType: xsd:int)
+     ns0:GetMediaContentResponse(MediaContentArray: {MediaContent: ns0:MediaContent[]}, errorMessage: ns1:errorMessage)
+     ns0:GetMediaDateModifiedRequest(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, cultureName: xsd:string, changeTimeStamp: xsd:dateTime)
+     ns0:GetMediaDateModifiedResponse(MediaDateModifiedArray: {MediaDateModified: ns0:MediaDateModified[]}, errorMessage: ns1:errorMessage)
+     ns0:Location(locationId: xsd:int, locationName: ns0:locationName)
+     ns0:MediaContent(productId: ns1:productId, partId: ns1:partId, url: ns0:url, mediaType: ns1:mediaTypeType, ClassTypeArray: {ClassType: ns0:ClassType[]}, fileSize: xsd:double, width: xsd:decimal, height: xsd:decimal, dpi: xsd:int, color: ns0:color, DecorationArray: {Decoration: ns0:Decoration[]}, LocationArray: {Location: ns0:Location[]}, decorationId: xsd:int, description: ns0:description, singlePart: xsd:boolean, changeTimeStamp: xsd:dateTime)
+     ns0:MediaDateModified(productId: ns1:productId, partId: ns1:partId)
+     
+
+Global types:
+     xsd:anyType
+     ns1:mediaTypeType
+     xsd:ENTITIES
+     xsd:ENTITY
+     xsd:ID
+     xsd:IDREF
+     xsd:IDREFS
+     xsd:NCName
+     xsd:NMTOKEN
+     xsd:NMTOKENS
+     xsd:NOTATION
+     xsd:Name
+     xsd:QName
+     xsd:anySimpleType
+     xsd:anyURI
+     xsd:base64Binary
+     xsd:boolean
+     xsd:byte
+     xsd:date
+     xsd:dateTime
+     xsd:decimal
+     xsd:double
+     xsd:duration
+     xsd:float
+     xsd:gDay
+     xsd:gMonth
+     xsd:gMonthDay
+     xsd:gYear
+     xsd:gYearMonth
+     xsd:hexBinary
+     xsd:int
+     xsd:integer
+     xsd:language
+     xsd:long
+     xsd:negativeInteger
+     xsd:nonNegativeInteger
+     xsd:nonPositiveInteger
+     xsd:normalizedString
+     xsd:positiveInteger
+     xsd:short
+     xsd:string
+     xsd:time
+     xsd:token
+     xsd:unsignedByte
+     xsd:unsignedInt
+     xsd:unsignedLong
+     xsd:unsignedShort
+
+Bindings:
+     Soap11Binding: {http://www.promostandards.org/WSDL/MediaService/1.0.0/}MediaContentServiceBinding
+
+Service: MediaContentService
+     Port: MediaServiceBinding (Soap11Binding: {http://www.promostandards.org/WSDL/MediaService/1.0.0/}MediaContentServiceBinding)
+         Operations:
+            getMediaContent(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, cultureName: xsd:string, mediaType: ns1:mediaTypeType, productId: ns1:productId, partId: ns1:partId, classType: xsd:int) -> MediaContentArray: {MediaContent: ns0:MediaContent[]}, errorMessage: ns1:errorMessage
+            getMediaDateModified(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, cultureName: xsd:string, changeTimeStamp: xsd:dateTime) -> MediaDateModifiedArray: {MediaDateModified: ns0:MediaDateModified[]}, errorMessage: ns1:errorMessage
+

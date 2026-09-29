@@ -1,0 +1,76 @@
+
+Prefixes:
+     xsd: http://www.w3.org/2001/XMLSchema
+     ns0: http://webservice.integration.sanmar.com/
+
+Global elements:
+     ns0:Exception(ns0:Exception)
+     ns0:getInventoryQtyForStyleColorSize(ns0:getInventoryQtyForStyleColorSize)
+     ns0:getInventoryQtyForStyleColorSizeByWhse(ns0:getInventoryQtyForStyleColorSizeByWhse)
+     ns0:getInventoryQtyForStyleColorSizeByWhseResponse(ns0:getInventoryQtyForStyleColorSizeByWhseResponse)
+     ns0:getInventoryQtyForStyleColorSizeResponse(ns0:getInventoryQtyForStyleColorSizeResponse)
+     
+
+Global types:
+     xsd:anyType
+     ns0:Exception(message: xsd:string)
+     ns0:getInventoryQtyForStyleColorSize(arg0: xsd:string, arg1: xsd:string, arg2: xsd:string, arg3: xsd:string, arg4: xsd:string, arg5: xsd:string)
+     ns0:getInventoryQtyForStyleColorSizeByWhse(arg0: xsd:string, arg1: xsd:string, arg2: xsd:string, arg3: xsd:string, arg4: xsd:string, arg5: xsd:string, arg6: xsd:string)
+     ns0:getInventoryQtyForStyleColorSizeByWhseResponse(return: ns0:responseBean)
+     ns0:getInventoryQtyForStyleColorSizeResponse(return: ns0:responseBean)
+     ns0:responseBean(errorOccurred: xsd:boolean, listResponse: None[], message: xsd:string, response: None)
+     xsd:ENTITIES
+     xsd:ENTITY
+     xsd:ID
+     xsd:IDREF
+     xsd:IDREFS
+     xsd:NCName
+     xsd:NMTOKEN
+     xsd:NMTOKENS
+     xsd:NOTATION
+     xsd:Name
+     xsd:QName
+     xsd:anySimpleType
+     xsd:anyURI
+     xsd:base64Binary
+     xsd:boolean
+     xsd:byte
+     xsd:date
+     xsd:dateTime
+     xsd:decimal
+     xsd:double
+     xsd:duration
+     xsd:float
+     xsd:gDay
+     xsd:gMonth
+     xsd:gMonthDay
+     xsd:gYear
+     xsd:gYearMonth
+     xsd:hexBinary
+     xsd:int
+     xsd:integer
+     xsd:language
+     xsd:long
+     xsd:negativeInteger
+     xsd:nonNegativeInteger
+     xsd:nonPositiveInteger
+     xsd:normalizedString
+     xsd:positiveInteger
+     xsd:short
+     xsd:string
+     xsd:time
+     xsd:token
+     xsd:unsignedByte
+     xsd:unsignedInt
+     xsd:unsignedLong
+     xsd:unsignedShort
+
+Bindings:
+     Soap11Binding: {http://webservice.integration.sanmar.com/}SanMarWebServicePortBinding
+
+Service: SanMarWebServiceService
+     Port: SanMarWebServicePort (Soap11Binding: {http://webservice.integration.sanmar.com/}SanMarWebServicePortBinding)
+         Operations:
+            getInventoryQtyForStyleColorSize(arg0: xsd:string, arg1: xsd:string, arg2: xsd:string, arg3: xsd:string, arg4: xsd:string, arg5: xsd:string) -> return: ns0:responseBean
+            getInventoryQtyForStyleColorSizeByWhse(arg0: xsd:string, arg1: xsd:string, arg2: xsd:string, arg3: xsd:string, arg4: xsd:string, arg5: xsd:string, arg6: xsd:string) -> return: ns0:responseBean
+

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.4-b01-. --><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:stl="http://www.iso20022.org/" targetNamespace="http://www.iso20022.org/">
+
+	<xsd:simpleType name="ISO20022UomCode">
+		<xsd:annotation>
+			<xsd:documentation>
+			https://www.iso20022.org/standardsrepository/public/wqt/Description/mx/dico/codesets/_Y4XF0tp-Ed-ak6NoX_4Aeg_385163498
+			The type of Dimension UOM
+      </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PIEC"></xsd:enumeration>
+			<xsd:enumeration value="TONS"></xsd:enumeration>
+			<xsd:enumeration value="FOOT"></xsd:enumeration>
+			<xsd:enumeration value="GBGA"></xsd:enumeration>
+			<xsd:enumeration value="USGA"></xsd:enumeration>
+			<xsd:enumeration value="GRAM"></xsd:enumeration>
+			<xsd:enumeration value="INCH"></xsd:enumeration>
+			<xsd:enumeration value="KILO"></xsd:enumeration>
+			<xsd:enumeration value="PUND"></xsd:enumeration>
+			<xsd:enumeration value="METR"></xsd:enumeration>
+			<xsd:enumeration value="CMET"></xsd:enumeration>
+			<xsd:enumeration value="MMET"></xsd:enumeration>
+			<xsd:enumeration value="LITR"></xsd:enumeration>
+			<xsd:enumeration value="CELI"></xsd:enumeration>
+			<xsd:enumeration value="MILI"></xsd:enumeration>
+			<xsd:enumeration value="GBOU"></xsd:enumeration>
+			<xsd:enumeration value="USOU"></xsd:enumeration>
+			<xsd:enumeration value="GBQA"></xsd:enumeration>
+			<xsd:enumeration value="USQA"></xsd:enumeration>
+			<xsd:enumeration value="GBPI"></xsd:enumeration>
+			<xsd:enumeration value="USPI"></xsd:enumeration>
+			<xsd:enumeration value="MILE"></xsd:enumeration>
+			<xsd:enumeration value="KMET"></xsd:enumeration>
+			<xsd:enumeration value="YARD"></xsd:enumeration>
+			<xsd:enumeration value="SQKI"></xsd:enumeration>
+			<xsd:enumeration value="HECT"></xsd:enumeration>
+			<xsd:enumeration value="ARES"></xsd:enumeration>
+			<xsd:enumeration value="SMET"></xsd:enumeration>
+			<xsd:enumeration value="SCMT"></xsd:enumeration>
+			<xsd:enumeration value="SMIL"></xsd:enumeration>
+			<xsd:enumeration value="SQMI"></xsd:enumeration>
+			<xsd:enumeration value="SQYA"></xsd:enumeration>
+			<xsd:enumeration value="SQFO"></xsd:enumeration>
+			<xsd:enumeration value="SQIN"></xsd:enumeration>
+			<xsd:enumeration value="ACRE"></xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

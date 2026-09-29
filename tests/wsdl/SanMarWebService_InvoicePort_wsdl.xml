@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.4-b01-. --><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://webservice.integration.sanmar.com/" targetNamespace="http://webservice.integration.sanmar.com/" name="Invoice">
+
+
+	<!-- WSDL Types -->
+
+	<types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://webservice.integration.sanmar.com/" elementFormDefault="qualified" version="1.0">
+
+			<!-- Invoice -->
+
+			<!-- Input -->
+			<element name="GetInvoiceByInvoiceNo" type="tns:GetInvoiceByInvoiceNoType"></element>
+			<element name="GetInvoicesByPurchaseOrderNo" type="tns:GetInvoicesByPurchaseOrderNoType"></element>
+			<element name="GetInvoicesByInvoiceDateRange" type="tns:GetInvoicesByInvoiceDateRangeType"></element>
+			<element name="GetInvoicesByOrderDate" type="tns:GetInvoicesByOrderDateType"></element>
+			<element name="GetUnpaidInvoices" type="tns:GetUnpaidInvoicesType"></element>
+			<element name="GetInvoices" type="tns:GetInvoicesType"></element>
+			<!-- Output -->
+			<element name="Invoice" type="tns:InvoiceType"></element>
+			<element name="Invoices" type="tns:InvoicesType"></element>
+
+
+			<!-- Invoice Header -->
+
+			<!-- Input -->
+			<element name="GetInvoicesHeaderByPurchaseOrderNo" type="tns:GetInvoicesHeaderByPurchaseOrderNoType"></element>
+			<element name="GetInvoicesHeaderByInvoiceDateRange" type="tns:GetInvoicesHeaderByInvoiceDateRangeType"></element>
+			<element name="GetInvoicesHeaderByOrderDate" type="tns:GetInvoicesHeaderByOrderDateType"></element>
+			<element name="GetUnpaidInvoicesHeader" type="tns:GetUnpaidInvoicesHeaderType"></element>
+			<!-- Output -->
+			<element name="InvoiceHeader" type="tns:InvoiceHeaderType"></element>
+			<element name="InvoicesHeader" type="tns:InvoicesHeaderType"></element>
+			<!-- Faults -->
+			<element name="Fault" type="tns:FaultType"></element>
+
+			<complexType name="GetInvoiceByInvoiceNoType">
+				<sequence>
+					<element name="CustomerNo" type="normalizedString"></element>
+					<element name="UserName" type="normalizedString"></element>
+					<element name="Password" type="normalizedString"></element>
+					<element name="InvoiceNo" type="int"></element>
+				</sequence>
+			</complexType>
+			<complexType name="GetInvoicesByPurchaseOrderNoType">
+				<sequence>
+					<element name="CustomerNo" type="normalizedString"></element>
+					<element name="UserName" type="normalizedString"></element>
+					<element name="Password" type="normalizedString"></element>
+					<element name="PurchaseOrderNo" type="normalizedString"></element>
+				</sequence>
+			</complexType>
+			<complexType name="GetInvoicesByInvoiceDateRangeType">
+				<sequence>
+					<element name="CustomerNo" type="normalizedString"></element>
+					<element name="UserName" type="normalizedString"></element>
+					<element name="Password" type="normalizedString"></element>
+					<element name="StartDate" type="date"></element>
+					<element name="EndDate" type="date" minOccurs="0"></element>
+				</sequence>
+			</complexType>
+			<complexType name="GetInvoicesByOrderDateType">
+				<sequence>
+					<element name="CustomerNo" type="normalizedString"></element>
+					<element name="UserName" type="normalizedString"></element>
+					<element name="Password" type="normalizedString"></element>
+					<element name="Date" type="date"></element>
+				</sequence>
+			</complexType>
+			<complexType name="GetUnpaidInvoicesType">
+				<sequence>
+					<element name="CustomerNo" type="normalizedString"></element>
+					<element name="UserName" type="normalizedString"></element>
+					<element name="Password" type="normalizedString"></element>
+				</sequence>
+			</complexType>
+			<complexType name="GetInvoicesType">
+				<sequence>
+					<element name="CustomerNo" type="normalizedString"></element>
+					<element name="UserName" type="normalizedString"></element>
+					<element name="Password" type="normalizedString"></element>
+				</sequence>
+			</complexType>
+			<complexType name="GetInvoicesHeaderByPurchaseOrderNoType">
+				<sequence>
+					<element name="CustomerNo" type="normalizedString"></element>
+					<element name="UserName" type="normalizedString"></element>
+					<element name="Password" type="normalizedString"></element>
+					<element name="PurchaseOrderNo" type="normalizedString"></element>
+				</sequence>
+			</complexType>
+			<complexType name="GetInvoicesHeaderByInvoiceDateRangeType">
+				<sequence>
+					<element name="CustomerNo" type="normalizedString"></element>
+					<element name="UserName" type="normalizedString"></element>
+					<element name="Password" type="normalizedString"></element>
+					<element name="StartDate" type="date"></element>
+					<element name="EndDate" type="date" minOccurs="0"></element>
+				</sequence>
+			</complexType>
+			<complexType name="GetInvoicesHeaderByOrderDateType">
+				<sequence>
+					<element name="CustomerNo" type="normalizedString"></element>
+					<element name="UserName" type="normalizedString"></element>
+					<element name="Password" type="normalizedString"></element>
+					<element name="Date" type="date"></element>
+				</sequence>
+			</complexType>
+			<complexType name="GetUnpaidInvoicesHeaderType">
+				<sequence>
+					<element name="CustomerNo" type="normalizedString"></element>
+					<element name="UserName" type="normalizedString"></element>
+					<element name="Password" type="normalizedString"></element>
+				</sequence>
+			</complexType>
+			<complexType name="AddressType">
+				<sequence>
+					<element name="Address1" type="normalizedString"></element>
+					<element name="Address2" type="normalizedString" minOccurs="0"></element>
+					<element name="Address3" type="normalizedString" minOccurs="0"></element>
+					<element name="City" type="normalizedString"></element>
+					<element name="State" type="normalizedString"></element>
+					<element name="PostalCode" type="normalizedString"></element>
+					<element name="Country" type="normalizedString"></element>
+				</sequence>
+			</complexType>
+
+			<complexType name="RecipientType">
+				<sequence>
+					<element name="Name" type="normalizedString" minOccurs="0"></element>
+					<element name="Address" type="tns:AddressType" minOccurs="0"></element>
+				</sequence>
+			</complexType>
+
+			<simpleType name="InvoiceStatusType">
+				<restriction base="token">
+					<enumeration value="Paid"></enumeration>
+					<enumeration value="Unpaid"></enumeration>
+				</restriction>
+			</simpleType>
+			<complexType name="MiscellaneousType">
+				<sequence>
+					<element name="FreightSavings" type="double" minOccurs="0"></element>
+					<element name="TrackingIDs" type="normalizedString" minOccurs="0"></element>
+				</sequence>
+			</complexType>
+			
+			<complexType name="InvoiceHeaderType">
+				<sequence>
+					<element name="InvoiceNo" type="int"></element>
+					<element name="SalesOrderNumber" type="int" minOccurs="0"></element>
+					<element name="InvoiceDate" type="date"></element>
+					<element name="InvoiceStatus" type="tns:InvoiceStatusType"></element>
+					<element name="IsCreditMemo" type="boolean" minOccurs="0"></element>
+					<element name="CustomerNo" type="int"></element>
+					<element name="SoldTo" type="tns:RecipientType" minOccurs="0"></element>
+					<element name="ShipTo" type="tns:RecipientType" minOccurs="0"></element>
+					<element name="RemitTo" type="tns:RecipientType" minOccurs="0"></element>
+					<element name="PurchaseOrderNo" type="normalizedString" minOccurs="0"></element>
+					<element name="OrderDate" type="date" minOccurs="0"></element>
+					<element name="DueDate" type="date" minOccurs="0"></element>
+					<element name="ShipVia" type="normalizedString" minOccurs="0"></element>
+					<element name="FOB" type="normalizedString" minOccurs="0"></element>
+					<element name="Terms" type="normalizedString" minOccurs="0"></element>
+					<element name="DeptNo" type="normalizedString" minOccurs="0"></element>
+					<element name="TotalCases" type="int" minOccurs="0"></element>
+					<element name="TotalWeight" type="int" minOccurs="0"></element>
+					<element name="SubTotal" type="double" minOccurs="0"></element>
+					<element name="SalesTax" type="double" minOccurs="0"></element>
+					<element name="ShippingHandlingCharges" type="double" minOccurs="0"></element>
+					<element name="TotalAmount" type="double" minOccurs="0"></element>
+					<element name="Miscellaneous" type="tns:MiscellaneousType" minOccurs="0"></element>
+				</sequence>
+			</complexType>
+			<complexType name="InvoiceLineItemType">
+				<sequence>
+					<element name="StyleNo" type="normalizedString" minOccurs="0"></element>
+					<element name="StyleColor" type="normalizedString" minOccurs="0"></element>
+					<element name="StyleDescription" type="normalizedString" minOccurs="0"></element>
+					<element name="StyleSize" type="normalizedString" minOccurs="0"></element>
+					<element name="Quantity" type="int" minOccurs="0"></element>
+					<element name="UnitPrice" type="double" minOccurs="0"></element>
+					<element name="Amount" type="double" minOccurs="0"></element>
+					<element name="UniqueKey" type="normalizedString" minOccurs="0"></element>
+				</sequence>
+			</complexType>
+			<complexType name="InvoiceType">
+				<sequence>
+					<element name="Header" type="tns:InvoiceHeaderType"></element>
+					<element name="LineItem" type="tns:InvoiceLineItemType" maxOccurs="unbounded"></element>
+				</sequence>
+			</complexType>
+			<complexType name="InvoicesType">
+				<sequence>
+					<element name="Invoice" type="tns:InvoiceType" maxOccurs="unbounded"></element>
+				</sequence>
+			</complexType>
+
+
+			<complexType name="InvoicesHeaderType">
+				<sequence>
+					<element name="InvoiceHeader" type="tns:InvoiceHeaderType" maxOccurs="unbounded"></element>
+				</sequence>
+			</complexType>
+
+
+			<simpleType name="FaultType">
+				<restriction base="normalizedString">
+					<enumeration value="Unexpected failure">
+						<annotation>
+							<documentation>The Web Service experienced an unexpected failure
+							</documentation>
+						</annotation>
+					</enumeration>
+					<enumeration value="Service unavailable">
+						<annotation>
+							<documentation>The Web Service is currently unavailable
+							</documentation>
+						</annotation>
+					</enumeration>
+					<enumeration value="Unauthenticated request">
+						<annotation>
+							<documentation>Wrong credentials were supplied
+							</documentation>
+						</annotation>
+					</enumeration>
+					<enumeration value="Unauthorized request">
+						<annotation>
+							<documentation>Unauthorized request due to policy
+							</documentation>
+						</annotation>
+					</enumeration>
+					<enumeration value="Invalid request">
+						<annotation>
+							<documentation>Request contains unexpected values. For example an
+								invalid date range, etc
+							</documentation>
+						</annotation>
+					</enumeration>
+					<enumeration value="Data not found">
+						<annotation>
+							<documentation>No data was found satisfying the request
+							</documentation>
+						</annotation>
+					</enumeration>
+				</restriction>
+			</simpleType>
+		</schema>
+	</types>
+
+
+	<!-- WSDL Messages -->
+
+	<message name="GetInvoiceByInvoiceNo">
+		<part name="body" element="tns:GetInvoiceByInvoiceNo"></part>
+	</message>
+	<message name="GetInvoicesByPurchaseOrderNo">
+		<part name="body" element="tns:GetInvoicesByPurchaseOrderNo"></part>
+	</message>
+	<message name="GetInvoicesByInvoiceDateRange">
+		<part name="body" element="tns:GetInvoicesByInvoiceDateRange"></part>
+	</message>
+	<message name="GetInvoicesByOrderDate">
+		<part name="body" element="tns:GetInvoicesByOrderDate"></part>
+	</message>
+	<message name="GetUnpaidInvoices">
+		<part name="body" element="tns:GetUnpaidInvoices"></part>
+	</message>
+	<message name="GetInvoices">
+		<part name="body" element="tns:GetInvoices"></part>
+	</message>
+	<message name="Invoice">
+		<part name="body" element="tns:Invoice"></part>
+	</message>
+	<message name="Invoices">
+		<part name="body" element="tns:Invoices"></part>
+	</message>
+	<message name="GetInvoicesHeaderByPurchaseOrderNo">
+		<part name="body" element="tns:GetInvoicesHeaderByPurchaseOrderNo"></part>
+	</message>
+	<message name="GetInvoicesHeaderByInvoiceDateRange">
+		<part name="body" element="tns:GetInvoicesHeaderByInvoiceDateRange"></part>
+	</message>
+	<message name="GetInvoicesHeaderByOrderDate">
+		<part name="body" element="tns:GetInvoicesHeaderByOrderDate"></part>
+	</message>
+	<message name="GetUnpaidInvoicesHeader">
+		<part name="body" element="tns:GetUnpaidInvoicesHeader"></part>
+	</message>
+	<message name="InvoiceHeader">
+		<part name="body" element="tns:InvoiceHeader"></part>
+	</message>
+	<message name="InvoicesHeader">
+		<part name="body" element="tns:InvoicesHeader"></part>
+	</message>
+	<message name="Fault">
+		<part name="body" element="tns:Fault"></part>
+	</message>
+
+
+	<!-- WSDL Port Types -->
+
+	<portType name="InvoicePortType">
+		<operation name="GetInvoiceByInvoiceNo">
+			<documentation>Returns the invoice for the invoice number specified
+			</documentation>
+			<input message="tns:GetInvoiceByInvoiceNo"></input>
+			<output message="tns:Invoice">
+				<documentation></documentation>
+			</output>
+			<fault name="Fault" message="tns:Fault"></fault>
+		</operation>
+		<operation name="GetInvoicesByPurchaseOrderNo">
+			<documentation>Returns invoices for the purchase order number
+				specified
+			</documentation>
+			<input message="tns:GetInvoicesByPurchaseOrderNo"></input>
+			<output message="tns:Invoices"></output>
+			<fault name="Fault" message="tns:Fault"></fault>
+		</operation>
+		<operation name="GetInvoicesByInvoiceDateRange">
+			<documentation>Returns invoices created in the date range specified
+			</documentation>
+			<input message="tns:GetInvoicesByInvoiceDateRange"></input>
+			<output message="tns:Invoices"></output>
+			<fault name="Fault" message="tns:Fault"></fault>
+		</operation>
+		<operation name="GetInvoicesByOrderDate">
+			<documentation>Returns invoices for the order date specified
+			</documentation>
+			<input message="tns:GetInvoicesByOrderDate"></input>
+			<output message="tns:Invoices"></output>
+			<fault name="Fault" message="tns:Fault"></fault>
+		</operation>
+		<operation name="GetUnpaidInvoices">
+			<documentation>Returns unpaid invoices</documentation>
+			<input message="tns:GetUnpaidInvoices"></input>
+			<output message="tns:Invoices"></output>
+			<fault name="Fault" message="tns:Fault"></fault>
+		</operation>
+		<operation name="GetInvoices">
+			<documentation>Returns invoices for incremental</documentation>
+			<input message="tns:GetInvoices"></input>
+			<output message="tns:Invoices"></output>
+			<fault name="Fault" message="tns:Fault"></fault>
+		</operation>
+
+		<operation name="GetInvoicesHeaderByPurchaseOrderNo">
+			<documentation>Returns invoices header for the purchase order number
+				specified
+			</documentation>
+			<input message="tns:GetInvoicesHeaderByPurchaseOrderNo"></input>
+			<output message="tns:InvoicesHeader"></output>
+			<fault name="Fault" message="tns:Fault"></fault>
+		</operation>
+		<operation name="GetInvoicesHeaderByInvoiceDateRange">
+			<documentation>Returns invoices header of the invoices created in the
+				date range specified
+			</documentation>
+			<input message="tns:GetInvoicesHeaderByInvoiceDateRange"></input>
+			<output message="tns:InvoicesHeader"></output>
+			<fault name="Fault" message="tns:Fault"></fault>
+		</operation>
+		<operation name="GetInvoicesHeaderByOrderDate">
+			<documentation>Returns invoices header for the order date specified
+			</documentation>
+			<input message="tns:GetInvoicesHeaderByOrderDate"></input>
+			<output message="tns:InvoicesHeader"></output>
+			<fault name="Fault" message="tns:Fault"></fault>
+		</operation>
+		<operation name="GetUnpaidInvoicesHeader">
+			<documentation>Returns unpaid invoices header</documentation>
+			<input message="tns:GetUnpaidInvoicesHeader"></input>
+			<output message="tns:InvoicesHeader"></output>
+			<fault name="Fault" message="tns:Fault"></fault>
+		</operation>
+	</portType>
+
+
+	<!-- WSDL Binding -->
+
+	<binding name="InvoiceSoapBinding" type="tns:InvoicePortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+		<operation name="GetInvoiceByInvoiceNo">
+			<soap:operation soapAction="GetInvoiceByInvoiceNo"></soap:operation>
+			<input>
+				<soap:body use="literal"></soap:body>
+			</input>
+			<output>
+				<soap:body use="literal"></soap:body>
+			</output>
+			<fault name="Fault">
+				<soap:fault name="Fault" use="literal"></soap:fault>
+			</fault>
+		</operation>
+		<operation name="GetInvoicesByPurchaseOrderNo">
+			<soap:operation soapAction="GetInvoicesByPurchaseOrderNo"></soap:operation>
+			<input>
+				<soap:body use="literal"></soap:body>
+			</input>
+			<output>
+				<soap:body use="literal"></soap:body>
+			</output>
+			<fault name="Fault">
+				<soap:fault name="Fault" use="literal"></soap:fault>
+			</fault>
+		</operation>
+		<operation name="GetInvoicesByInvoiceDateRange">
+			<soap:operation soapAction="GetInvoicesByInvoiceDateRange"></soap:operation>
+			<input>
+				<soap:body use="literal"></soap:body>
+			</input>
+			<output>
+				<soap:body use="literal"></soap:body>
+			</output>
+			<fault name="Fault">
+				<soap:fault name="Fault" use="literal"></soap:fault>
+			</fault>
+		</operation>
+		<operation name="GetInvoicesByOrderDate">
+			<soap:operation soapAction="GetInvoicesByOrderDate"></soap:operation>
+			<input>
+				<soap:body use="literal"></soap:body>
+			</input>
+			<output>
+				<soap:body use="literal"></soap:body>
+			</output>
+			<fault name="Fault">
+				<soap:fault name="Fault" use="literal"></soap:fault>
+			</fault>
+		</operation>
+		<operation name="GetUnpaidInvoices">
+			<soap:operation soapAction="GetUnpaidInvoices"></soap:operation>
+			<input>
+				<soap:body use="literal"></soap:body>
+			</input>
+			<output>
+				<soap:body use="literal"></soap:body>
+			</output>
+			<fault name="Fault">
+				<soap:fault name="Fault" use="literal"></soap:fault>
+			</fault>
+		</operation>
+		<operation name="GetInvoices">
+			<soap:operation soapAction="GetInvoices"></soap:operation>
+			<input>
+				<soap:body use="literal"></soap:body>
+			</input>
+			<output>
+				<soap:body use="literal"></soap:body>
+			</output>
+			<fault name="Fault">
+				<soap:fault name="Fault" use="literal"></soap:fault>
+			</fault>
+		</operation>
+		<operation name="GetInvoicesHeaderByPurchaseOrderNo">
+			<soap:operation soapAction="GetInvoicesHeaderByPurchaseOrderNo"></soap:operation>
+			<input>
+				<soap:body use="literal"></soap:body>
+			</input>
+			<output>
+				<soap:body use="literal"></soap:body>
+			</output>
+			<fault name="Fault">
+				<soap:fault name="Fault" use="literal"></soap:fault>
+			</fault>
+		</operation>
+		<operation name="GetInvoicesHeaderByInvoiceDateRange">
+			<soap:operation soapAction="GetInvoicesHeaderByInvoiceDateRange"></soap:operation>
+			<input>
+				<soap:body use="literal"></soap:body>
+			</input>
+			<output>
+				<soap:body use="literal"></soap:body>
+			</output>
+			<fault name="Fault">
+				<soap:fault name="Fault" use="literal"></soap:fault>
+			</fault>
+		</operation>
+		<operation name="GetInvoicesHeaderByOrderDate">
+			<soap:operation soapAction="GetInvoicesHeaderByOrderDate"></soap:operation>
+			<input>
+				<soap:body use="literal"></soap:body>
+			</input>
+			<output>
+				<soap:body use="literal"></soap:body>
+			</output>
+			<fault name="Fault">
+				<soap:fault name="Fault" use="literal"></soap:fault>
+			</fault>
+		</operation>
+		<operation name="GetUnpaidInvoicesHeader">
+			<soap:operation soapAction="GetUnpaidInvoicesHeader"></soap:operation>
+			<input>
+				<soap:body use="literal"></soap:body>
+			</input>
+			<output>
+				<soap:body use="literal"></soap:body>
+			</output>
+			<fault name="Fault">
+				<soap:fault name="Fault" use="literal"></soap:fault>
+			</fault>
+		</operation>
+	</binding>
+
+
+	<!-- WSDL Service -->
+
+	<service name="InvoiceService">
+		<documentation>SanMar Invoice WebService</documentation>
+		<port name="InvoicePort" binding="tns:InvoiceSoapBinding">
+			<soap:address location="https://ws.sanmar.com:8080/SanMarWebService/InvoicePort"></soap:address>
+		</port>
+	</service>
+
+</definitions>

@@ -1,0 +1,806 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.4-b01-. --><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns="http://ws.sanmar.com/webservices/PackingSlip" targetNamespace="http://ws.sanmar.com/webservices/PackingSlip" name="PackingSlipService">
+
+	<!-- Types -->
+
+	<wsdl:types>
+<!-- External references authentication-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://ws.sanmar.com/webservices/PackingSlip" targetNamespace="http://ws.sanmar.com/webservices/PackingSlip" elementFormDefault="qualified">
+	
+	<xs:element name="Address" type="AddressType">
+		<xs:annotation>
+			<xs:documentation>
+				The address of an individual or organization.
+			</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+
+	<xs:complexType name="AddressType">
+		<xs:sequence>
+
+			<xs:element name="Line1">
+				<xs:annotation>
+					<xs:documentation>
+						The first line of the address.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:normalizedString">
+						<xs:maxLength value="100"></xs:maxLength>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+			<xs:element name="Line2" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						The second line of the address.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:normalizedString">
+						<xs:maxLength value="100"></xs:maxLength>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+			<xs:element name="Line3" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						The third line of the address.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:normalizedString">
+						<xs:maxLength value="100"></xs:maxLength>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+			<xs:element name="CityName">
+				<xs:annotation>
+					<xs:documentation>
+						The city name of the address.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:normalizedString">
+						<xs:maxLength value="100"></xs:maxLength>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+			<xs:element name="StateCode">
+				<xs:annotation>
+					<xs:documentation>
+						The ISO-3166-2 state or province code for the address.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="2"></xs:length>
+						<xs:pattern value="[A-Z]+"></xs:pattern>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+			<xs:element name="PostalCode">
+				<xs:annotation>
+					<xs:documentation>
+						The postal code or zip code of the address.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:normalizedString">
+						<xs:maxLength value="60"></xs:maxLength>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+			<xs:element name="CountryCode">
+				<xs:annotation>
+					<xs:documentation>
+						The ISO-3166 country code of the address.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="2"></xs:length>
+						<xs:pattern value="[A-Z]+"></xs:pattern>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			
+			<xs:element name="IsResidential" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the address is a residence.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="Notes" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Any type of note for this address, for example: shipping or delivery instruction notes.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="60"></xs:maxLength>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			
+		</xs:sequence>
+	</xs:complexType>
+
+
+
+
+	<xs:element name="TelephoneNumber" type="TelephoneNumberType">
+		<xs:annotation>
+			<xs:documentation>
+				The telephone number of an individual or organization including area code.
+			</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+
+	<xs:simpleType name="TelephoneNumberType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="12"></xs:maxLength>
+			<xs:pattern value="[-0-9]+"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+
+
+	<xs:element name="EmailAddress" type="EmailAddressType">
+		<xs:annotation>
+			<xs:documentation>
+				The email address of an individual or organization.
+			</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+
+	<xs:simpleType name="EmailAddressType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9A-Za-z._-]+@[0-9A-Za-z.-]+\.[0-9A-Za-z]+"></xs:pattern>
+			<xs:maxLength value="254">
+				<xs:annotation>
+					<xs:documentation>
+						Though unrealistic, 254 is the actual industry-standard length today.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:maxLength>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+
+
+	<xs:element name="CompanyAddress" type="CompanyAddressType">
+		<xs:annotation>
+			<xs:documentation>
+				A company's address and contact information.
+			</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+
+	<xs:complexType name="CompanyAddressType">
+		<xs:sequence>
+	
+			<xs:element name="Name">
+				<xs:annotation>
+					<xs:documentation>
+						The company name.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:normalizedString">
+						<xs:maxLength value="100"></xs:maxLength>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			
+			<xs:element name="Address" type="AddressType">
+				<xs:annotation>
+					<xs:documentation>
+						The company's address.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			
+			<xs:element name="ContactName" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						The company's main point of contact.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:normalizedString">
+						<xs:maxLength value="100"></xs:maxLength>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+			<xs:element name="Telephone" type="TelephoneNumberType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						The company's or contact's telephone number.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="Fax" type="TelephoneNumberType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						The company's or contact's fax number.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="Email" type="EmailAddressType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						The company's or contact's email address.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+	
+		</xs:sequence>
+	</xs:complexType>
+
+
+	
+	
+	<xs:element name="PackingSlip" type="PackingSlipType"></xs:element>
+
+
+	<xs:complexType name="PackingSlipType">
+		<xs:sequence>
+			<xs:element name="Header" type="PackingSlipHeaderType"></xs:element>
+			<xs:element name="Body" type="PackingSlipBodyType"></xs:element>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:normalizedString" use="required"></xs:attribute>
+	</xs:complexType>
+
+
+	<xs:complexType name="PackingSlipHeaderType">
+		<xs:sequence>
+					
+			<xs:element name="ShipmentDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation> 
+						The date the package was shipped.
+              </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="ShipmentUnitIndex" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>
+						The unique consecutive number assigned to this package
+						based on the total number of packages shipped for the order.
+              </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="ShipmentUnitQuantity" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>
+						The total number of packages shipped for the order.
+              </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="OrderDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation> 
+						The date the order was placed.
+						Optional when this packing slip contains other packing slips inside it.
+              </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			
+			<xs:element name="OrderNumber" type="xs:int" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						The order number associated with this shipment.
+						Optional when this packing slip contains other packing slips inside it.
+              </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="InvoiceNumber" type="xs:int" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						The invoice number associated with this shipment.
+						Optional when this packing slip contains other packing slips inside it.
+              </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="PurchaseOrderReference" type="xs:normalizedString" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation> 
+						The PO number in most cases.
+						Optional when this packing slip contains other packing slips inside it.
+              </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			
+			<xs:element name="ShipFrom" type="CompanyAddressType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						The company and address that shipped the package.
+						Optional when this packing slip is inside another packing slip.
+              </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="ShipTo" type="CompanyAddressType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						The company and address the package was shipped to.
+						Optional when this packing slip is inside another packing slip.
+              </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="BillTo" type="CompanyAddressType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						The company and address that was billed for the transaction.
+						Optional when this packing slip contains other packing slips inside it.
+              </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+						
+			<xs:element name="Weight" type="WeightType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The package's weight</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			
+			<xs:element name="Length" type="DistanceType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The package's length</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			
+			<xs:element name="Width" type="DistanceType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The package's width</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			
+			<xs:element name="Height" type="DistanceType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The package height</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="Carrier" type="CarrierType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The shipment's carrier information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+		</xs:sequence>
+	</xs:complexType>
+
+
+
+	<xs:complexType name="PackingSlipBodyType">
+		<xs:choice>
+			<xs:element name="PackingSlip" type="PackingSlipType" maxOccurs="unbounded"></xs:element>
+			<xs:element name="Item" type="ItemType" maxOccurs="unbounded"></xs:element>
+		</xs:choice>
+	</xs:complexType>
+
+
+
+	<xs:complexType name="ItemType">
+		<xs:sequence>
+		
+			<xs:element name="SkuId">
+				<xs:annotation>
+					<xs:documentation>The item's SKU number</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"></xs:maxLength>
+						<xs:pattern value="[-0-9]+"></xs:pattern>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+			<xs:element name="StyleNo">
+				<xs:annotation>
+					<xs:documentation>The item's style number</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:normalizedString">
+						<xs:maxLength value="20"></xs:maxLength>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+			<xs:element name="Description" type="xs:normalizedString">
+				<xs:annotation>
+					<xs:documentation>The item's description</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="Color">
+				<xs:annotation>
+					<xs:documentation>The item's color name</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:normalizedString">
+						<xs:maxLength value="14"></xs:maxLength>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+			<xs:element name="Size">
+				<xs:annotation>
+					<xs:documentation>The item's size</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:normalizedString">
+						<xs:maxLength value="10"></xs:maxLength>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+			<xs:element name="Quantity">
+				<xs:annotation>
+					<xs:documentation>The number of items included</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:minInclusive value="1"></xs:minInclusive>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+			<xs:element name="GTIN" type="xs:normalizedString" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The item's Global Trade Item Number (https://www.gs1.org/gtin)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:normalizedString"></xs:attribute>		
+	</xs:complexType>
+
+
+
+	<xs:complexType name="CarrierType">
+		<xs:sequence>
+
+			<xs:element name="Name" type="xs:normalizedString">
+				<xs:annotation>
+					<xs:documentation>The shipment's carrier name. Examples: UPS, FedEx, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			
+			<xs:element name="ShippingMethod">
+				<xs:annotation>
+					<xs:documentation>The shipping method used for the shipment. Examples: Ground, Next Day Air, etc.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:normalizedString">
+						<xs:maxLength value="30"></xs:maxLength>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			
+			<xs:element name="TrackingId" type="xs:normalizedString" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The shipment's tracking number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="WeightType">
+		<xs:simpleContent>
+			<xs:extension base="UnsignedMeasureType">
+				<xs:attribute name="uom">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="oz"></xs:enumeration>
+							<xs:enumeration value="lb"></xs:enumeration>
+							<xs:enumeration value="gr"></xs:enumeration>
+							<xs:enumeration value="kg"></xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="DistanceType">
+		<xs:simpleContent>
+			<xs:extension base="UnsignedMeasureType">
+				<xs:attribute name="uom">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="in"></xs:enumeration>
+							<xs:enumeration value="ft"></xs:enumeration>
+							<xs:enumeration value="cm"></xs:enumeration>
+							<xs:enumeration value="m"></xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+
+	<xs:simpleType name="UnsignedMeasureType">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0"></xs:minInclusive>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="Fault" type="FaultType">
+		<xs:annotation>
+			<xs:documentation>
+				The structure to be used to return faults in web services.
+			</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:complexType name="FaultType" mixed="false">
+		<xs:sequence>
+
+			<xs:element name="Code" type="FaultCodeType">
+				<xs:annotation>
+					<xs:documentation>
+						The unique identifier for the fault.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="Message" type="xs:normalizedString">
+				<xs:annotation>
+					<xs:documentation>
+						The text message explaining the fault.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="Actor" type="FaultActorType">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates who caused the fault.
+						Set to "client" when the request was incorrectly formed or contained incorrect information.
+						Set to "server" when the request could not be processed due to a problem with the server.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="Severity" type="FaultSeverityType">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates the level of severity for the fault.
+						Set to "low" when the fault can be ignored.
+						Set to "normal" in most cases.
+						Set to "critical" when the service is experiencing an outage.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="Type" type="FaultTypeType">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates the type or nature of the fault.
+						Set to "technical" when the fault is caused by technical policy or outage.
+						Set to "business" when the fault is caused by business policy.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="IsRetriable" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the request can be retried later.
+						Set to "true" when the request might work at a later time.
+						Set to "false" when the request will never work.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:simpleType name="FaultCodeType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z0-9]+"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<xs:simpleType name="FaultActorType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="client"></xs:enumeration>
+			<xs:enumeration value="server"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<xs:simpleType name="FaultSeverityType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="low"></xs:enumeration>
+			<xs:enumeration value="normal"></xs:enumeration>
+			<xs:enumeration value="critical"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<xs:simpleType name="FaultTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="business"></xs:enumeration>
+			<xs:enumeration value="technical"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Service contract element definitions (used by the WSDL) -->
+	
+	<xs:element name="GetPackingSlip" type="GetPackingSlipType"></xs:element>
+	<xs:element name="GetPackingSlipResponse" type="GetPackingSlipResponseType"></xs:element>
+	<xs:element name="GetPackingSlipFault" type="FaultType"></xs:element>
+
+	
+	<!-- Types  -->
+	
+	<xs:complexType name="GetPackingSlipType">
+		<xs:sequence>
+			<xsd:element name="wsVersion">
+				<xsd:annotation>
+					<xsd:documentation>
+						The Standard Version of the Web Service being
+						referenced
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:token">
+						<xsd:minLength value="1"></xsd:minLength>
+						<xsd:maxLength value="64"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xs:element name="UserId">
+				<xs:annotation>
+					<xs:documentation>
+						A valid web user account from www.sanmar.com.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:normalizedString">
+					<xs:minLength value="1"></xs:minLength>
+					<xs:maxLength value="28"></xs:maxLength>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Password">
+				<xs:annotation>
+					<xs:documentation>
+						The web user account password.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:normalizedString">
+					<xs:minLength value="1"></xs:minLength>
+						<xs:maxLength value="28"></xs:maxLength>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PackingSlipId" type="xs:normalizedString">
+				<xs:annotation>
+					<xs:documentation> 
+						The packing slip ID, also referred to as "LPN".
+						It's the human-friendly barcode number.
+              </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="GetPackingSlipResponseType">
+		<xs:sequence>
+			<xs:element name="PackingSlip" type="PackingSlipType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation> 
+						The package's Packing Slip.
+						Should the package contain other packages inside, it will also contain their information as well.
+              </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>
+
+
+	</wsdl:types>
+
+
+	<!-- Messages -->
+
+	<wsdl:message name="GetPackingSlip">
+		<wsdl:documentation>Get Packing Slip request</wsdl:documentation>
+		<wsdl:part element="GetPackingSlip" name="body"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="GetPackingSlipResponse">
+		<wsdl:documentation>Get Packing Slip response</wsdl:documentation>
+		<wsdl:part element="GetPackingSlipResponse" name="body"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="GetPackingSlipFault">
+		<wsdl:documentation>Get Packing Slip fault</wsdl:documentation>
+		<wsdl:part element="GetPackingSlipFault" name="body"></wsdl:part>
+	</wsdl:message>
+
+	<!-- Ports -->
+	
+	<wsdl:portType name="PackingSlipWS">
+
+		<wsdl:operation name="GetPackingSlip">
+			<wsdl:documentation>Gets a package's Packing Slip information.</wsdl:documentation>
+			<wsdl:input message="GetPackingSlip"></wsdl:input>
+			<wsdl:output message="GetPackingSlipResponse"></wsdl:output>
+			<wsdl:fault message="GetPackingSlipFault" name="GetPackingSlipFault"></wsdl:fault>
+		</wsdl:operation>
+
+	</wsdl:portType>
+
+
+	<!-- Bindings -->
+	
+	<wsdl:binding name="PackingSlipBinding" type="PackingSlipWS">
+  
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+
+		<wsdl:operation name="GetPackingSlip">
+			<soap:operation soapAction="http://ws.sanmar.com/webservices/PackingSlip/GetPackingSlip"></soap:operation>
+				<wsdl:input>
+					<soap:body use="literal"></soap:body>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"></soap:body>
+				</wsdl:output>
+				<wsdl:fault name="GetPackingSlipFault">
+					<soap:fault name="GetPackingSlipFault" use="literal"></soap:fault>
+				</wsdl:fault>
+		</wsdl:operation>
+
+	</wsdl:binding>
+
+
+	<!-- Service -->
+
+	<wsdl:service name="PackingSlipService">
+		<wsdl:documentation>Packing Slip Service</wsdl:documentation>
+		<wsdl:port binding="PackingSlipBinding" name="PackingSlipService">
+			<soap:address location="https://ws.sanmar.com:8080/SanMarWebService/webservices/PackingSlipService"></soap:address>
+		</wsdl:port>
+	</wsdl:service>
+
+
+</wsdl:definitions>

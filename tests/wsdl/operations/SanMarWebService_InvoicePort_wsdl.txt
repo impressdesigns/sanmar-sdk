@@ -1,0 +1,108 @@
+
+Prefixes:
+     xsd: http://www.w3.org/2001/XMLSchema
+     ns0: http://webservice.integration.sanmar.com/
+
+Global elements:
+     ns0:Fault(ns0:FaultType)
+     ns0:GetInvoiceByInvoiceNo(ns0:GetInvoiceByInvoiceNoType)
+     ns0:GetInvoices(ns0:GetInvoicesType)
+     ns0:GetInvoicesByInvoiceDateRange(ns0:GetInvoicesByInvoiceDateRangeType)
+     ns0:GetInvoicesByOrderDate(ns0:GetInvoicesByOrderDateType)
+     ns0:GetInvoicesByPurchaseOrderNo(ns0:GetInvoicesByPurchaseOrderNoType)
+     ns0:GetInvoicesHeaderByInvoiceDateRange(ns0:GetInvoicesHeaderByInvoiceDateRangeType)
+     ns0:GetInvoicesHeaderByOrderDate(ns0:GetInvoicesHeaderByOrderDateType)
+     ns0:GetInvoicesHeaderByPurchaseOrderNo(ns0:GetInvoicesHeaderByPurchaseOrderNoType)
+     ns0:GetUnpaidInvoices(ns0:GetUnpaidInvoicesType)
+     ns0:GetUnpaidInvoicesHeader(ns0:GetUnpaidInvoicesHeaderType)
+     ns0:Invoice(ns0:InvoiceType)
+     ns0:InvoiceHeader(ns0:InvoiceHeaderType)
+     ns0:Invoices(ns0:InvoicesType)
+     ns0:InvoicesHeader(ns0:InvoicesHeaderType)
+     
+
+Global types:
+     xsd:anyType
+     ns0:AddressType(Address1: xsd:normalizedString, Address2: xsd:normalizedString, Address3: xsd:normalizedString, City: xsd:normalizedString, State: xsd:normalizedString, PostalCode: xsd:normalizedString, Country: xsd:normalizedString)
+     ns0:FaultType
+     ns0:GetInvoiceByInvoiceNoType(CustomerNo: xsd:normalizedString, UserName: xsd:normalizedString, Password: xsd:normalizedString, InvoiceNo: xsd:int)
+     ns0:GetInvoicesByInvoiceDateRangeType(CustomerNo: xsd:normalizedString, UserName: xsd:normalizedString, Password: xsd:normalizedString, StartDate: xsd:date, EndDate: xsd:date)
+     ns0:GetInvoicesByOrderDateType(CustomerNo: xsd:normalizedString, UserName: xsd:normalizedString, Password: xsd:normalizedString, Date: xsd:date)
+     ns0:GetInvoicesByPurchaseOrderNoType(CustomerNo: xsd:normalizedString, UserName: xsd:normalizedString, Password: xsd:normalizedString, PurchaseOrderNo: xsd:normalizedString)
+     ns0:GetInvoicesHeaderByInvoiceDateRangeType(CustomerNo: xsd:normalizedString, UserName: xsd:normalizedString, Password: xsd:normalizedString, StartDate: xsd:date, EndDate: xsd:date)
+     ns0:GetInvoicesHeaderByOrderDateType(CustomerNo: xsd:normalizedString, UserName: xsd:normalizedString, Password: xsd:normalizedString, Date: xsd:date)
+     ns0:GetInvoicesHeaderByPurchaseOrderNoType(CustomerNo: xsd:normalizedString, UserName: xsd:normalizedString, Password: xsd:normalizedString, PurchaseOrderNo: xsd:normalizedString)
+     ns0:GetInvoicesType(CustomerNo: xsd:normalizedString, UserName: xsd:normalizedString, Password: xsd:normalizedString)
+     ns0:GetUnpaidInvoicesHeaderType(CustomerNo: xsd:normalizedString, UserName: xsd:normalizedString, Password: xsd:normalizedString)
+     ns0:GetUnpaidInvoicesType(CustomerNo: xsd:normalizedString, UserName: xsd:normalizedString, Password: xsd:normalizedString)
+     ns0:InvoiceHeaderType(InvoiceNo: xsd:int, SalesOrderNumber: xsd:int, InvoiceDate: xsd:date, InvoiceStatus: ns0:InvoiceStatusType, IsCreditMemo: xsd:boolean, CustomerNo: xsd:int, SoldTo: ns0:RecipientType, ShipTo: ns0:RecipientType, RemitTo: ns0:RecipientType, PurchaseOrderNo: xsd:normalizedString, OrderDate: xsd:date, DueDate: xsd:date, ShipVia: xsd:normalizedString, FOB: xsd:normalizedString, Terms: xsd:normalizedString, DeptNo: xsd:normalizedString, TotalCases: xsd:int, TotalWeight: xsd:int, SubTotal: xsd:double, SalesTax: xsd:double, ShippingHandlingCharges: xsd:double, TotalAmount: xsd:double, Miscellaneous: ns0:MiscellaneousType)
+     ns0:InvoiceLineItemType(StyleNo: xsd:normalizedString, StyleColor: xsd:normalizedString, StyleDescription: xsd:normalizedString, StyleSize: xsd:normalizedString, Quantity: xsd:int, UnitPrice: xsd:double, Amount: xsd:double, UniqueKey: xsd:normalizedString)
+     ns0:InvoiceStatusType
+     ns0:InvoiceType(Header: ns0:InvoiceHeaderType, LineItem: ns0:InvoiceLineItemType[])
+     ns0:InvoicesHeaderType(InvoiceHeader: ns0:InvoiceHeaderType[])
+     ns0:InvoicesType(Invoice: ns0:InvoiceType[])
+     ns0:MiscellaneousType(FreightSavings: xsd:double, TrackingIDs: xsd:normalizedString)
+     ns0:RecipientType(Name: xsd:normalizedString, Address: ns0:AddressType)
+     xsd:ENTITIES
+     xsd:ENTITY
+     xsd:ID
+     xsd:IDREF
+     xsd:IDREFS
+     xsd:NCName
+     xsd:NMTOKEN
+     xsd:NMTOKENS
+     xsd:NOTATION
+     xsd:Name
+     xsd:QName
+     xsd:anySimpleType
+     xsd:anyURI
+     xsd:base64Binary
+     xsd:boolean
+     xsd:byte
+     xsd:date
+     xsd:dateTime
+     xsd:decimal
+     xsd:double
+     xsd:duration
+     xsd:float
+     xsd:gDay
+     xsd:gMonth
+     xsd:gMonthDay
+     xsd:gYear
+     xsd:gYearMonth
+     xsd:hexBinary
+     xsd:int
+     xsd:integer
+     xsd:language
+     xsd:long
+     xsd:negativeInteger
+     xsd:nonNegativeInteger
+     xsd:nonPositiveInteger
+     xsd:normalizedString
+     xsd:positiveInteger
+     xsd:short
+     xsd:string
+     xsd:time
+     xsd:token
+     xsd:unsignedByte
+     xsd:unsignedInt
+     xsd:unsignedLong
+     xsd:unsignedShort
+
+Bindings:
+     Soap11Binding: {http://webservice.integration.sanmar.com/}InvoiceSoapBinding
+
+Service: InvoiceService
+     Port: InvoicePort (Soap11Binding: {http://webservice.integration.sanmar.com/}InvoiceSoapBinding)
+         Operations:
+            GetInvoiceByInvoiceNo(CustomerNo: xsd:normalizedString, UserName: xsd:normalizedString, Password: xsd:normalizedString, InvoiceNo: xsd:int) -> Header: ns0:InvoiceHeaderType, LineItem: ns0:InvoiceLineItemType[]
+            GetInvoices(CustomerNo: xsd:normalizedString, UserName: xsd:normalizedString, Password: xsd:normalizedString) -> Invoice: ns0:InvoiceType[]
+            GetInvoicesByInvoiceDateRange(CustomerNo: xsd:normalizedString, UserName: xsd:normalizedString, Password: xsd:normalizedString, StartDate: xsd:date, EndDate: xsd:date) -> Invoice: ns0:InvoiceType[]
+            GetInvoicesByOrderDate(CustomerNo: xsd:normalizedString, UserName: xsd:normalizedString, Password: xsd:normalizedString, Date: xsd:date) -> Invoice: ns0:InvoiceType[]
+            GetInvoicesByPurchaseOrderNo(CustomerNo: xsd:normalizedString, UserName: xsd:normalizedString, Password: xsd:normalizedString, PurchaseOrderNo: xsd:normalizedString) -> Invoice: ns0:InvoiceType[]
+            GetInvoicesHeaderByInvoiceDateRange(CustomerNo: xsd:normalizedString, UserName: xsd:normalizedString, Password: xsd:normalizedString, StartDate: xsd:date, EndDate: xsd:date) -> InvoiceHeader: ns0:InvoiceHeaderType[]
+            GetInvoicesHeaderByOrderDate(CustomerNo: xsd:normalizedString, UserName: xsd:normalizedString, Password: xsd:normalizedString, Date: xsd:date) -> InvoiceHeader: ns0:InvoiceHeaderType[]
+            GetInvoicesHeaderByPurchaseOrderNo(CustomerNo: xsd:normalizedString, UserName: xsd:normalizedString, Password: xsd:normalizedString, PurchaseOrderNo: xsd:normalizedString) -> InvoiceHeader: ns0:InvoiceHeaderType[]
+            GetUnpaidInvoices(CustomerNo: xsd:normalizedString, UserName: xsd:normalizedString, Password: xsd:normalizedString) -> Invoice: ns0:InvoiceType[]
+            GetUnpaidInvoicesHeader(CustomerNo: xsd:normalizedString, UserName: xsd:normalizedString, Password: xsd:normalizedString) -> InvoiceHeader: ns0:InvoiceHeaderType[]
+

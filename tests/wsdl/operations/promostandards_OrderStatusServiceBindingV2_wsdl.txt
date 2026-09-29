@@ -1,0 +1,166 @@
+
+Prefixes:
+     xsd: http://www.w3.org/2001/XMLSchema
+     ns0: http://www.promostandards.org/WSDL/OrderStatus/2.0.0/
+     ns1: http://www.promostandards.org/WSDL/OrderStatus/2.0.0/SharedObjects/
+     ns2: http://www.codesynthesis.com/xmlns/xsstl
+
+Global elements:
+     ns1:Contact(accountName: ns1:accountName, accountNumber: ns1:accountNumber, contactType: ns1:contactType, ContactDetails: ns1:ContactDetails)
+     ns1:ContactArray(Contact: ns1:Contact[])
+     ns1:ContactDetails(attentionTo: ns1:attentionTo, companyName: ns1:companyName, address1: ns1:addressLine, address2: ns1:addressLine, address3: ns1:addressLine, city: ns1:city, region: ns1:region, postalCode: ns1:postalCode, country: ns1:country, email: ns1:email, phone: ns1:phone, comments: ns1:comments)
+     ns1:Issue(issueId: ns1:issueId, issueStatus: ns1:issueStatus, issueCategory: ns1:issueCategory, issueName: ns1:issueName, urgentResponseRequired: xsd:boolean, issueDescription: ns1:issueDescription, responseRequiredBy: xsd:dateTime, issueResolutionURL: ns1:issueResolutionURL, ResolutionArray: ns1:ResolutionArray, issueBlockingStatus: ns1:issueBlockingStatus, ContactArray: ns1:ContactArray, productId: ns1:productId, partId: ns1:partId)
+     ns1:IssueArray(Issue: ns1:Issue[])
+     ns1:OrderContactArray(Contact: ns1:Contact[])
+     ns1:OrderStatus(purchaseOrderNumber: ns1:purchaseOrderNumber, OrderStatusDetailArray: ns1:OrderStatusDetailArray, auditURL: ns1:auditURL)
+     ns1:OrderStatusArray(OrderStatus: ns1:OrderStatus[])
+     ns1:OrderStatusDetail(salesOrderNumber: ns1:salesOrderNumber, status: ns1:status, issueCategory: ns1:issueCategory, expectedShipDate: xsd:date, expectedDeliveryDate: xsd:date, additionalExplanation: ns1:additionalExplanation, qualityProofURL: ns1:qualityProofURL, OrderContactArray: ns1:OrderContactArray, ProductArray: ns1:ProductArray, IssueArray: ns1:IssueArray, validTimestamp: xsd:dateTime)
+     ns1:OrderStatusDetailArray(OrderStatusDetail: ns1:OrderStatusDetail[])
+     ns1:Parameter(parameterId: ns1:parameterId, name: ns1:parameterName, type: ns1:parameterType, displayOrder: ns1:parameterDisplayOrder, required: ns1:parameterRequired, length: ns1:parameterLength, pspoFieldName: ns1:parameterPspoFieldName, pspoVersion: ns1:parameterPspoVersion, validResponseArray: ns1:validResponseArray)
+     ns1:ParameterArray(Parameter: ns1:Parameter[])
+     ns1:Product(productId: ns1:productId, partId: ns1:partId, salesOrderLineNumber: ns1:salesOrderLineNumber, purchaseOrderLineNumber: ns1:purchaseOrderLineNumber, QuantityOrdered: ns1:Quantity, QuantityShipped: ns1:Quantity, issueCategory: ns1:issueCategory, status: ns1:status)
+     ns1:ProductArray(Product: ns1:Product[])
+     ns1:Resolution(resolutionId: ns1:resolutionId, resolutionName: ns1:resolutionName, resolutionDescription: ns1:resolutionDescription, ParameterArray: ns1:ParameterArray)
+     ns1:ResolutionArray(Resolution: ns1:Resolution[])
+     ns1:ServiceMessage(code: ns1:ServiceMessageCode, description: ns1:ServiceMessageDescription, severity: ns1:ServiceMessageSeverity)
+     ns1:ServiceMessageArray(ServiceMessage: ns1:ServiceMessage[])
+     ns1:ServiceMethodArray(serviceMethod: ns1:serviceMethod[])
+     ns1:accountName(ns1:accountName)
+     ns1:accountNumber(ns1:accountNumber)
+     ns1:additionalExplanation(ns1:additionalExplanation)
+     ns1:attentionTo(ns1:attentionTo)
+     ns1:auditURL(ns1:auditURL)
+     ns1:city(ns1:city)
+     ns1:comments(ns1:comments)
+     ns1:companyName(ns1:companyName)
+     ns1:contactType(ns1:contactType)
+     ns1:country(ns1:country)
+     ns1:email(ns1:email)
+     ns1:expectedDeliveryDate(xsd:date)
+     ns1:expectedShipDate(xsd:date)
+     ns1:id(ns1:id)
+     ns1:issueBlockingStatus(ns1:issueBlockingStatus)
+     ns1:issueCategory(ns1:issueCategory)
+     ns1:issueDescription(ns1:issueDescription)
+     ns1:issueId(ns1:issueId)
+     ns1:issueName(ns1:issueName)
+     ns1:issueResolutionURL(ns1:issueResolutionURL)
+     ns1:issueStatus(ns1:issueStatus)
+     ns1:parameterId(ns1:parameterId)
+     ns1:partId(ns1:partId)
+     ns1:password(ns1:password)
+     ns1:phone(ns1:phone)
+     ns1:postalCode(ns1:postalCode)
+     ns1:productId(ns1:productId)
+     ns1:purchaseOrderLineNumber(ns1:purchaseOrderLineNumber)
+     ns1:purchaseOrderNumber(ns1:purchaseOrderNumber)
+     ns1:qualityProofURL(ns1:qualityProofURL)
+     ns1:queryType(ns1:queryType)
+     ns1:referenceNumber(ns1:referenceNumber)
+     ns1:region(ns1:region)
+     ns1:resolutionDescription(ns1:resolutionDescription)
+     ns1:resolutionId(ns1:resolutionId)
+     ns1:resolutionName(ns1:resolutionName)
+     ns1:responseRequiredBy(xsd:dateTime)
+     ns1:returnIssueDetailType(ns1:returnIssueDetailType)
+     ns1:returnProductDetail(xsd:boolean)
+     ns1:salesOrderLineNumber(ns1:salesOrderLineNumber)
+     ns1:salesOrderNumber(ns1:salesOrderNumber)
+     ns1:serviceMethod(ns1:serviceMethod)
+     ns1:status(ns1:status)
+     ns1:statusTimeStamp(xsd:dateTime)
+     ns1:urgentResponseRequired(xsd:boolean)
+     ns1:validResponse(validResponseValue: ns1:validResponseValue)
+     ns1:validResponseArray(validResponse: ns1:validResponse[])
+     ns1:validResponseValue(ns1:validResponseValue)
+     ns1:validTimestamp(xsd:dateTime)
+     ns1:wsVersion(ns1:wsVersion)
+     ns0:GetIssueRequest(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, issueId: ns1:issueId)
+     ns0:GetIssueResponse(IssueArray: ns1:IssueArray, ServiceMessageArray: ns1:ServiceMessageArray)
+     ns0:GetOrderStatusRequest(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, queryType: ns1:queryType, referenceNumber: ns1:referenceNumber, statusTimeStamp: xsd:dateTime, returnIssueDetailType: ns1:returnIssueDetailType, returnProductDetail: xsd:boolean)
+     ns0:GetOrderStatusResponse(OrderStatusArray: ns1:OrderStatusArray, ServiceMessageArray: ns1:ServiceMessageArray)
+     ns0:GetServiceMethodsRequest(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password)
+     ns0:GetServiceMethodsResponse(ServiceMethodArray: ns1:ServiceMethodArray, ServiceMessageArray: ns1:ServiceMessageArray)
+     
+
+Global types:
+     xsd:anyType
+     ns2:ISO3166CountyCode
+     ns1:Quantity(value: ns1:quantityValue, uom: ns1:quantityUomType)
+     ns1:ServiceMessageCode
+     ns1:ServiceMessageDescription
+     ns1:ServiceMessageSeverity
+     ns1:ServiceMessageSeverityType
+     ns1:addressLine
+     ns1:contactTypeType
+     ns1:issueCategoryType
+     ns1:issueStatusType
+     ns1:parameterDisplayOrder
+     ns1:parameterLength
+     ns1:parameterName
+     ns1:parameterPspoFieldName
+     ns1:parameterPspoVersion
+     ns1:parameterRequired
+     ns1:parameterType
+     ns1:quantityUomType
+     ns1:quantityUomTypeType
+     ns1:quantityValue
+     ns1:queryTypeType
+     ns1:returnIssueDetailTypeType
+     ns1:statusType
+     xsd:ENTITIES
+     xsd:ENTITY
+     xsd:ID
+     xsd:IDREF
+     xsd:IDREFS
+     xsd:NCName
+     xsd:NMTOKEN
+     xsd:NMTOKENS
+     xsd:NOTATION
+     xsd:Name
+     xsd:QName
+     xsd:anySimpleType
+     xsd:anyURI
+     xsd:base64Binary
+     xsd:boolean
+     xsd:byte
+     xsd:date
+     xsd:dateTime
+     xsd:decimal
+     xsd:double
+     xsd:duration
+     xsd:float
+     xsd:gDay
+     xsd:gMonth
+     xsd:gMonthDay
+     xsd:gYear
+     xsd:gYearMonth
+     xsd:hexBinary
+     xsd:int
+     xsd:integer
+     xsd:language
+     xsd:long
+     xsd:negativeInteger
+     xsd:nonNegativeInteger
+     xsd:nonPositiveInteger
+     xsd:normalizedString
+     xsd:positiveInteger
+     xsd:short
+     xsd:string
+     xsd:time
+     xsd:token
+     xsd:unsignedByte
+     xsd:unsignedInt
+     xsd:unsignedLong
+     xsd:unsignedShort
+
+Bindings:
+     Soap11Binding: {http://www.promostandards.org/WSDL/OrderStatus/2.0.0/}OrderStatusServiceBindingV2
+
+Service: OrderStatusServiceV2
+     Port: OrderStatusServiceBinding (Soap11Binding: {http://www.promostandards.org/WSDL/OrderStatus/2.0.0/}OrderStatusServiceBindingV2)
+         Operations:
+            getIssue(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, issueId: ns1:issueId) -> IssueArray: ns1:IssueArray, ServiceMessageArray: ns1:ServiceMessageArray
+            getOrderStatus(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password, queryType: ns1:queryType, referenceNumber: ns1:referenceNumber, statusTimeStamp: xsd:dateTime, returnIssueDetailType: ns1:returnIssueDetailType, returnProductDetail: xsd:boolean) -> OrderStatusArray: ns1:OrderStatusArray, ServiceMessageArray: ns1:ServiceMessageArray
+            getServiceMethods(wsVersion: ns1:wsVersion, id: ns1:id, password: ns1:password) -> ServiceMethodArray: ns1:ServiceMethodArray, ServiceMessageArray: ns1:ServiceMessageArray
+

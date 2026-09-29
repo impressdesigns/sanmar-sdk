@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.4-b01-. --><wsdl:definitions xmlns:tns="http://www.promostandards.org/WSDL/OrderStatus/2.0.0/" xmlns:ns="http://www.promostandards.org/WSDL/OrderStatus/2.0.0/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Order_Status_v2_0_0" targetNamespace="http://www.promostandards.org/WSDL/OrderStatus/2.0.0/">
+	<wsdl:types>
+		<xsd:schema xmlns:ns1="http://www.promostandards.org/WSDL/OrderStatus/2.0.0/SharedObjects/" targetNamespace="http://www.promostandards.org/WSDL/OrderStatus/2.0.0/" elementFormDefault="qualified">
+			<xsd:import namespace="http://www.promostandards.org/WSDL/OrderStatus/2.0.0/SharedObjects/" schemaLocation="https://ws.sanmar.com:8080/promostandards/OrderStatusServiceBindingV2?xsd=1"></xsd:import>
+			<xsd:element name="GetOrderStatusRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="ns1:wsVersion"></xsd:element>
+						<xsd:element ref="ns1:id"></xsd:element>
+						<xsd:element ref="ns1:password" minOccurs="0"></xsd:element>
+						<xsd:element ref="ns1:queryType"></xsd:element>
+						<xsd:element ref="ns1:referenceNumber" minOccurs="0"></xsd:element>
+						<xsd:element ref="ns1:statusTimeStamp" minOccurs="0"></xsd:element>
+						<xsd:element ref="ns1:returnIssueDetailType" minOccurs="0"></xsd:element>
+						<xsd:element ref="ns1:returnProductDetail" minOccurs="0"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetOrderStatusResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="ns1:OrderStatusArray" minOccurs="0"></xsd:element>
+						<xsd:element ref="ns1:ServiceMessageArray" minOccurs="0"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="GetIssueRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="ns1:wsVersion"></xsd:element>
+						<xsd:element ref="ns1:id"></xsd:element>
+						<xsd:element ref="ns1:password" minOccurs="0"></xsd:element>
+						<xsd:element ref="ns1:issueId"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetIssueResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="ns1:IssueArray" minOccurs="0"></xsd:element>
+						<xsd:element ref="ns1:ServiceMessageArray" minOccurs="0"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="GetServiceMethodsRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="ns1:wsVersion"></xsd:element>
+						<xsd:element ref="ns1:id"></xsd:element>
+						<xsd:element ref="ns1:password" minOccurs="0"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetServiceMethodsResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="ns1:ServiceMethodArray" minOccurs="0"></xsd:element>
+						<xsd:element ref="ns1:ServiceMessageArray" minOccurs="0"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="GetOrderStatusRequestMessage">
+		<wsdl:part name="GetOrderStatusRequest" element="ns:GetOrderStatusRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="GetOrderStatusResponseMessage">
+		<wsdl:part name="GetOrderStatusResponse" element="ns:GetOrderStatusResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="GetIssueRequestMessage">
+		<wsdl:part name="GetIssueRequest" element="tns:GetIssueRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="GetIssueResponseMessage">
+		<wsdl:part name="GetIssueResponse" element="tns:GetIssueResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="GetServiceMethodsRequestMessage">
+		<wsdl:part name="GetServiceMethodsRequest" element="tns:GetServiceMethodsRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="GetServiceMethodsResponseMessage">
+		<wsdl:part name="GetServiceMethodsResponse" element="tns:GetServiceMethodsResponse"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:portType name="OrderStatusService">
+		<wsdl:operation name="getOrderStatus">
+			<wsdl:input message="tns:GetOrderStatusRequestMessage"></wsdl:input>
+			<wsdl:output message="tns:GetOrderStatusResponseMessage"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getIssue">
+			<wsdl:input message="tns:GetIssueRequestMessage"></wsdl:input>
+			<wsdl:output message="tns:GetIssueResponseMessage"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getServiceMethods">
+			<wsdl:input message="tns:GetServiceMethodsRequestMessage"></wsdl:input>
+			<wsdl:output message="tns:GetServiceMethodsResponseMessage"></wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="OrderStatusServiceBindingV2" type="tns:OrderStatusService">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+		<wsdl:operation name="getOrderStatus">
+			<soap:operation soapAction="getOrderStatus" style="document"></soap:operation>
+			<wsdl:input>
+				<soap:body use="literal"></soap:body>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"></soap:body>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getIssue">
+			<soap:operation soapAction="getIssue" style="document"></soap:operation>
+			<wsdl:input>
+				<soap:body use="literal"></soap:body>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"></soap:body>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getServiceMethods">
+			<soap:operation soapAction="getServiceMethods" style="document"></soap:operation>
+			<wsdl:input>
+				<soap:body use="literal"></soap:body>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"></soap:body>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="OrderStatusServiceV2">
+		<wsdl:port name="OrderStatusServiceBinding" binding="tns:OrderStatusServiceBindingV2">
+			<soap:address location="https://ws.sanmar.com:8080/promostandards/OrderStatusServiceBindingV2"></soap:address>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

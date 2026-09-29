@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.4-b01-. --><wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://www.promostandards.org/WSDL/Inventory/2.0.0/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Inventory_v2_0_0" targetNamespace="http://www.promostandards.org/WSDL/Inventory/2.0.0/">
+	<wsdl:types>
+	<xsd:schema xmlns:ns1="http://www.promostandards.org/WSDL/Inventory/2.0.0/" xmlns:ns2="http://www.promostandards.org/WSDL/Inventory/2.0.0/SharedObjects/" elementFormDefault="qualified" targetNamespace="http://www.promostandards.org/WSDL/Inventory/2.0.0/">
+	<xsd:import namespace="http://www.promostandards.org/WSDL/Inventory/2.0.0/SharedObjects/" schemaLocation="https://ws.sanmar.com:8080/promostandards/InventoryServiceBindingV2final?xsd=1"></xsd:import>
+	<xsd:element name="GetFilterValuesRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ns2:wsVersion"></xsd:element>
+				<xsd:element ref="ns2:id"></xsd:element>
+				<xsd:element minOccurs="0" ref="ns2:password"></xsd:element>
+				<xsd:element ref="ns2:productId"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="GetFilterValuesResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element minOccurs="0" name="FilterValues">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="ns2:productId"></xsd:element>
+							<xsd:element ref="ns2:Filter"></xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element minOccurs="0" ref="ns2:ServiceMessageArray"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="GetInventoryLevelsRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ns2:wsVersion"></xsd:element>
+				<xsd:element ref="ns2:id"></xsd:element>
+				<xsd:element minOccurs="0" ref="ns2:password"></xsd:element>
+				<xsd:element ref="ns2:productId"></xsd:element>
+				<xsd:element minOccurs="0" ref="ns2:Filter"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="GetInventoryLevelsResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element minOccurs="0" ref="ns2:Inventory"></xsd:element>
+				<xsd:element minOccurs="0" ref="ns2:ServiceMessageArray"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="GetFilterValuesRequestMessage">
+		<wsdl:part element="tns:GetFilterValuesRequest" name="GetFilterValuesRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="GetFilterValuesResponseMessage">
+		<wsdl:part element="tns:GetFilterValuesResponse" name="GetFilterValuesResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getInventoryLevelsRequest">
+		<wsdl:part element="tns:GetInventoryLevelsRequest" name="GetInventoryLevelsRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getInventoryLevelsResponse">
+		<wsdl:part element="tns:GetInventoryLevelsResponse" name="GetInventoryLevelsResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="InventoryServiceV2final">
+		<wsdl:operation name="getFilterValues">
+			<wsdl:input message="tns:GetFilterValuesRequestMessage"></wsdl:input>
+			<wsdl:output message="tns:GetFilterValuesResponseMessage"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getInventoryLevels">
+			<wsdl:input message="tns:getInventoryLevelsRequest"></wsdl:input>
+			<wsdl:output message="tns:getInventoryLevelsResponse"></wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="InventoryServiceBindingV2final" type="tns:InventoryServiceV2final">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+		<wsdl:operation name="getFilterValues">
+			<soap:operation soapAction="getFilterValues" style="document"></soap:operation>
+			<wsdl:input>
+				<soap:body use="literal"></soap:body>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"></soap:body>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getInventoryLevels">
+			<soap:operation soapAction="getInventoryLevels" style="document"></soap:operation>
+			<wsdl:input>
+				<soap:body use="literal"></soap:body>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"></soap:body>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="InventoryServiceV2final">
+		<wsdl:port binding="tns:InventoryServiceBindingV2final" name="InventoryServiceBindingV2final">
+			<soap:address location="https://ws.sanmar.com:8080/promostandards/InventoryServiceBindingV2final"></soap:address>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
