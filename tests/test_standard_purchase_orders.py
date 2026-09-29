@@ -63,6 +63,13 @@ CHECKED = """<poNum>WEBSERVICES TEST</poNum><residence>N</residence>
   </webServicePoDetailList>"""
 
 
+def test_order_lines_cannot_change_after_validation() -> None:
+    """Lines passed as a list are kept as a tuple, so emptying them cannot bypass validation."""
+    assert isinstance(ORDER.lines, tuple)
+    with pytest.raises(AttributeError):
+        ORDER.lines.clear()  # type: ignore[attr-defined]  # ty: ignore[unresolved-attribute]
+
+
 def test_order_is_shaped_as_sanmar_takes_it() -> None:
     """Lines are combined, keys and styles go in their own fields, and blank fields are left out."""
     sanmar, transport = replay_client()

@@ -61,9 +61,13 @@ def test_model_is_strict() -> None:
         Order.model_validate({"quantity": 12, "colour": "Black"})
 
 
-@pytest.mark.parametrize("text", ["Rush, please", "Café"], ids=["comma", "non-ascii"])
+@pytest.mark.parametrize(
+    "text",
+    ["Rush, please", "Café", "1 MAIN ST\r\n85497", "Dock\t4", "Bell\x07"],
+    ids=["comma", "non-ascii", "line-break", "tab", "control"],
+)
 def test_order_text_rejects_what_sanmar_cannot_take(text: str) -> None:
-    """Commas split SanMar's order files, and those files are ASCII."""
+    """Commas and line breaks split SanMar's order files, and those files are ASCII."""
     with pytest.raises(ValidationError, match="SanMar orders"):
         Order(quantity=1, note=text)
 

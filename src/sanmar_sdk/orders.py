@@ -10,7 +10,7 @@ from typing import Annotated
 
 from pydantic import Field
 
-from .base import ORDER_TEXT, Model
+from .base import FROZEN, ORDER_TEXT, Model
 from .common import ShipMethod, ShipTo, SkuKey, StyleColorSize, Warehouse, WillCall
 
 
@@ -39,7 +39,7 @@ class PurchaseOrder(Model):
     po_number: Annotated[str, Field(min_length=1, max_length=28), ORDER_TEXT]
     ship_to: ShipTo
     ship_method: ShipMethod | WillCall
-    lines: Annotated[Sequence[OrderLine], Field(min_length=1)]
+    lines: Annotated[Sequence[OrderLine], Field(min_length=1), FROZEN]
 
     def merged_lines(self) -> list[OrderLine]:
         """Return the lines with duplicates combined, as SanMar asks.

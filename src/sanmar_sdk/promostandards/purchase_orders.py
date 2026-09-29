@@ -18,7 +18,7 @@ from typing import TYPE_CHECKING, Annotated
 from pydantic import Field, field_validator
 
 from sanmar_sdk._soap import PROMOSTANDARDS_PURCHASE_ORDER
-from sanmar_sdk.base import ORDER_TEXT, Model
+from sanmar_sdk.base import FROZEN, ORDER_TEXT, Model
 from sanmar_sdk.common import ShipMethod, ShipTo, Warehouse
 from sanmar_sdk.exceptions import ResponseError
 
@@ -52,12 +52,13 @@ class PromoStandardsOrder(Model):
     po_number: Annotated[str, Field(min_length=1, max_length=28), ORDER_TEXT]
     ship_to: ShipTo
     ship_method: ShipMethod
-    lines: Annotated[Sequence[PromoStandardsOrderLine], Field(min_length=1)]
+    lines: Annotated[Sequence[PromoStandardsOrderLine], Field(min_length=1), FROZEN]
     order_date: datetime | None = None
     """When the order was placed. Defaults to the time it is sent."""
     ship_references: Annotated[
         Sequence[Annotated[str, Field(min_length=1, max_length=64), ORDER_TEXT]],
         Field(max_length=2),
+        FROZEN,
     ] = ()
     """Up to two references for the shipping process. Defaults to the PO number."""
 

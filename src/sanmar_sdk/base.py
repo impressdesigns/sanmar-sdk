@@ -123,7 +123,8 @@ SemicolonSeparated = Annotated[list[str], _split_list(";")]
 def _check_order_text(value: str) -> str:
     """Reject characters SanMar cannot accept in an order.
 
-    SanMar's order processor splits on commas, and its order files are ASCII.
+    SanMar's order processor splits on commas, its order files split records on line breaks,
+    and those files are ASCII.
     """
     if "," in value:
         message = "SanMar orders cannot contain commas."
@@ -131,13 +132,25 @@ def _check_order_text(value: str) -> str:
     if not value.isascii():
         message = "SanMar orders must be ASCII."
         raise ValueError(message)
+    if not value.isprintable():
+        message = "SanMar orders cannot contain line breaks, tabs or other control characters."
+        raise ValueError(message)
     return value
 
 
 ORDER_TEXT = AfterValidator(_check_order_text)
-"""Marks a string as text that goes into a SanMar order, which allows no commas and only ASCII.
+"""Marks a string as text that goes into a SanMar order, which takes printable ASCII without commas.
 
 It goes after the field's length limits, so a too-long value is reported in characters::
 
     city: Annotated[str, Field(max_length=28), ORDER_TEXT]
+"""
+
+FROZEN = AfterValidator(tuple)
+"""Stores a validated collection as a tuple, so a frozen model's collection cannot change.
+
+Callers may pass any sequence, a list included; without this, a list would be kept as the
+same mutable list, and emptying it would get past the model's validation::
+
+    lines: Annotated[Sequence[OrderLine], Field(min_length=1), FROZEN]
 """

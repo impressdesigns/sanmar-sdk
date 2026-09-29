@@ -119,6 +119,13 @@ def test_order_is_shaped_with_every_required_field() -> None:
     )
 
 
+def test_order_collections_cannot_change_after_validation() -> None:
+    """Lines and references passed as lists are kept as tuples."""
+    order = _order(ship_references=["85496"])
+
+    assert (type(order.lines), type(order.ship_references)) == (tuple, tuple)
+
+
 def test_minimal_address_and_references() -> None:
     """Blank address fields are left out, and shipping references can be set."""
     sanmar, transport = replay_client()
