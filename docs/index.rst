@@ -1,5 +1,5 @@
-SanMar SDK
-================
+idi-sanmar-sdk
+==============
 
 A Python SDK for SanMar's SOAP APIs.
 
@@ -9,7 +9,7 @@ Module Index
 .. toctree::
    :maxdepth: 1
 
-   autoapi/sanmar_sdk/index
+   autoapi/index
 
 .. toctree::
    :caption: Other:
