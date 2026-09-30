@@ -1,6 +1,7 @@
 Changelog
 =========
 
+- :release:`1.0.0 <30th September 2026>`
 - :feature:`-` Read SanMar's SFTP files, and place orders through them, with ``sanmar_sdk.ftp.SanMarFTP``. Files stream row by row into typed records.
 - :feature:`-` Add SanMar's PromoStandards services under ``SanMar.promostandards``: Product Data 2.0.0, Media Content 1.1.0, Inventory 2.0.0, Pricing and Configuration 1.0.0, Order Status 2.0.0, Order Shipment Notification 1.0.0, Invoice 1.0.0 and Purchase Order 1.0.0.
 - :feature:`-` Add SanMar's own product information, inventory, pricing, invoicing and purchase order services.
