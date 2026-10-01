@@ -11,7 +11,7 @@ requires-python = ">=3.14"
 dependencies = [
     # 5.0 removed the ssh-rsa host key algorithm, and SanMar's SFTP server offers nothing newer.
     # That is why 4.x carries GHSA-r374-rxx8-8654 (SHA-1 in rsakey.py), with no fix short of 5.0.
-    "paramiko>=4.0,<5",
+    "paramiko>=4.0,<6",
     "pydantic>=2.12",
     "zeep>=4.3.3",
 ]
