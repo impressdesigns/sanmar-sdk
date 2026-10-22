@@ -12,7 +12,7 @@ dependencies = [
     # 5.0 removed the ssh-rsa host key algorithm, and SanMar's SFTP server offers nothing newer.
     # That is why 4.x carries GHSA-r374-rxx8-8654 (SHA-1 in rsakey.py), with no fix short of 5.0.
     "paramiko>=4.0,<5",
-    "pydantic>=2.12",
+    "pydantic>=2.14.1",
     "zeep>=4.3.3",
 ]
 
@@ -27,29 +27,29 @@ build-backend = "uv_build"
 [dependency-groups]
 dev = [
     # DX
-    "nox>=2026.8.10",
-    "prek>=0.4.14",
+    "nox>=2026.8.17",
+    "prek>=0.5.5",
     # Linters
-    "ruff>=0.16.3",
-    "mypy>=2.3.1",
-    "ty>=0.0.72",
+    "ruff>=0.17.0",
+    "mypy>=2.4.0",
+    "ty>=0.0.87",
     # Stubs
     "types-paramiko>=4.0,<5",
-    "types-requests>=2.32",
+    "types-requests>=2.33.0.20261006",
 ]
 docs = [
     "sphinx>=9.1.0",
     # Theme
     "furo>=2025.12.19",
     # Extensions
-    "sphinx-autoapi>=3.8.0",
+    "sphinx-autoapi>=3.8.1",
     "releases>=2.1.1",
 ]
 tests = [
-    "coverage>=7.15.2",
+    "coverage>=7.16.2",
     "pytest>=9.1.1",
     # Extensions
-    "pytest-randomly>=4.1.0",
+    "pytest-randomly>=5.0.0",
 ]
 
 [tool.uv]
@@ -59,6 +59,11 @@ exclude-newer = "P7D"
 environments = [
     "sys_platform == 'linux' and platform_machine == 'x86_64'",
 ]
+exclude-newer-package = { certifi = false, virtualenv = false }
+# certifi 2026.10.19 is the release that distrusts the compromised eMudhra/emSign
+# intermediates (October 2026); it is exempt from exclude-newer until it ages past the window.
+# virtualenv 21.14.9 fixes GHSA-c978-59m8-c77v, GHSA-43mp-35q3-x3fq and GHSA-cw65-gx24-rc82 (October 2026).
+constraint-dependencies = ["certifi>=2026.10.19", "virtualenv>=21.14.9"]
 
 [tool.uv.build-backend]
 module-name = "sanmar_sdk"

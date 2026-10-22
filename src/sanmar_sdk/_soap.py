@@ -24,7 +24,7 @@ from zeep.wsdl.bindings.soap import Soap11Binding
 from .exceptions import ResponseError, SanMarConnectionError, SoapFaultError
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator, Mapping, Sequence
+    from collections.abc import Generator, Mapping, Sequence
 
     from .common import Environment
 
@@ -256,7 +256,7 @@ class SoapClient:
 
 
 @contextmanager
-def _translated_errors() -> Iterator[None]:
+def _translated_errors() -> Generator[None]:
     """Re-raise zeep and requests errors as the SDK's own exceptions."""
     try:
         yield

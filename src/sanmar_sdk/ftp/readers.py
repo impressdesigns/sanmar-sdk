@@ -22,7 +22,7 @@ from pydantic import AliasChoices, ValidationError
 from sanmar_sdk.exceptions import FileFormatError
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator, Sequence
+    from collections.abc import Generator, Iterator, Sequence
 
     from sanmar_sdk.base import Record
 
@@ -41,7 +41,7 @@ def normalize_column(name: str) -> str:
 
 
 @contextmanager
-def open_source(source: Source, encoding: str = "utf-8-sig") -> Iterator[TextIO]:
+def open_source(source: Source, encoding: str = "utf-8-sig") -> Generator[TextIO]:
     """Open a path for reading, or pass an already-open stream through untouched.
 
     ``utf-8-sig`` reads plain UTF-8 too, and drops the byte-order mark SanMar's CSV files

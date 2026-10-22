@@ -33,7 +33,7 @@ from .inventory import read_warehouse_inventory
 from .orders import OrderFiles, read_holding, render_order_files, render_release_file
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterator, Sequence
+    from collections.abc import Callable, Generator, Iterator, Sequence
     from pathlib import Path
     from types import TracebackType
 
@@ -270,7 +270,7 @@ class SanMarFTP:
         return "/".join(resolved)
 
     @contextmanager
-    def open(self, path: str, *, prefetch: bool = True) -> Iterator[IO[bytes]]:
+    def open(self, path: str, *, prefetch: bool = True) -> Generator[IO[bytes]]:
         """Open a remote file for reading, as bytes.
 
         ``prefetch`` requests the whole file ahead of reading, which is much faster for
@@ -284,7 +284,7 @@ class SanMarFTP:
             yield cast("IO[bytes]", remote)
 
     @contextmanager
-    def open_text(self, path: str, *, member: str | None = None, encoding: str = "utf-8-sig") -> Iterator[TextIO]:
+    def open_text(self, path: str, *, member: str | None = None, encoding: str = "utf-8-sig") -> Generator[TextIO]:
         """Open a remote text file, or a text file inside a remote zip archive.
 
         For a ``.zip`` path, ``member`` names the file inside it; it may be left out when the
@@ -316,7 +316,7 @@ class SanMarFTP:
         *,
         member: str | None = None,
         encoding: str = "utf-8-sig",
-    ) -> Iterator[Iterator[R]]:
+    ) -> Generator[Iterator[R]]:
         """Stream a remote file through one of this package's readers.
 
         The rows are read as the file downloads, and only while the ``with`` block is open::
@@ -377,7 +377,7 @@ class SanMarFTP:
         return name
 
     @contextmanager
-    def holding(self, batch: str) -> Iterator[Iterator[HoldingLine]]:
+    def holding(self, batch: str) -> Generator[Iterator[HoldingLine]]:
         """Stream SanMar's acknowledgement of an uploaded batch, once it exists.
 
         SanMar writes it to ``Holding`` within about 15 minutes of the upload, and moves it
