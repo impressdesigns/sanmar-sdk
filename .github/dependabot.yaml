@@ -21,6 +21,12 @@ updates:
           - "*"
     cooldown:
       default-days: 7
+    ignore:
+      # SanMar's SFTP server offers only ssh-rsa, which paramiko 5 removed (see pyproject.toml).
+      - dependency-name: paramiko
+        versions: [">=5"]
+      - dependency-name: types-paramiko
+        versions: [">=5"]
 
   - package-ecosystem: pre-commit
     directory: /
